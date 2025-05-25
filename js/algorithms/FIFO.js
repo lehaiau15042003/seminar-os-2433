@@ -1,3 +1,5 @@
+'use strict'
+
 function FIFO(pages, frameSize) {
     let frame = [];
     let pageFault = 0;
@@ -17,5 +19,4 @@ function FIFO(pages, frameSize) {
     return pageFault;
 }
 
-pages = [7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1];
-console.log(FIFO(pages, 3));
+export default FIFO;
