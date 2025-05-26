@@ -1,0 +1,130 @@
+
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Hide spin buttons */
+input[type="number"] {
+    -moz-appearance: textfield;
+    
+}
+
+*{
+    
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+/* body{
+    padding: 20px;
+
+} */
+ .header{
+        
+    display: flex;
+
+} 
+.title{
+    grid-gap: 50px;
+    /* grid-template-columns: repeat(auto-fit ,minmax(200px,1fr)); */
+    padding: 10px;
+    border: 1px solid #000;
+    display: flex;
+    position: fixed;     
+}
+.intro{
+    padding: 10px;
+}
+.intro:hover {
+    background-color: greenyellow;
+
+}
+
+.container{
+    margin-top: 100px;
+    padding-left: 20px;
+    background-position:center;
+    grid-gap: 10px;
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit ,minmax(200px,1fr)); */
+}
+
+/* .numberpage{
+    inline-size: 20px;
+} */
+
+a::-webkit-inner-spin-button::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+}
+.a{
+
+    width: 20px;
+}
+.articles{
+    border: 1px solid #000;
+}
+
+
+.cards{
+    border: 1px solid #000;
+    background-color: aqua;
+}
+.card{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
+    /* grid-template-rows: repeat(auto-fit, minmax(200px, 1fr)); */
+    border: 1px solid #000;
+}
+.article1{
+
+}
+.ro0{
+    border: 1px solid #000;
+}
+
+/* .Column{
+    padding-right: 50%;
+} */
+#Frame{
+border: 1px solid #000;
+}
+#frame{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
+    /* grid-template-rows: repeat(auto-fit, minmax(30px, 1px)); */
+}
+.f1{
+
+}
+.f2{
+}
+.article2{
+    /* grid-template-columns: repeat(3, 1fr); */
+    /* grid-template-columns: repeat(auto-fit, minmax(40px, 1px)); */
+
+}
+ .numberpage{
+ }
+
+@media (max-width: 430px){
+    .title{
+        grid-gap: 30px;
+    }
+}    
+@media (max-width: 390px){
+
+    .title{
+        grid-gap: 10px;
+    }
+}
+@media (max-width: 350px){
+
+    .title{
+        grid-gap: 1px;
+    }    
+    
+
+}
