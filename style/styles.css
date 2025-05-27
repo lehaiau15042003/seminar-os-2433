@@ -37,6 +37,9 @@ input[type="number"] {
 }
 .intro{
     padding: 10px;
+    transition-property: background-color;
+    transition-duration: 2000ms;
+    transition-delay: 200ms;
 }
 .intro:hover {
     background-color: greenyellow;
@@ -127,4 +130,33 @@ border: 1px solid #000;
     }    
     
 
+}
+.nghia{
+    background-color:yellowgreen;
+    border: 1px solid #000;
+    width: 100px;
+    transition-property: background-color,width, height ;
+    transition-duration: 2000ms, 4s;
+    transition: all 2000ms ease-in-out;
+    /* animation-name: loadingabc;
+    animation-duration: 3s;
+    animation-direction: alternate; */
+}
+.nghia:hover{
+    animation-name: loadingabc;
+    animation-duration: 3s;
+    animation-direction: alternate;
+    height:200px ;
+    width: 200px;
+    background-color: aquamarine;
+
+}
+@keyframes loadingabc {
+    form{
+    background-color: aquamarine;
+
+    }
+    to{
+        background-color: aquamarine;
+    }
 }
