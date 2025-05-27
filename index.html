@@ -24,11 +24,12 @@
                 </div>
                 <div class="title2">
                     <div>
-                        <select name="intro" class="intro">
+                        <select name="pageReplacement" class="pageReplacement">
                             <option value="intro math">Intro Math</option>
-                            <option value="FiFo">FiFo</option>
+                            <option value="FIFO">FiFo</option>
                             <option value="LRU">LRU</option>
                             <option value="OPTIMAL">OPTIMAL</option>
+                            <option value="CLOCK">CLOCK</option>
                         </select>
                     </div>
                 </div>
@@ -69,82 +70,24 @@
                 </div> -->
                 <div>
                     <p>Page:
-                    <input class="numberpage" type="number" >
+                    <input class="pageInput" type="number" >
                     </p>
                     <br>
                     <p>Frame:
-                        <input class="numberframe" type="number">
+                        <input class="frameInput" type="number" min="1">
                     </p>
                     </div>
-                <div class="card"> 
-                    <div class="article1">1</div>
-                    <div class="article1">2</div>
-                    <div class="article1">3</div>
-                    <div class="article1">4</div>
-                    <div class="article1">5</div>
-                    <div class="article1">6</div>
-                    <div class="article1">7</div>
-                    <div class="article1">8</div>
-                    <div class="article1">9</div>
-                    <div class="article1">10</div>
-                    <div class="article1">11</div>
-                    <div class="article1">12</div>
-                    <div class="article1">13</div>
-                    <div class="article1">14</div>
-                    <div class="article1">15</div>
-                    <div class="article1">16</div>
-                    <div class="article1">17</div>
-                    <div class="article1">18</div>
-                    <div class="article1">19</div>
-                    <div class="article1">20</div>
-                    <div class="article1">21</div>
-                    <div class="article1">22</div>
-                    <div class="article1">23</div>
-                    <div class="article1">24</div>
-                    <div class="article1">25</div>
-                    
-                </div>
+                <div class="card"></div>
                 <div id="Frame">
-                    <div id="frame">
-                        <div>1</div>
-                        <div>2</div>
-                        <div>3</div>
-                        <div>4</div>
-                        <div>5</div>
-                        <div>6</div>
-                        <div>7</div>
-                        <div>8</div>
-                        <div>9</div>
-                        <div>10</div>
-                        <div>11</div>
-                        <div>12</div>
-                        <div>13</div>
-                        <div>14</div>
-                        <div>15</div>
-                        <div>16</div>
-                        <div>17</div>
-                        <div>18</div>
-                        <div>19</div>
-                        <div>20</div>
-                        <div>21</div>
-                        <div>22</div>
-                        <div>23</div>
-                        <div>24</div>
-                        <div>25</div>
-                    </div>
+                    <div id="frame"></div>
                     <div id="frame">
                         <div>1</div>
                         <div>2</div>
                         <div>3</div>
                     </div>
-                    <div id="frame">
-                        <div>1</div>
-                        <div>2</div>
-                        <div>3</div>
+
                     </div>
                 </div>
-                    
-                <div class="frame"></div>
                 </div>
                     <!-- <div class="articles">
                         <input class="a" type="number">
@@ -161,6 +104,6 @@
       
     </form>
     
-        
+    <script type="module" src="/js/index.js"></script>
 </body>
 </html>
