@@ -81,7 +81,8 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
     grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
     /* grid-template-rows: repeat(auto-fit, minmax(200px, 1fr)); */
     border: 1px solid #000;
-    gap: 5px; 
+    gap: 5px;  
+    flex-direction: column;
 }
 .page:hover{
     background-color: aqua;
@@ -100,8 +101,8 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
 .frame{
     border: 1px solid #000;
     display: flex;
-    grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
-    /* grid-template-rows: repeat(auto-fit, minmax(30px, 1px)); */
+    flex-direction: column;
+    gap: 8px;
 }
 .f1{
 
@@ -135,32 +136,3 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
     
 
 }
-/* .nghia{
-    background-color:yellowgreen;
-    border: 1px solid #000;
-    width: 100px;
-    transition-property: background-color,width, height ;
-    transition-duration: 2000ms, 4s;
-    transition: all 2000ms ease-in-out;
-    /animation-name: loadingabc;
-    animation-duration: 3s;
-    animation-direction: alternate;/
-}
-.nghia:hover{
-    animation-name: loadingabc;
-    animation-duration: 3s;
-    animation-direction: alternate;
-    height:200px ;
-    width: 200px;
-    background-color: aquamarine;
-
-}
-@keyframes loadingabc {
-    form{
-    background-color: aquamarine;
-
-    }
-    to{
-        background-color: aquamarine;
-    }
-} */

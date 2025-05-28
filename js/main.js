@@ -27,36 +27,35 @@ window.onload = function() {
                 renderPages();
                 pageInput.value = '';
             }
-
-            function renderPages(){
-                pageDisplay.innerHTML = '';
-                pages.forEach(p => {
-                    const span = document.createElement('span');
-                    span.className = 'page-box';
-                    span.innerText = p;
-                    pageDisplay.appendChild(span);
-                });
-            }
     });
+
+    function renderPages(){
+        pageDisplay.innerHTML = '';
+        pages.forEach(p => {
+            const span = document.createElement('span');
+            span.className = 'page-box';
+            span.innerText = p;
+            pageDisplay.appendChild(span);
+        });
+    }
 
     frameSize.addEventListener('input', (event) => {
         const value = parseInt(frameSize.value, 10);
-        if(!isNaN(value)){
-            frame.push(value);
-            renderFrame(count);
+        if(!isNaN(value) && value > 0){
+            renderFrame(value);
             frameSize.value = '';
         }
-
-        function renderFrame(count) {
-            frame.innerHTML = '';
-            for(let i=0; i < count; i++){
-                const div = document.createElement('div');
-                div.className = 'frame-rows';
-                div.innerText = `Frame ${i + 1}`;
-                frame.appendChild(div);
-            }
-        }
     });
+
+    function renderFrame(count) {
+        frameDisplay.innerHTML = '';
+        for(let i=0; i < count; i++){
+            const div = document.createElement('div');
+            div.className = 'frame-rows';
+            div.innerHTML = `${i + 1}`;
+            frameDisplay.appendChild(div);
+        }
+    }
 
     let res;
     switch(algorithms) {
