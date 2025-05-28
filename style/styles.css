@@ -37,6 +37,9 @@ input[type="number"] {
 }
 .intro{
     padding: 10px;
+    transition-property: background-color;
+    transition-duration: 2000ms;
+    transition-delay: 200ms;
 }
 .intro:hover {
     background-color: greenyellow;
@@ -93,11 +96,7 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
 .frame{
     border: 1px solid #000;
     display: flex;
-    /* grid-template-columns: repeat(auto-fit, minmax(40px, 1px)); */
-    /* grid-template-rows: repeat(auto-fit, minmax(30px, 1px)); */
     flex-direction: column;
-    f
-
     gap: 8px;
 }
 .f1{
