@@ -72,12 +72,13 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
     border: 1px solid #000;
     background-color: aqua;
 }
-.card{
+.page{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
     /* grid-template-rows: repeat(auto-fit, minmax(200px, 1fr)); */
     border: 1px solid #000;
     gap: 5px;   
+    flex-direction: column;
 }
 .article1{
 
@@ -89,13 +90,15 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
 /* .Column{
     padding-right: 50%;
 } */
-#Frame{
-border: 1px solid #000;
-}
-#frame{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
+.frame{
+    border: 1px solid #000;
+    display: flex;
+    /* grid-template-columns: repeat(auto-fit, minmax(40px, 1px)); */
     /* grid-template-rows: repeat(auto-fit, minmax(30px, 1px)); */
+    flex-direction: column;
+    f
+
+    gap: 8px;
 }
 .f1{
 
