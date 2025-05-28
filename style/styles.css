@@ -35,11 +35,12 @@ input[type="number"] {
     display: flex;
     position: fixed;     
 }
+.pageReplacement{
+   padding: 10px;
+
+}
 .intro{
     padding: 10px;
-    transition-property: background-color;
-    transition-duration: 2000ms;
-    transition-delay: 200ms;
 }
 .intro:hover {
     background-color: greenyellow;
@@ -75,28 +76,30 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
     border: 1px solid #000;
     background-color: aqua;
 }
-.card{
+.page{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
     /* grid-template-rows: repeat(auto-fit, minmax(200px, 1fr)); */
     border: 1px solid #000;
-    gap: 5px;   
+    gap: 5px; 
+}
+.page:hover{
+    background-color: aqua;
+}
+.card{
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
+    border: 1px solid #000;
 }
 .article1{
 
-}
-.ro0{
-    border: 1px solid #000;
 }
 
 /* .Column{
     padding-right: 50%;
 } */
-#Frame{
-border: 1px solid #000;
-}
-#frame{
-    display: grid;
+.frame{
+    border: 1px solid #000;
+    display: flex;
     grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
     /* grid-template-rows: repeat(auto-fit, minmax(30px, 1px)); */
 }
@@ -132,16 +135,16 @@ border: 1px solid #000;
     
 
 }
-.nghia{
+/* .nghia{
     background-color:yellowgreen;
     border: 1px solid #000;
     width: 100px;
     transition-property: background-color,width, height ;
     transition-duration: 2000ms, 4s;
     transition: all 2000ms ease-in-out;
-    /* animation-name: loadingabc;
+    /animation-name: loadingabc;
     animation-duration: 3s;
-    animation-direction: alternate; */
+    animation-direction: alternate;/
 }
 .nghia:hover{
     animation-name: loadingabc;
@@ -160,4 +163,4 @@ border: 1px solid #000;
     to{
         background-color: aquamarine;
     }
-}
+} */
