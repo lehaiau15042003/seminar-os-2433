@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="">
+    <form action="" onsubmit="return false;">
         <div>
 
         </div>
@@ -26,7 +26,7 @@
                     <div>
                         <select name="pageReplacement" class="pageReplacement">
                             <option value="intro math">Intro Math</option>
-                            <option value="FIFO">FiFo</option>
+                            <option value="FIFO">FIFO</option>
                             <option value="LRU">LRU</option>
                             <option value="OPTIMAL">OPTIMAL</option>
                             <option value="CLOCK">CLOCK</option>
@@ -52,7 +52,7 @@
                     <div class="article">article3</div>
                 </div>
                 <div class="cards">
-                    <p>clumn2</p>
+                    <p>column2</p>
                     <div class="article">article12</div>
                     <div class="article">article23</div>
                     <div class="article">article34</div>
@@ -64,35 +64,19 @@
                     <div class="article">article26</div>
                     <div class="article">article37</div>
                 </div>
-                <!-- <div>
-                    Page: <input type="number" id="page">
-                    Frame: <input type="number" id="frame">
-                </div> -->
                 <div>
                     <p>Page:
-                    <input class="pageInput" type="number" >
+                        <input class="pageInput" type="number" >
                     </p>
-                    <br>
+                        <br>
                     <p>Frame:
-                        <input class="frameInput" type="number" min="1">
+                            <input class="frameInput" type="number" min="1">
                     </p>
-                    </div>
-                <div class="page"></div>
-                <div class="frame"></div>
                 </div>
-                    <!-- <div class="articles">
-                        <input class="a" type="number">
-                    </div>
-                    <div class="articles">
-                        <input class="a" type="number">
-                    </div>
-                    <div class="articles">
-                        <input class="a" type="number">
-                    </div> -->
-                </div>                
-            
-        </div>
-      
+                    <div class="page"></div>
+                    <div class="frame"></div>              
+              </div>
+        <button id="run-btn">Run</button>
     </form>
     
     <script type="module" src="/js/main.js"></script>
