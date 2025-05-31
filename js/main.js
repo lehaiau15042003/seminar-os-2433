@@ -1,77 +1,25 @@
 'use strict'
 
-import FIFO from './algorithms/PageReplacement/FIFO.js'
-import LRU from './algorithms/PageReplacement/LRU.js'
-import OPTIMAL from './algorithms/PageReplacement/OPTIMAL.js'
-import CLOCK from './algorithms/PageReplacement/CLOCK.js'
-
-//let pages = [7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1];
-//console.log(FIFO(pages, 3));
-//console.log(LRU(pages, 3));
-//console.log(OPTIMAL(pages, 3));
-//console.log(CLOCK(pages, 3));
+import { renderPages, renderFrame, renderSteps } from './algorithms/handlers/render.js'
+import { runAlgorithms } from './algorithms/handlers/Algorithms.js';
+import { pageInputFunc, frameInputFunc } from './algorithms/handlers/Input.js';
 
 let pages = [];
-let frame = [];
 window.onload = function() {
     const pageInput = document.querySelector('.pageInput');
     const pageDisplay = document.querySelector('.page');
-    const frameSize = document.querySelector('.frameInput');
-    const algorithms = document.querySelector('.pageReplacement').value;
+    const frameInput = document.querySelector('.frameInput');
+    const algorithmsSelect = document.querySelector('.pageReplacement');
     const frameDisplay = document.querySelector('.frame');
+    const runbtn = document.getElementById('run-btn');
 
-    pageInput.addEventListener('input', (event) => {
-            const value = parseInt(pageInput.value, 10);
-            if(!isNaN(value)){
-                pages.push(value);
-                renderPages();
-                pageInput.value = '';
-            }
-    });
+    pageInputFunc(pageInput, pageDisplay, pages, renderPages);
+    frameInputFunc(frameInput, frameDisplay, renderFrame);
 
-    function renderPages(){
-        pageDisplay.innerHTML = '';
-        pages.forEach(p => {
-            const span = document.createElement('span');
-            span.className = 'page-box';
-            span.innerText = p;
-            pageDisplay.appendChild(span);
-        });
-    }
-
-    frameSize.addEventListener('input', (event) => {
-        const value = parseInt(frameSize.value, 10);
-        if(!isNaN(value) && value > 0){
-            renderFrame(value);
-            frameSize.value = '';
-        }
-    });
-
-    function renderFrame(count) {
-        frameDisplay.innerHTML = '';
-        for(let i=0; i < count; i++){
-            const div = document.createElement('div');
-            div.className = 'frame-rows';
-            div.innerHTML = `${i + 1}`;
-            frameDisplay.appendChild(div);
-        }
-    }
-
-    let res;
-    switch(algorithms) {
-        case "FIFO":
-            res = FIFO(pages, frameSize);
-            break;
-        case "LRU":
-            res = FIFO(pages, frameSize);
-            break;
-        case "OPTIMAL":
-            res = OPTIMAL(pages, frameSize);
-            break;
-        case "CLOCK":
-            res = CLOCK(pages, frameSize);
-            break;
-        default:
-            res = "Thuật toán không hợp lệ";
-    }
+    runbtn.addEventListener('click', () => {
+        const frameSize = parseInt(frameInput.value || frameDisplay.childElementCount, 10);
+        const algorithms = algorithmsSelect.value;
+        const result = runAlgorithms(pages, frameSize, algorithms);
+        renderSteps(result.steps, frameSize, frameDisplay);
+    })
 }
