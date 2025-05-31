@@ -1,0 +1,52 @@
+export function renderPages(pages, pageDisplay){
+    pageDisplay.innerHTML = '';
+    pages.forEach(p => {
+        const span = document.createElement('span');
+        span.className = 'page-box';
+        span.innerText = p;
+        pageDisplay.appendChild(span);
+    });
+}
+
+export function renderFrame(count, frameDisplay) {
+    frameDisplay.innerHTML = '';
+    for(let i=0; i < count; i++){
+        const div = document.createElement('div');
+        div.className = 'frame-rows';
+        div.innerHTML = `${i + 1}`;
+        frameDisplay.appendChild(div);
+    }
+}
+
+export function renderSteps(steps, frameSize, frameDisplay) {
+    frameDisplay.innerHTML = '';
+    const headerRow = document.createElement('div');
+    headerRow.className = 'row header-row';
+    steps.forEach(step => {
+        const cell = document.createElement('div');
+        cell.className = 'cell header-cell';
+        cell.innerText = step.page;
+        headerRow.appendChild(cell);
+    });
+    frameDisplay.appendChild(headerRow);
+
+    for(let i=0; i < frameSize; i++) {
+        const row = document.createElement('div');
+        row.className = 'row';
+
+        steps.forEach(step => {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+
+            if(step.frame[i] != undefined) {
+                cell.innerText = step.frame[i];
+            }
+
+            if(step.isFault && step.index === i){
+                cell.classList.add('fault');
+            }
+            row.appendChild(cell)
+        });
+        frameDisplay.appendChild(row);
+    }
+}

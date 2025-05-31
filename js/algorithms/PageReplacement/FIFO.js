@@ -3,20 +3,32 @@
 function FIFO(pages, frameSize) {
     let frame = [];
     let pageFault = 0;
+    let pointer = 0;
+    let steps = [];
 
-    for(let i = 0; i < pages.length; i++){
-        let page = pages[i];
+    pages.forEach((page, idx) =>{
         if(!frame.includes(page)){
-            if(frame.length >= frameSize){
-                frame.shift();
+            if(frame.length < frameSize){
+                frame.push(page);
+            }else {
+                frame[pointer] = page;
+                pointer = (pointer + 1) % frameSize;
             }
-            frame.push(page);
             pageFault++;
             console.log(frame);
         }
-    }
+        steps.push({
+            index: idx,
+            page,
+            frame: [...frame],
+            isFault: !frame.includes(page)
+        });
+    });
     
-    return pageFault;
+    return {
+        pageFault,
+        steps
+    }
 }
 
 export default FIFO;
