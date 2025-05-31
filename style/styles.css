@@ -35,11 +35,12 @@ input[type="number"] {
     display: flex;
     position: fixed;     
 }
+.pageReplacement{
+   padding: 10px;
+
+}
 .intro{
     padding: 10px;
-    transition-property: background-color;
-    transition-duration: 2000ms;
-    transition-delay: 200ms;
 }
 .intro:hover {
     background-color: greenyellow;
@@ -80,14 +81,18 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
     grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
     /* grid-template-rows: repeat(auto-fit, minmax(200px, 1fr)); */
     border: 1px solid #000;
-    gap: 5px;   
+    gap: 5px;  
     flex-direction: column;
+}
+.page:hover{
+    background-color: aqua;
+}
+.card{
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
+    border: 1px solid #000;
 }
 .article1{
 
-}
-.ro0{
-    border: 1px solid #000;
 }
 
 /* .Column{
