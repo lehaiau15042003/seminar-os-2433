@@ -48,6 +48,9 @@ input[type="number"] {
 }
 
 .container{
+    grid-template-areas:
+    "cards1 cards cards"    
+    "cards2 cards casrds";
     margin-top: 100px;
     padding-left: 20px;
     background-position:center;
@@ -73,10 +76,40 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
 
 
 .cards{
+    grid-template-areas: 
+    "";
+    /* grid-area: cards; */
     border: 1px solid #000;
     background-color: aqua;
 }
+.cards1{
+    /* grid-area: cards1; */
+    border: 1px solid #000;
+    background-color: aqua;    
+
+}
+.cards2{
+    /* grid-area: cards2; */
+    border: 1px solid #000;
+    background-color: aqua;    
+
+}
+.pageInput{
+
+}
+.Page{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(20px,2fr ));
+}
+.page0{
+    border: 1px solid #000;
+    inline-size: 100px;
+    grid-column-start: 1;
+    display: grid;
+}
 .page{
+    
+    grid-column-start: 2;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
     /* grid-template-rows: repeat(auto-fit, minmax(200px, 1fr)); */
@@ -84,16 +117,8 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
     gap: 5px;  
     flex-direction: column;
 }
-.page:hover{
-    background-color: aqua;
-}
-.card{
-    grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
-    border: 1px solid #000;
-}
-.article1{
 
-}
+
 
 /* .Column{
     padding-right: 50%;
@@ -103,6 +128,9 @@ a::-webkit-inner-spin-button::-webkit-outer-spin-button{
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+.small-box{
+    border: 1px solid #000;
 }
 .f1{
 
