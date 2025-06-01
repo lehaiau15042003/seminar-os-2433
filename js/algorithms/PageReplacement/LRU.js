@@ -3,9 +3,10 @@
 function LRU(pages, frameSize){
     let frame = [];
     let pageFault = 0;
-    for(let i = 0; i < pages.length; i++) {
-        let page = pages[i];
-        if(!frame.includes(page)) {
+    let steps = [];
+    pages.forEach((page, idx) => {
+        const isFault = !frame.includes(page);
+        if(isFault) {
             pageFault++;
             if(frame.length >= frameSize){
                 frame.shift();
@@ -15,8 +16,17 @@ function LRU(pages, frameSize){
         }
         frame.push(page);
         console.log(frame);
+        steps.push({
+            index: idx,
+            page,
+            frame: [...frame],
+            isFault
+        });
+    });
+    return {
+        pageFault,
+        steps
     }
-    return pageFault;
 }
 
 

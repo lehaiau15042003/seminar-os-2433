@@ -5,10 +5,11 @@ function CLOCK(pages, frameSize) {
     let pageFault = 0;
     let pointer = 0;
     let bit = new Array(frameSize).fill(0);
-    for(let i = 0; i < pages.length; i++) {
-        let page = pages[i];
+    let steps = [];
+    pages.forEach((page, idx) => {
+        const isFault = !frame.includes(page);
         let pageIndex = frame.indexOf(page);
-        if(!frame.includes(page)){
+        if(isFault){
             pageFault++;
             if(frame.length >= frameSize){
                 while(true){
@@ -28,8 +29,17 @@ function CLOCK(pages, frameSize) {
             bit[pageIndex] = 1;
         }
         console.log(frame);
+        steps.push({
+            index: idx,
+            page,
+            frame: [...frame],
+            isFault
+        });
+    });
+    return {
+        pageFault,
+        steps
     }
-    return pageFault;
 }
 
 export default CLOCK;

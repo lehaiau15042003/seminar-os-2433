@@ -3,15 +3,16 @@
 function OPTIMAL(pages, frameSize) {
     let frame = [];
     let pageFault = 0;
-    for(let i = 0; i < pages.length; i++) {
-        let page = pages[i];
-        if(!frame.includes(page)){
+    let steps = [];
+    pages.forEach((page, idx) => {
+        const isFault = !frame.includes(page);
+        if(isFault){
             pageFault++;
             if(frame.length >= frameSize) {
                 let farthest = -1;
                 let index = -1;
                 for(let j = 0; j < frame.length; j++) {
-                    let temp = pages.slice(i + 1).indexOf(frame[j]);
+                    let temp = pages.slice(idx + 1).indexOf(frame[j]);
                     if(temp === -1){
                         index = j;
                         break;
@@ -27,8 +28,19 @@ function OPTIMAL(pages, frameSize) {
         }
         frame.push(page);
         console.log(frame);
+
+        steps.push({
+            index: idx,
+            page,
+            frame: [...frame],
+            isFault
+        });
+    });
+
+    return {
+        pageFault,
+        steps
     }
-    return pageFault;
 }
 
 export default OPTIMAL;
