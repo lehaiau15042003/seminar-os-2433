@@ -176,6 +176,13 @@ input[type="number"] {
 
 
 
+
+ canvas {
+    border: 2px solid black;
+    margin: 50px;
+ }
+
+
 @media (max-width: 430px){
     .title{
         grid-gap: 30px;

@@ -1,7 +1,7 @@
-import FIFO from '../PageReplacement/FIFO.js'
-import LRU from '../PageReplacement/LRU.js'
-import OPTIMAL from '../PageReplacement/OPTIMAL.js'
-import CLOCK from '../PageReplacement/CLOCK.js'
+import FIFO from '../algorithms/PageReplacement/FIFO.js'
+import LRU from '../algorithms/PageReplacement/LRU.js'
+import OPTIMAL from '../algorithms/PageReplacement/OPTIMAL.js'
+import CLOCK from '../algorithms/PageReplacement/CLOCK.js'
 
 export function runAlgorithms(pages, frameSize, algorithms){
     switch(algorithms) {
