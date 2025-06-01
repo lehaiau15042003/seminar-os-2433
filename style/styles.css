@@ -48,9 +48,7 @@ input[type="number"] {
 }
 
 .container{
-    grid-template-areas:
-    "cards1 cards cards"    
-    "cards2 cards casrds";
+
     margin-top: 100px;
     padding-left: 20px;
     background-position:center;
@@ -59,91 +57,124 @@ input[type="number"] {
     /* grid-template-columns: repeat(auto-fit ,minmax(200px,1fr)); */
 }
 
-/* .numberpage{
-    inline-size: 20px;
-} */
 
-a::-webkit-inner-spin-button::-webkit-outer-spin-button{
-    -webkit-appearance: none;
-}
-.a{
-
-    width: 20px;
-}
-.articles{
-    border: 1px solid #000;
-}
-
-
-.cards{
-    grid-template-areas: 
-    "";
-    /* grid-area: cards; */
-    border: 1px solid #000;
-    background-color: aqua;
-}
-.cards1{
-    /* grid-area: cards1; */
-    border: 1px solid #000;
-    background-color: aqua;    
-
-}
-.cards2{
-    /* grid-area: cards2; */
-    border: 1px solid #000;
-    background-color: aqua;    
-
-}
-.pageInput{
-
-}
-.Page{
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(20px,2fr ));
-}
-.page0{
-    border: 1px solid #000;
-    inline-size: 100px;
-    grid-column-start: 1;
-    display: grid;
-}
 .page{
-    
-    grid-column-start: 2;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40px, 1px));
-    /* grid-template-rows: repeat(auto-fit, minmax(200px, 1fr)); */
+    padding-left: 5px;
+    gap: 17px;
+    display: flex;
+    justify-content: start;
     border: 1px solid #000;
-    gap: 5px;  
-    flex-direction: column;
 }
 
-
-
-/* .Column{
-    padding-right: 50%;
-} */
 .frame{
     border: 1px solid #000;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 8px;
+    flex-direction: column;
+    
 }
-.small-box{
-    border: 1px solid #000;
+/* Tổng thể vùng hiển thị */
+#frameDisplay {
+  display: inline-block;
+  padding: 16px;
+  border: 2px solid #000;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Courier New', Courier, monospace;
 }
-.f1{
 
+/* Dãy trang phía trên */
+#pageDisplay {
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  border: 1px dashed #888;
+  border-radius: 6px;
+  background-color: #f9f9f9;
 }
-.f2{
-}
-.article2{
-    /* grid-template-columns: repeat(3, 1fr); */
-    /* grid-template-columns: repeat(auto-fit, minmax(40px, 1px)); */
 
+/* Mỗi ô page */
+.page-box {
+  background-color: #424242;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 14px;
+  border: 1px solid #222;
 }
- .numberpage{
- }
+
+/* Số thứ tự các frame */
+.frame-rows {
+  background-color: #e0e0e0;
+  padding: 10px;
+  margin: 4px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  text-align: center;
+  width: 40px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Hàng tiêu đề (dãy trang truy cập) */
+.row.header-row {
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 2px solid #000;
+}
+
+/* Ô trong tiêu đề */
+.cell.header-cell {
+  background-color: #cfd8dc;
+  border: 1px solid #90a4ae;
+  padding: 10px;
+  width: 50px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Mỗi hàng trong bảng kết quả */
+.row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Ô dữ liệu trong từng hàng */
+.cell {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 50px;
+  text-align: center;
+  font-size: 14px;
+  position: relative;
+}
+
+/* Khi xảy ra page fault */
+.fault {
+  background-color: #ffebee !important;
+  color: #c62828;
+  border: 2px solid #ef5350;
+  font-weight: bold;
+}
+
+/* Biểu tượng cảnh báo nhỏ */
+.fault::after {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 11px;
+}
+
+
+
+
+
 
 @media (max-width: 430px){
     .title{

@@ -20,16 +20,6 @@ export function renderFrame(count, frameDisplay) {
 
 export function renderSteps(steps, frameSize, frameDisplay) {
     frameDisplay.innerHTML = '';
-    const headerRow = document.createElement('div');
-    headerRow.className = 'row header-row';
-    steps.forEach(step => {
-        const cell = document.createElement('div');
-        cell.className = 'cell header-cell';
-        cell.innerText = step.page;
-        headerRow.appendChild(cell);
-    });
-    frameDisplay.appendChild(headerRow);
-
     for(let i=0; i < frameSize; i++) {
         const row = document.createElement('div');
         row.className = 'row';
@@ -42,7 +32,7 @@ export function renderSteps(steps, frameSize, frameDisplay) {
                 cell.innerText = step.frame[i];
             }
 
-            if(step.isFault && step.index === i){
+            if(step.isFault){
                 cell.classList.add('fault');
             }
             row.appendChild(cell)

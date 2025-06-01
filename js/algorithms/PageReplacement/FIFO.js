@@ -7,7 +7,8 @@ function FIFO(pages, frameSize) {
     let steps = [];
 
     pages.forEach((page, idx) =>{
-        if(!frame.includes(page)){
+        const isFault = !frame.includes(page);
+        if(isFault){
             if(frame.length < frameSize){
                 frame.push(page);
             }else {
@@ -21,7 +22,7 @@ function FIFO(pages, frameSize) {
             index: idx,
             page,
             frame: [...frame],
-            isFault: !frame.includes(page)
+            isFault
         });
     });
     
