@@ -1,8 +1,9 @@
 'use strict'
 
-import { renderPages, renderFrame, renderSteps } from './algorithms/handlers/render.js'
-import { runAlgorithms } from './algorithms/handlers/Algorithms.js';
-import { pageInputFunc, frameInputFunc } from './algorithms/handlers/Input.js';
+import { renderPages, renderFrame, renderSteps } from './handlers/render.js'
+import { runAlgorithms } from './handlers/Algorithms.js';
+import { pageInputFunc, frameInputFunc } from './handlers/Input.js';
+import drawFCFS from './algorithms/DiskScheduling/FCFS.js'
 
 let pages = [];
 window.onload = function() {
@@ -21,5 +22,5 @@ window.onload = function() {
         const algorithms = algorithmsSelect.value;
         const result = runAlgorithms(pages, frameSize, algorithms);
         renderSteps(result.steps, frameSize, frameDisplay);
-    })
+    });
 }

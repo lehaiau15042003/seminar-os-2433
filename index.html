@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="style/styles.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style/styles.css">
 </head>
 <body>
     <form action="" onsubmit="return false;">
@@ -55,20 +55,21 @@
                 </div>
                 <div class="page"></div>
                 <div class="frame"></div>              
-        </div>
-        <button id="run-btn">Run</button>
-                    <div class="page"></div>
-                    <div class="frame"></div>              
-        </div>
-        <button id="run-btn">Run</button>
+        </div>            
+        <button id="run-btn" type="button">Run</button>
     </form>
-    
-    <span class="page-box"></span>
-    <div class="frame-rows"></div>
-    <div class="cell header-cell"></div>
-    <div class="row"></div>
-    <div class="cell"></div>
+    <div class="container">
+        <span class="page-box"></span>
+        <div class="frame-rows"></div>
+        <div class="cell header-cell"></div>
+        <div class="row"></div>
+        <div class="cell"></div>
+    </div>
 
+
+    <div>
+        <canvas id="myCanvas" width="900" height="300"></canvas>
+    </div>
 
     <script type="module" src="/js/main.js"></script>
 </body>
