@@ -13,7 +13,7 @@ export function renderFrame(count, frameDisplay) {
     for(let i=0; i < count; i++){
         const div = document.createElement('div');
         div.className = 'frame-rows';
-        div.innerHTML = `${i + 1}`;
+        div.innerText = `${i + 1}`;
         frameDisplay.appendChild(div);
     }
 }

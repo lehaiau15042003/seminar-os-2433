@@ -5,7 +5,6 @@ function FIFO(pages, frameSize) {
     let pageFault = 0;
     let pointer = 0;
     let steps = [];
-
     pages.forEach((page, idx) =>{
         const isFault = !frame.includes(page);
         if(isFault){
