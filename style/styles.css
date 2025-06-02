@@ -28,19 +28,22 @@ input[type="number"] {
 
 } 
 .title{
-    grid-gap: 50px;
-    /* grid-template-columns: repeat(auto-fit ,minmax(200px,1fr)); */
-    padding: 10px;
-    border: 1px solid #000;
-    display: flex;
-    position: fixed;     
+  border-radius: 10px;
+  justify-content: space-between;
+  width: 500px;
+  display: flex;
+  padding: 10px;
+  border: 1px solid #000;
+  position: fixed;     
 }
 .pageReplacement{
-   padding: 10px;
+  border-radius: 10px;
+  padding: 10px;
 
 }
 .intro{
-    padding: 10px;
+  border-radius: 10px;
+  padding: 10px;
 }
 .intro:hover {
     background-color: greenyellow;
@@ -58,16 +61,20 @@ input[type="number"] {
 }
 
 
+.borderPF{
+  grid-gap: 5px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.176)
+}
+
 .page{
+    margin-bottom: 10px;
     padding-left: 5px;
     gap: 17px;
     display: flex;
     justify-content: start;
-    border: 1px solid #000;
 }
 
 .frame{
-    border: 1px solid #000;
     display: grid;
     gap: 8px;
     flex-direction: column;
@@ -153,11 +160,30 @@ input[type="number"] {
   text-align: center;
   font-size: 14px;
   position: relative;
+  animation-duration: 5s;
+  animation-direction: alternate;
+}
+@keyframes cell{
+  0%{
+    border: 0px solid #ccc;
+    
+    position: relative;
+    font-size: 14px;
+    padding: 0;
+  }
+  100%{
+    border: 1px solid #ccc;
+
+    position: relative;
+    font-size: 14px;
+    padding: 10px;
+
+  }
 }
 
 /* Khi xảy ra page fault */
 .fault {
-  background-color: #ffebee !important;
+  background-color: #ffebee ;
   color: #c62828;
   border: 2px solid #ef5350;
   font-weight: bold;
@@ -170,7 +196,19 @@ input[type="number"] {
   right: 4px;
   font-size: 11px;
 }
+#run-btn{
+  border-radius: 10px;
+  background-color: #90a4ae;
+  width: 100px;
+  margin: 20px;
+  font-size: 15px;
+  transition-duration: 500ms;
+  transition-property: background-color;
+}
+#run-btn:hover{
+  background-color: chocolate;
 
+}
 
 
 
