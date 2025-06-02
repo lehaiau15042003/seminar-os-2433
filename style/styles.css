@@ -1,12 +1,9 @@
-
-
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-/* Hide spin buttons */
+
 input[type="number"] {
     -moz-appearance: textfield;
     
@@ -76,11 +73,11 @@ input[type="number"] {
 
 .frame{
     display: grid;
-    gap: 8px;
     flex-direction: column;
     
 }
-/* Tổng thể vùng hiển thị */
+
+
 #frameDisplay {
   display: inline-block;
   padding: 16px;
@@ -91,7 +88,6 @@ input[type="number"] {
   font-family: 'Courier New', Courier, monospace;
 }
 
-/* Dãy trang phía trên */
 #pageDisplay {
   margin-bottom: 16px;
   display: flex;
@@ -103,7 +99,6 @@ input[type="number"] {
   background-color: #f9f9f9;
 }
 
-/* Mỗi ô page */
 .page-box {
   background-color: #424242;
   color: #fff;
@@ -114,7 +109,6 @@ input[type="number"] {
   border: 1px solid #222;
 }
 
-/* Số thứ tự các frame */
 .frame-rows {
   background-color: #e0e0e0;
   padding: 10px;
@@ -127,14 +121,12 @@ input[type="number"] {
   font-size: 14px;
 }
 
-/* Hàng tiêu đề (dãy trang truy cập) */
 .row.header-row {
   display: flex;
   justify-content: flex-start;
   border-bottom: 2px solid #000;
 }
 
-/* Ô trong tiêu đề */
 .cell.header-cell {
   background-color: #cfd8dc;
   border: 1px solid #90a4ae;
@@ -145,13 +137,11 @@ input[type="number"] {
   font-size: 14px;
 }
 
-/* Mỗi hàng trong bảng kết quả */
 .row {
   display: flex;
   justify-content: flex-start;
 }
 
-/* Ô dữ liệu trong từng hàng */
 .cell {
   background-color: #ffffff;
   border: 1px solid #ccc;
@@ -181,7 +171,6 @@ input[type="number"] {
   }
 }
 
-/* Khi xảy ra page fault */
 .fault {
   background-color: #ffebee ;
   color: #c62828;
@@ -189,7 +178,6 @@ input[type="number"] {
   font-weight: bold;
 }
 
-/* Biểu tượng cảnh báo nhỏ */
 .fault::after {
   position: absolute;
   top: 2px;
@@ -207,13 +195,6 @@ input[type="number"] {
 }
 #run-btn:hover{
   background-color: chocolate;
-
-}
-
-
-
-
-
 
  canvas {
     border: 2px solid black;

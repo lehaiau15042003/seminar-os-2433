@@ -3,7 +3,6 @@
 import { renderPages, renderFrame, renderSteps } from './handlers/render.js'
 import { runAlgorithms } from './handlers/Algorithms.js';
 import { pageInputFunc, frameInputFunc } from './handlers/Input.js';
-import drawFCFS from './algorithms/DiskScheduling/FCFS.js'
 
 let pages = [];
 window.onload = function() {
@@ -21,6 +20,6 @@ window.onload = function() {
         const frameSize = parseInt(frameInput.value || frameDisplay.childElementCount, 10);
         const algorithms = algorithmsSelect.value;
         const result = runAlgorithms(pages, frameSize, algorithms);
-        renderSteps(result.steps, frameSize, frameDisplay);
+        renderSteps(result.steps, frameSize, frameDisplay, 500);
     });
 }

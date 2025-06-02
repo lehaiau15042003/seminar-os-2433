@@ -4,33 +4,33 @@ function OPTIMAL(pages, frameSize) {
     let frame = [];
     let pageFault = 0;
     let steps = [];
+    let map = new Map();
     pages.forEach((page, idx) => {
         const isFault = !frame.includes(page);
+        let replaceIndex = -1;
         if(isFault){
             pageFault++;
-            if(frame.length >= frameSize) {
-                let farthest = -1;
-                let index = -1;
-                for(let j = 0; j < frame.length; j++) {
-                    let temp = pages.slice(idx + 1).indexOf(frame[j]);
-                    if(temp === -1){
-                        index = j;
-                        break;
-                    }else if(temp > farthest){
-                        farthest = temp;
-                        index = j;
+            if(frame.length < frameSize) {
+                frame.push(page);
+                replaceIndex = frame.length - 1;
+            }else {
+                let indexPage = 0;
+                let max = -Infinity;
+                frame.forEach((value, idx) => {
+                    if(map.has(value) && map.get(value) > max) {
+                        max = map.get(value);
+                        indexPage = idx;
                     }
-                }
-                frame.splice(index, 1);
+                });
+                frame[indexPage] = page;
+                replaceIndex = indexPage;
             }
-        }else {
-            frame.splice(frame.indexOf(page), 1);
         }
-        frame.push(page);
+        map.set(page, idx);
         console.log(frame);
 
         steps.push({
-            index: idx,
+            index: replaceIndex,
             page,
             frame: [...frame],
             isFault

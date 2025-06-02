@@ -36,13 +36,18 @@ export function renderSteps(steps, frameSize, frameDisplay, speed = 500) {
             const cell = document.createElement('div');
             cell.className = 'cell';
 
-            if(step.frame[i] != undefined) {
-                cell.innerText = step.frame[i];
+            if(step.frame[i] != undefined) {   
+                if(!step.isFault) {
+                    cell.innerText = "|";
+                }else {
+                    cell.innerText = step.frame[i];
+                }
             }
 
             if(step.isFault && step.index === i){
                 cell.classList.add('fault');
             }
+
             row.appendChild(cell)
         });
         currentStep++;
