@@ -31,9 +31,7 @@ export function renderSteps(steps, frameSize, frameDisplay, speed = 500) {
     let currentStep = 0;
     function showStep() {
         if(currentStep >= steps.length) return;
-
         const step = steps[currentStep];
-        
         rows.forEach((row, i) => {
             const cell = document.createElement('div');
             cell.className = 'cell';
@@ -52,10 +50,8 @@ export function renderSteps(steps, frameSize, frameDisplay, speed = 500) {
 
             row.appendChild(cell)
         });
-
         currentStep++;
         setTimeout(showStep, speed);
-        }
-
-        showStep();
+    }
+    showStep();
 }
