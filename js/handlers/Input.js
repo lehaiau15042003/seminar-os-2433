@@ -7,7 +7,15 @@ export function pageInputFunc(pageInput, pageDisplay, pages, renderPages) {
             pageInput.value = '';
         }
     });
+
+    pageInput.addEventListener('keydown', (e) => {
+        if(e.key === 'Backspace' && pageInput.value === '') {
+            pages.pop();
+            renderPages(pages, pageDisplay);
+        }
+    });
 }
+
 
 export function frameInputFunc(frameInput, frameDisplay, renderFrame) {
     frameInput.addEventListener('input', () => {

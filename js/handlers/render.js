@@ -18,25 +18,44 @@ export function renderFrame(count, frameDisplay) {
     }
 }
 
-export function renderSteps(steps, frameSize, frameDisplay) {
+export function renderSteps(steps, frameSize, frameDisplay, speed = 500) {
     frameDisplay.innerHTML = '';
+    const rows = [];
     for(let i=0; i < frameSize; i++) {
         const row = document.createElement('div');
         row.className = 'row';
+        frameDisplay.appendChild(row);
+        rows.push(row);
+    }
 
-        steps.forEach(step => {
+    let currentStep = 0;
+    function showStep() {
+        if(currentStep >= steps.length) return;
+
+        const step = steps[currentStep];
+        
+        rows.forEach((row, i) => {
             const cell = document.createElement('div');
             cell.className = 'cell';
 
-            if(step.frame[i] != undefined) {
-                cell.innerText = step.frame[i];
+            if(step.frame[i] != undefined) {   
+                if(!step.isFault) {
+                    cell.innerText = "|";
+                }else {
+                    cell.innerText = step.frame[i];
+                }
             }
 
-            if(step.isFault){
+            if(step.isFault && step.index === i){
                 cell.classList.add('fault');
             }
+
             row.appendChild(cell)
         });
-        frameDisplay.appendChild(row);
-    }
+
+        currentStep++;
+        setTimeout(showStep, speed);
+        }
+
+        showStep();
 }
