@@ -15,15 +15,11 @@ input[type="number"] {
     margin: 0;
     box-sizing: border-box;
 }
-/* body{
-    padding: 20px;
 
-} */
  .header{
-        
     display: flex;
-
 } 
+
 .title{
   border-radius: 10px;
   justify-content: space-between;
@@ -33,6 +29,7 @@ input[type="number"] {
   border: 1px solid #000;
   position: fixed;     
 }
+
 .pageReplacement{
   border-radius: 10px;
   padding: 10px;
@@ -48,7 +45,6 @@ input[type="number"] {
 }
 
 .container{
-
     margin-top: 100px;
     padding-left: 20px;
     background-position:center;
@@ -57,46 +53,40 @@ input[type="number"] {
     /* grid-template-columns: repeat(auto-fit ,minmax(200px,1fr)); */
 }
 
+#pageInput {
+  margin-left: 20px;
+}
+
+#frameInput {
+  margin-top: 20px;
+  margin-left: 11px;
+}
+
+
+
 
 .borderPF{
   grid-gap: 5px;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.176)
 }
 
-.page{
+.page-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#page, #index{
     margin-bottom: 10px;
     padding-left: 5px;
     gap: 17px;
     display: flex;
     justify-content: start;
+    flex-direction: row;
 }
 
-.frame{
-    display: grid;
+#frame{
+    display: flex;
     flex-direction: column;
-    
-}
-
-
-#frameDisplay {
-  display: inline-block;
-  padding: 16px;
-  border: 2px solid #000;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  font-family: 'Courier New', Courier, monospace;
-}
-
-#pageDisplay {
-  margin-bottom: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px;
-  border: 1px dashed #888;
-  border-radius: 6px;
-  background-color: #f9f9f9;
 }
 
 .page-box {
@@ -120,6 +110,7 @@ input[type="number"] {
   font-weight: bold;
   font-size: 14px;
 }
+
 
 .row.header-row {
   display: flex;
@@ -195,6 +186,7 @@ input[type="number"] {
 }
 #run-btn:hover{
   background-color: chocolate;
+}
 
  canvas {
     border: 2px solid black;
