@@ -43,6 +43,29 @@ input[type="number"] {
     background-color: greenyellow;
 
 }
+/* .sidebar {
+  width: 220px;
+  background-color: #eaeaea;
+  border-right: 1px solid #ccc;
+}
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 0.8rem;
+}
+
+.sidebar a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+} */
+
+
 
 .container{
     margin-top: 100px;
@@ -65,9 +88,8 @@ input[type="number"] {
 
 
 
-.borderPF{
-  grid-gap: 5px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.176)
+.borderPage_frame{
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
 }
 
 .page-container {
@@ -88,6 +110,8 @@ input[type="number"] {
     display: flex;
     flex-direction: column;
 }
+
+
 
 .page-box {
   background-color: #424242;
@@ -140,9 +164,6 @@ input[type="number"] {
   width: 50px;
   text-align: center;
   font-size: 14px;
-  position: relative;
-  animation-duration: 5s;
-  animation-direction: alternate;
 }
 @keyframes cell{
   0%{
