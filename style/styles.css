@@ -46,6 +46,29 @@ input[type="number"] {
     background-color: greenyellow;
 
 }
+/* .sidebar {
+  width: 220px;
+  background-color: #eaeaea;
+  border-right: 1px solid #ccc;
+}
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 0.8rem;
+}
+
+.sidebar a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+} */
+
+
 
 .container{
 
@@ -58,46 +81,33 @@ input[type="number"] {
 }
 
 
-.borderPF{
-  grid-gap: 5px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.176)
+.borderPage_frame{
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
 }
 
 .page{
-    margin-bottom: 10px;
-    padding-left: 5px;
-    gap: 17px;
-    display: flex;
-    justify-content: start;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  gap: 17px;
+  display: flex;
+  justify-content: start;
 }
 
 .frame{
-    display: grid;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
     
 }
-
-
-#frameDisplay {
-  display: inline-block;
-  padding: 16px;
-  border: 2px solid #000;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  font-family: 'Courier New', Courier, monospace;
+.borderBit{
+  margin-top: 20px;
 }
-
-#pageDisplay {
-  margin-bottom: 16px;
+.bit{
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px;
-  border: 1px dashed #888;
-  border-radius: 6px;
-  background-color: #f9f9f9;
+  flex-direction: column;
+  border: 1px solid #000;
 }
+
+
 
 .page-box {
   background-color: #424242;
@@ -149,9 +159,6 @@ input[type="number"] {
   width: 50px;
   text-align: center;
   font-size: 14px;
-  position: relative;
-  animation-duration: 5s;
-  animation-direction: alternate;
 }
 @keyframes cell{
   0%{
@@ -195,6 +202,7 @@ input[type="number"] {
 }
 #run-btn:hover{
   background-color: chocolate;
+}
 
  canvas {
     border: 2px solid black;
