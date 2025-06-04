@@ -88,7 +88,7 @@ input[type="number"] {
 
 
 
-.borderPage_frame{
+.border_page_frame{
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
 }
 
@@ -96,7 +96,8 @@ input[type="number"] {
   display: flex;
   flex-direction: column;
 }
-
+#index{
+}
 #page, #index{
     margin-bottom: 10px;
     padding-left: 5px;
@@ -110,9 +111,25 @@ input[type="number"] {
     display: flex;
     flex-direction: column;
 }
+.border_bit{
+    margin-top: 20px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
+
+}
+.bit{
+    display: flex;
+    flex-direction: column;  
+}
 
 
-
+.index-pages {
+  color: #333;
+  padding: 6px 12px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #fff;
+}
 .page-box {
   background-color: #424242;
   color: #fff;
