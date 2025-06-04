@@ -29,11 +29,14 @@ function LRU(pages, frameSize){
         map.set(page, idx);
         console.log(frame);
 
+        const exponentIndex = frame.map(value => map.get(value) + 1);
+
         steps.push({
             index: replaceIndex,
             page,
             frame: [...frame],
-            isFault
+            isFault,
+            exponentIndex
         });
     });
     return {
