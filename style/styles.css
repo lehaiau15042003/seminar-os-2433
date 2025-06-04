@@ -76,18 +76,6 @@ input[type="number"] {
     /* grid-template-columns: repeat(auto-fit ,minmax(200px,1fr)); */
 }
 
-#pageInput {
-  margin-left: 20px;
-}
-
-#frameInput {
-  margin-top: 20px;
-  margin-left: 11px;
-}
-
-
-
-
 .borderPage_frame{
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
 }
@@ -95,6 +83,15 @@ input[type="number"] {
 .page-container {
   display: flex;
   flex-direction: column;
+}
+
+#pageInput {
+  margin-left: 20px;
+}
+
+#frameInput {
+  margin-top: 20px;
+  margin-left: 11px;
 }
 
 #page, #index{
@@ -111,8 +108,6 @@ input[type="number"] {
     flex-direction: column;
 }
 
-
-
 .page-box {
   background-color: #424242;
   color: #fff;
@@ -121,6 +116,15 @@ input[type="number"] {
   font-weight: bold;
   font-size: 14px;
   border: 1px solid #222;
+}
+
+.index-pages {
+  color: #333;
+  padding: 6px 12px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+  border: 1px solid #fff;
 }
 
 .frame-rows {

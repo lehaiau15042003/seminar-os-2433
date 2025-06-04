@@ -62,7 +62,8 @@ export function renderSteps(steps, frameSize, frameDisplay, speed = 500) {
                 if(!step.isFault) {
                     cell.innerText = "|";
                 }else {
-                    cell.innerText = step.frame[i];
+                    const extra = step.exponentIndex?.[i] !== undefined ? `<sup>${step.exponentIndex[i]}</sup>` : '';
+                    cell.innerHTML = `${step.frame[i]}${extra}`;
                 }
             }
 
