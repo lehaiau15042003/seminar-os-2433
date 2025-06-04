@@ -1,3 +1,5 @@
+'use strict'
+
 export function renderPages(pages, pageDisplay){
     pageDisplay.innerHTML = '';
     pages.forEach(p => {
@@ -13,8 +15,28 @@ export function renderFrame(count, frameDisplay) {
     for(let i=0; i < count; i++){
         const div = document.createElement('div');
         div.className = 'frame-rows';
-        div.innerText = `${i + 1}`;
+        div.innerText = i + 1;
         frameDisplay.appendChild(div);
+    }
+}
+
+export function renderIndex(pages, indexDisplay) {
+    indexDisplay.innerText = '';
+    for(let i = 0; i < pages.length; i++) {
+        const div = document.createElement('div');
+        div.className = 'index-pages';
+        div.innerText = i + 1;
+        indexDisplay.appendChild(div);
+    }
+}
+
+export function renderBit(count, bitDisplay) {
+    bitDisplay.innerHTML = '';
+    for(let i=0; i < count; i++){
+        const div = document.createElement('div');
+        div.className = 'frame-rows';
+        div.innerText = i + 1;
+        bitDisplay.appendChild(div);
     }
 }
 
