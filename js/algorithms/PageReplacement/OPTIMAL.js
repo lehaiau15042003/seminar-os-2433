@@ -4,7 +4,6 @@ function OPTIMAL(pages, frameSize) {
     let frame = [];
     let pageFault = 0;
     let steps = [];
-    let map = new Map();
     pages.forEach((page, idx) => {
         const isFault = !frame.includes(page);
         let replaceIndex = -1;
@@ -14,21 +13,24 @@ function OPTIMAL(pages, frameSize) {
                 frame.push(page);
                 replaceIndex = frame.length - 1;
             }else {
-                let indexPage = 0;
-                let max = -Infinity;
-                frame.forEach((value, idx) => {
-                    if(map.has(value) && map.get(value) > max) {
-                        max = map.get(value);
-                        indexPage = idx;
+                let indexPage = -1;
+                let farthest = -1;
+                for(let i = 0; i < frame.length; i++) {
+                    const value = frame[i];
+                    const future = pages.slice(idx + 1).indexOf(value);
+                    if(future === -1) {
+                        indexPage = i;
+                        break;
+                    }else if(future > farthest) {
+                        farthest = future;
+                        indexPage = i;
                     }
-                });
+                }
                 frame[indexPage] = page;
                 replaceIndex = indexPage;
             }
         }
-        map.set(page, idx);
         console.log(frame);
-
         steps.push({
             index: replaceIndex,
             page,

@@ -1,4 +1,6 @@
-export function pageInputFunc(pageInput, pageDisplay, pages, renderPages) {
+'use strict'
+
+export function pageInputFunc(pageInput, pageDisplay, pages, indexDisplay, index,renderPages, renderIndex) {
     pageInput.addEventListener('input', () => {
         const value = parseInt(pageInput.value, 10);
         if(!isNaN(value)){
@@ -6,12 +8,14 @@ export function pageInputFunc(pageInput, pageDisplay, pages, renderPages) {
             renderPages(pages, pageDisplay);
             pageInput.value = '';
         }
+        renderIndex(pages, indexDisplay);
     });
 
     pageInput.addEventListener('keydown', (e) => {
         if(e.key === 'Backspace' && pageInput.value === '') {
             pages.pop();
             renderPages(pages, pageDisplay);
+            renderIndex(pages, indexDisplay);
         }
     });
 }
