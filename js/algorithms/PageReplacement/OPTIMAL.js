@@ -31,11 +31,17 @@ function OPTIMAL(pages, frameSize) {
             }
         }
         console.log(frame);
+        const futureIndex = frame.map(f => {
+            const future = pages.slice(idx + 1).indexOf(f);
+            return future === -1 ? '∞' : future + idx + 1 + 1;
+        });
+
         steps.push({
             index: replaceIndex,
             page,
             frame: [...frame],
-            isFault
+            isFault,
+            exponentIndex: futureIndex
         });
     });
 
