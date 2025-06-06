@@ -12,16 +12,17 @@ window.onload = function() {
     const frameInput = document.getElementById('frameInput');
     const frameDisplay = document.getElementById('frame');
     const indexDisplay = document.getElementById('index');
+    const bitDisplay = document.getElementById('bit');
     const algorithmsSelect = document.querySelector('.pageReplacement');
     const runbtn = document.getElementById('run-btn');
 
     pageInputFunc(pageInput, pageDisplay, pages, indexDisplay, index,renderPages, renderIndex);
-    frameInputFunc(frameInput, frameDisplay, renderFrame);
+    frameInputFunc(frameInput, frameDisplay, renderFrame, bitDisplay, renderBit);
 
     runbtn.addEventListener('click', () => {
         const frameSize = parseInt(frameInput.value || frameDisplay.childElementCount, 10);
         const algorithms = algorithmsSelect.value;
         const result = runAlgorithms(pages, frameSize, algorithms);
-        renderSteps(result.steps, frameSize, frameDisplay, 500);
+        renderSteps(algorithms, result.steps, frameSize, frameDisplay, bitDisplay, 500);
     });
 }

@@ -34,31 +34,41 @@ export function renderBit(count, bitDisplay) {
     bitDisplay.innerHTML = '';
     for(let i=0; i < count; i++){
         const div = document.createElement('div');
-        div.className = 'frame-rows';
-        div.innerText = i + 1;
+        div.className = 'bit-rows';
+        div.innerHTML = `<span class="bit-value" data-index="${i}">0</span>`;
         bitDisplay.appendChild(div);
     }
 }
 
-export function renderSteps(steps, frameSize, frameDisplay, speed = 500) {
+export function renderSteps(algorithms, steps, frameSize, frameDisplay, bitDisplay, speed = 500) {
     frameDisplay.innerHTML = '';
-    const rows = [];
+    bitDisplay.innerHTML = '';
+    const frameRows = [];
+    const bitRows = [];
     for(let i=0; i < frameSize; i++) {
         const row = document.createElement('div');
         row.className = 'row';
         frameDisplay.appendChild(row);
-        rows.push(row);
+        frameRows.push(row);
+    }
+
+    for(let i=0; i < frameSize; i++) {
+        const row = document.createElement('div');
+        row.className = 'row';
+        bitDisplay.appendChild(row);
+        bitRows.push(row);
     }
 
     let currentStep = 0;
     function showStep() {
         if(currentStep >= steps.length) return;
         const step = steps[currentStep];
-        rows.forEach((row, i) => {
+
+        frameRows.forEach((row, i) => {
             const cell = document.createElement('div');
             cell.className = 'cell';
 
-            if(step.frame[i] != undefined) {   
+            if(step.frame[i] !== undefined) {   
                 if(!step.isFault) {
                     cell.innerText = "|";
                 }else {
@@ -66,13 +76,25 @@ export function renderSteps(steps, frameSize, frameDisplay, speed = 500) {
                     cell.innerHTML = `${step.frame[i]}${extra}`;
                 }
             }
-
             if(step.isFault && step.index === i){
                 cell.classList.add('fault');
             }
 
-            row.appendChild(cell)
+            row.appendChild(cell);
         });
+
+        bitRows.forEach((row, i) => {
+            if(algorithms === 'CLOCK') {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.innerText = step.saveBit[i] !== undefined ? step.saveBit[i] : '0';
+                if(step.nextPointer === i) {
+                    cell.classList.add('pointer');
+                }
+                row.appendChild(cell);
+            }
+        });
+
         currentStep++;
         setTimeout(showStep, speed);
     }
