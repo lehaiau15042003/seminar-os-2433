@@ -21,11 +21,12 @@ export function pageInputFunc(pageInput, pageDisplay, pages, indexDisplay, index
 }
 
 
-export function frameInputFunc(frameInput, frameDisplay, renderFrame) {
+export function frameInputFunc(frameInput, frameDisplay, renderFrame, bitDisplay, renderBit) {
     frameInput.addEventListener('input', () => {
         const value = parseInt(frameInput.value, 10);
         if(!isNaN(value) && value > 0){
             renderFrame(value,frameDisplay);
+            renderBit(value, bitDisplay);
             frameInput.value = '';
         }
     });

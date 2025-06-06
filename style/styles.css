@@ -65,8 +65,6 @@ input[type="number"] {
   text-decoration: underline;
 } */
 
-
-
 .container{
     margin-top: 100px;
     padding-left: 20px;
@@ -76,7 +74,7 @@ input[type="number"] {
     /* grid-template-columns: repeat(auto-fit ,minmax(200px,1fr)); */
 }
 
-.border_page_frame{
+.box_page_frame{
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
 }
 
@@ -112,7 +110,7 @@ input[type="number"] {
     flex-direction: column;
   
 }
-.border_bit{
+.box_bit{
     margin-top: 20px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
 
@@ -154,6 +152,17 @@ input[type="number"] {
   font-size: 14px;
 }
 
+.bit-rows {
+  background-color: #e0e0e0;
+  padding: 10px;
+  margin: 4px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  text-align: center;
+  width: 40px;
+  font-weight: bold;
+  font-size: 14px;
+}
 
 .row.header-row {
   display: flex;
@@ -184,6 +193,17 @@ input[type="number"] {
   text-align: center;
   font-size: 14px;
 }
+
+.bit-cell {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 50px;
+  text-align: center;
+  font-size: 14px;
+}
+
+
 @keyframes cell{
   0%{
     border: 0px solid #ccc;
@@ -215,6 +235,14 @@ input[type="number"] {
   right: 4px;
   font-size: 11px;
 }
+
+.pointer {
+  background-color: #ffebee ;
+  color: #c62828;
+  border: 1px solid #ef5350;
+  font-weight: bold;
+}
+
 #run-btn{
   border-radius: 10px;
   background-color: #90a4ae;
