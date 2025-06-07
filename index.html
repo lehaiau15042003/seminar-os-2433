@@ -8,24 +8,11 @@
 </head>
 <body>
     <form onsubmit="return false;">
-        <div>
-
-        </div>
         <div class="header">
-            <div class="title">
-                <div class="title1">
-                    <div>
-                        <select name="intro" class="intro">
-                            <option value="intro">intro</option>
-                            <option value="nhà sáng lập">nhà sáng lập</option>
-                            <option value="ra đời"> ra đời</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="title2">
-                    <div>
+            <div class="algorithms-container">
+                <div>
+                    <div class="item1">
                         <select name="pageReplacement" class="pageReplacement">
-                            <option value="intro math">Intro Math</option>
                             <option class="fifo" value="FIFO">FIFO</option>
                             <option class="lru" value="LRU">LRU</option>
                             <option class="optimal" value="OPTIMAL">OPTIMAL</option>
@@ -34,7 +21,16 @@
                         </select>
                     </div>
                 </div>
-                <div class="title3">
+                <div class="item2">
+                    <div>
+                        <select name="intro" class="intro">
+                            <option value="intro">intro</option>
+                            <option value="nhà sáng lập">nhà sáng lập</option>
+                            <option value="ra đời"> ra đời</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="item3">
                     <div>
                         <select name="intro" class="intro">
                             <option value="tailieu1">tailieu1</option>
@@ -43,17 +39,6 @@
                 </div>
             </div>        
         </div>
-        <!-- <div class="main_layout">
-            <aside class="sidebar">
-                <ul>
-                    <li> <a href=".fifo"></a></li>
-                    <li> <a href="lru"></a></li> 
-                    <li> <a href="optimal"></a></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </aside>
-        </div> -->
         <div class="container">
                 <div class="input-container">
                     <p>Page:<input id="pageInput" type="number" ></p>
@@ -62,13 +47,10 @@
                 
                 <div class="box_page_frame">
                     <div class="page-container">
-                        <div class="box_index">
-
-                            <div id="index" class="row"></div>
-                        </div>
+                        <div id="index" class="row"></div>
                         <div id="page" class="row index-row"></div>
+                        <div id="frame"></div> 
                     </div>
-                    <div id="frame"></div> 
                 </div>
                 <div class="box_bit">
                     <div id="bit"></div>
@@ -77,7 +59,6 @@
 
         <button id="run-btn" type="button">Run</button>
     </form>
-
 
     <!-- <div>
         <canvas id="myCanvas" width="900" height="300"></canvas>
