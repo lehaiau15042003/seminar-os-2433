@@ -20,7 +20,7 @@ input[type="number"] {
     display: flex;
 } 
 
-.title{
+.algorithms-container{
   background-color: white;
   border-radius: 10px;
   justify-content: space-between;
@@ -44,27 +44,6 @@ input[type="number"] {
     background-color: greenyellow;
 
 }
-/* .sidebar {
-  width: 220px;
-  background-color: #eaeaea;
-  border-right: 1px solid #ccc;
-}
-.sidebar ul {
-  list-style: none;
-}
-
-.sidebar li {
-  margin-bottom: 0.8rem;
-}
-
-.sidebar a {
-  color: #0366d6;
-  text-decoration: none;
-}
-
-.sidebar a:hover {
-  text-decoration: underline;
-} */
 
 .container{
     margin-top: 100px;
