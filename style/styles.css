@@ -10,7 +10,6 @@ input[type="number"] {
 }
 
 *{
-    
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -36,13 +35,18 @@ input[type="number"] {
   padding: 10px;
 
 }
-.intro{
+
+.pageReplacement:hover {
+  background-color: greenyellow;
+}
+
+.diskScheduling{
   border-radius: 10px;
   padding: 10px;
 }
-.intro:hover {
-    background-color: greenyellow;
 
+.diskScheduling:hover {
+  background-color: greenyellow;
 }
 
 .container{
@@ -66,7 +70,9 @@ input[type="number"] {
 }
 
 #index{
+
 }
+
 #page{
   
 }
@@ -244,7 +250,7 @@ input[type="number"] {
 }
 
  canvas {
-    border: 2px solid black;
+    border: 1px solid black;
     margin: 50px;
  }
 

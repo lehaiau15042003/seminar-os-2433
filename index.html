@@ -23,10 +23,13 @@
                 </div>
                 <div class="item2">
                     <div>
-                        <select name="intro" class="intro">
-                            <option value="intro">intro</option>
-                            <option value="nhà sáng lập">nhà sáng lập</option>
-                            <option value="ra đời"> ra đời</option>
+                        <select name="diskScheduling" class="diskScheduling">
+                            <option value="FCFS">FCFS</option>
+                            <option value="SSTF">SSTF</option>
+                            <option value="SCAN">SCAN</option>
+                            <option value="C-SCAN">C-SCAN</option>
+                            <option value="LOOK">LOOK</option>
+                            <option value="C-LOOK">C-LOOK</option>
                         </select>
                     </div>
                 </div>
@@ -41,8 +44,17 @@
         </div>
         <div class="container">
                 <div class="input-container">
-                    <p>Page:<input id="pageInput" type="number" ></p>
-                    <p>Frame:<input id="frameInput" type="number" min="1"></p>
+                    <label for="pageInput">Page:</label>
+                    <input id="pageInput" type="number" >
+                    
+                    <label for="frameInput">Frame:</label>
+                    <input id="frameInput" type="number" min="1">
+
+                    <label for="queueInput">Queue: </label>
+                    <input id="queueInput" type="text">
+    
+                    <label for="headInput">Head starts at: </label>
+                    <input id="headInput" type="number" maxlength="10">
                 </div>
                 
                 <div class="box_page_frame">
@@ -52,6 +64,10 @@
                         <div id="frame"></div> 
                     </div>
                 </div>
+                <div class="box_queue">
+                    <div id="queue"></div>
+                    <div id="headstart"></div>
+                </div>
                 <div class="box_bit">
                     <div id="bit"></div>
                 </div> 
@@ -60,9 +76,7 @@
         <button id="run-btn" type="button">Run</button>
     </form>
 
-    <!-- <div>
-        <canvas id="myCanvas" width="900" height="300"></canvas>
-    </div> -->
+    <canvas id="myCanvas" width="900" height="300"></canvas>
 
     <script type="module" src="/js/main.js"></script>
 </body>
