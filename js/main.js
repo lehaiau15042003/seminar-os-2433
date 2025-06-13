@@ -16,8 +16,8 @@ window.onload = function() {
         bitDisplay: document.getElementById('bit'),
         queueInput: document.getElementById('queueInput'),
         headInput: document.getElementById('headInput'),
-        algorithmsSelect: document.querySelector('.pageReplacement'),
         runbtn: document.getElementById('run-btn'),
+        algorithmsSelect: document.querySelector('.pageReplacement'),
         drawLineInstance: drawLine('myCanvas'),
     }
 
@@ -26,10 +26,25 @@ window.onload = function() {
     queueInputFunc(DOM.queueInput, DOM.drawLineInstance);
     headInputFunc(DOM.headInput, DOM.drawLineInstance);
 
+    let selectedAlgorithm = null;
     DOM.runbtn.addEventListener('click', () => {
         const frameSize = parseInt(DOM.frameInput.value || DOM.frameDisplay.childElementCount, 10);
-        const algorithms = DOM.algorithmsSelect.value;
+        const algorithms = selectedAlgorithm;
         const result = runAlgorithms(pages, frameSize, algorithms);
         renderSteps(algorithms, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const id = link.getAttribute('href').substring(1);
+            const section = document.getElementById(id);
+            if(section) {
+                document.querySelectorAll('.pageReplacement section').forEach(sec => {
+                    sec.classList.remove('selected');
+                });
+                section.classList.add('selected');
+                selectedAlgorithm = section.dataset.value;
+            }
+        });
     });
 }

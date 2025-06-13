@@ -16,48 +16,22 @@
                     <input type="checkbox" id="toggle-algo" />
                     <label for="toggle-algo">Page Replement</label>        
                     <ul>
-                        <li> <a href="#fifo">FIFO</a></li>
-                        <li> <a href="#lru">LRU</a></li>
-                        <li> <a href="#optimal">OPTIMAL</a></li>
-                        <li> <a href="#clock">CLOCK</a></li>
+                        <li><a href="#fifo">FIFO</a></li>
+                        <li><a href="#lru">LRU</a></li>
+                        <li><a href="#optimal">OPTIMAL</a></li>
+                        <li><a href="#clock">CLOCK</a></li>
                     </ul>
-        <div class="header">
-            <div class="algorithms-container">
-                <div>
-                    <div class="item1">
-                        <select name="pageReplacement" class="pageReplacement">
-                            <option class="fifo" value="FIFO">FIFO</option>
-                            <option class="lru" value="LRU">LRU</option>
-                            <option class="optimal" value="OPTIMAL">OPTIMAL</option>
-                            <option class="clock" value="CLOCK">CLOCK
-                            </option>
-                        </select>
-                    </div>
                 </div>
-                <div class="item2">
-                    <div>
-                        <select name="diskScheduling" class="diskScheduling">
-                            <option value="FCFS">FCFS</option>
-                            <option value="SSTF">SSTF</option>
-                            <option value="SCAN">SCAN</option>
-                            <option value="C-SCAN">C-SCAN</option>
-                            <option value="LOOK">LOOK</option>
-                            <option value="C-LOOK">C-LOOK</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
         </nav>
         <main>
             <div class="header">
                 <div class="algorithms-container">
                     <div class="item1">
-                        <article name="pageReplacement" class="pageReplacement">
-                            <section id="fifo" class="fifo" value="FIFO">FIFO</section>
-                            <section id="lru" class="lru" value="LRU">LRU</section>
-                            <section id="optimal" class="optimal" value="OPTIMAL">OPTIMAL</section>
-                            <section id="clock" class="clock" value="CLOCK">CLOCK
-                            </section>
+                        <article data-name="pageReplacement" class="pageReplacement">
+                            <section id="fifo" class="fifo" data-value="FIFO"></section>
+                            <section id="lru" class="lru" data-value="LRU"></section>
+                            <section id="optimal" class="optimal" data-value="OPTIMAL"></section>
+                            <section id="clock" class="clock" data-value="CLOCK"></section>
                         </article>
                     </div>
                 </div>        
@@ -74,15 +48,13 @@
                     <input id="queueInput" type="text">
     
                     <label for="headInput">Head starts at: </label>
-                    <input id="headInput" type="number" maxlength="10">
+                    <input id="headInput" type="number">
                 </div>
                 
-                <div class="box_page_frame">
-                    <div class="page-container">
+                <div class="page-container">
                         <div id="index" class="row"></div>
                         <div id="page" class="row index-row"></div>
                         <div id="frame"></div> 
-                    </div>
                 </div>
                 <div class="box_queue">
                     <div id="queue"></div>
