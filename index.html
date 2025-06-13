@@ -5,41 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style/styles.css">
+
 </head>
 <body>
     <form onsubmit="return false;">
-        <div class="header">
-            <div class="algorithms-container">
-                <div>
+        <nav class="main-nav">
+            <div>
+                <h1>Algothrims</h1>
+                <div class="dropdown">
+                    <input type="checkbox" id="toggle-algo" />
+                    <label for="toggle-algo">Page Replement</label>        
+                    <ul>
+                        <li> <a href="#fifo">FIFO</a></li>
+                        <li> <a href="#lru">LRU</a></li>
+                        <li> <a href="#optimal">OPTIMAL</a></li>
+                        <li> <a href="#clock">CLOCK</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <div class="header">
+                <div class="algorithms-container">
                     <div class="item1">
-                        <select name="pageReplacement" class="pageReplacement">
-                            <option class="fifo" value="FIFO">FIFO</option>
-                            <option class="lru" value="LRU">LRU</option>
-                            <option class="optimal" value="OPTIMAL">OPTIMAL</option>
-                            <option class="clock" value="CLOCK">CLOCK
-                            </option>
-                        </select>
+                        <article name="pageReplacement" class="pageReplacement">
+                            <section id="fifo" class="fifo" value="FIFO">FIFO</section>
+                            <section id="lru" class="lru" value="LRU">LRU</section>
+                            <section id="optimal" class="optimal" value="OPTIMAL">OPTIMAL</section>
+                            <section id="clock" class="clock" value="CLOCK">CLOCK
+                            </section>
+                        </article>
                     </div>
-                </div>
-                <div class="item2">
-                    <div>
-                        <select name="intro" class="intro">
-                            <option value="intro">intro</option>
-                            <option value="nhà sáng lập">nhà sáng lập</option>
-                            <option value="ra đời"> ra đời</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="item3">
-                    <div>
-                        <select name="intro" class="intro">
-                            <option value="tailieu1">tailieu1</option>
-                        </select>
-                    </div>
-                </div>
-            </div>        
-        </div>
-        <div class="container">
+                </div>        
+            </div>
+            <div class="container">
                 <div class="input-container">
                     <p>Page:<input id="pageInput" type="number" ></p>
                     <p>Frame:<input id="frameInput" type="number" min="1"></p>
@@ -55,9 +54,10 @@
                 <div class="box_bit">
                     <div id="bit"></div>
                 </div> 
-        </div> 
-
-        <button id="run-btn" type="button">Run</button>
+            </div> 
+            
+            <button id="run-btn" type="button">Run</button>
+        </main>
     </form>
 
     <!-- <div>
