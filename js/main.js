@@ -1,28 +1,35 @@
 'use strict'
 
 import { renderPages, renderFrame, renderSteps, renderBit, renderIndex } from './handlers/render.js'
-import { runAlgorithms } from './handlers/Algorithms.js';
-import { pageInputFunc, frameInputFunc } from './handlers/Input.js';
+import { runAlgorithms } from './handlers/algorithms.js';
+import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc } from './handlers/input.js';
+import drawLine from './handlers/drawLine.js';
 
 let pages = [];
-let index = [];
 window.onload = function() {
-    const pageInput = document.getElementById('pageInput');
-    const pageDisplay = document.getElementById('page');
-    const frameInput = document.getElementById('frameInput');
-    const frameDisplay = document.getElementById('frame');
-    const indexDisplay = document.getElementById('index');
-    const bitDisplay = document.getElementById('bit');
-    const algorithmsSelect = document.querySelector('.pageReplacement');
-    const runbtn = document.getElementById('run-btn');
+    const DOM = {
+        pageInput: document.getElementById('pageInput'),
+        pageDisplay: document.getElementById('page'),
+        frameInput: document.getElementById('frameInput'),
+        frameDisplay: document.getElementById('frame'),
+        indexDisplay: document.getElementById('index'),
+        bitDisplay: document.getElementById('bit'),
+        queueInput: document.getElementById('queueInput'),
+        headInput: document.getElementById('headInput'),
+        algorithmsSelect: document.querySelector('.pageReplacement'),
+        runbtn: document.getElementById('run-btn'),
+        drawLineInstance: drawLine('myCanvas'),
+    }
 
-    pageInputFunc(pageInput, pageDisplay, pages, indexDisplay, index,renderPages, renderIndex);
-    frameInputFunc(frameInput, frameDisplay, renderFrame, bitDisplay, renderBit);
+    pageInputFunc(DOM.pageInput, DOM.pageDisplay, pages, DOM.indexDisplay,renderPages, renderIndex);
+    frameInputFunc(DOM.frameInput, DOM.frameDisplay, renderFrame, DOM.bitDisplay, renderBit);
+    queueInputFunc(DOM.queueInput, DOM.drawLineInstance);
+    headInputFunc(DOM.headInput, DOM.drawLineInstance);
 
-    runbtn.addEventListener('click', () => {
-        const frameSize = parseInt(frameInput.value || frameDisplay.childElementCount, 10);
-        const algorithms = algorithmsSelect.value;
+    DOM.runbtn.addEventListener('click', () => {
+        const frameSize = parseInt(DOM.frameInput.value || DOM.frameDisplay.childElementCount, 10);
+        const algorithms = DOM.algorithmsSelect.value;
         const result = runAlgorithms(pages, frameSize, algorithms);
-        renderSteps(algorithms, result.steps, frameSize, frameDisplay, bitDisplay, 500);
+        renderSteps(algorithms, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
     });
 }

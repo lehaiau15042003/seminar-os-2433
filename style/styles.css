@@ -1,7 +1,4 @@
-   
-   
-   
-   /* VER 1 */
+    /* VER 1 */
    :root {
       --bg-body: #f5f3ef;
       --bg-sidebar: #ebe6df;
@@ -171,32 +168,6 @@
         display: none;
       }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  /* VER 2 */
 
 input::-webkit-outer-spin-button,
@@ -211,7 +182,6 @@ input[type="number"] {
 }
 
 *{
-    
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -237,13 +207,18 @@ input[type="number"] {
   padding: 10px;
 
 }
-.intro{
+
+.pageReplacement:hover {
+  background-color: greenyellow;
+}
+
+.diskScheduling{
   border-radius: 10px;
   padding: 10px;
 }
-.intro:hover {
-    background-color: greenyellow;
 
+.diskScheduling:hover {
+  background-color: greenyellow;
 }
 
 .container{
@@ -271,7 +246,13 @@ input[type="number"] {
 }
 
 
+#index{
 
+}
+
+#page{
+  
+}
 
 #pageInput {
   margin-left: 20px;
@@ -456,7 +437,7 @@ input[type="number"] {
 }
 
  canvas {
-    border: 2px solid black;
+    border: 1px solid black;
     margin: 50px;
  }
 

@@ -21,6 +21,30 @@
                         <li> <a href="#optimal">OPTIMAL</a></li>
                         <li> <a href="#clock">CLOCK</a></li>
                     </ul>
+        <div class="header">
+            <div class="algorithms-container">
+                <div>
+                    <div class="item1">
+                        <select name="pageReplacement" class="pageReplacement">
+                            <option class="fifo" value="FIFO">FIFO</option>
+                            <option class="lru" value="LRU">LRU</option>
+                            <option class="optimal" value="OPTIMAL">OPTIMAL</option>
+                            <option class="clock" value="CLOCK">CLOCK
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="item2">
+                    <div>
+                        <select name="diskScheduling" class="diskScheduling">
+                            <option value="FCFS">FCFS</option>
+                            <option value="SSTF">SSTF</option>
+                            <option value="SCAN">SCAN</option>
+                            <option value="C-SCAN">C-SCAN</option>
+                            <option value="LOOK">LOOK</option>
+                            <option value="C-LOOK">C-LOOK</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -40,8 +64,17 @@
             </div>
             <div class="container">
                 <div class="input-container">
-                    <p>Page:<input id="pageInput" type="number" ></p>
-                    <p>Frame:<input id="frameInput" type="number" min="1"></p>
+                    <label for="pageInput">Page:</label>
+                    <input id="pageInput" type="number" >
+                    
+                    <label for="frameInput">Frame:</label>
+                    <input id="frameInput" type="number" min="1">
+
+                    <label for="queueInput">Queue: </label>
+                    <input id="queueInput" type="text">
+    
+                    <label for="headInput">Head starts at: </label>
+                    <input id="headInput" type="number" maxlength="10">
                 </div>
                 
                 <div class="box_page_frame">
@@ -50,6 +83,10 @@
                         <div id="page" class="row index-row"></div>
                         <div id="frame"></div> 
                     </div>
+                </div>
+                <div class="box_queue">
+                    <div id="queue"></div>
+                    <div id="headstart"></div>
                 </div>
                 <div class="box_bit">
                     <div id="bit"></div>
@@ -60,9 +97,7 @@
         </main>
     </form>
 
-    <!-- <div>
-        <canvas id="myCanvas" width="900" height="300"></canvas>
-    </div> -->
+    <canvas id="myCanvas" width="900" height="300"></canvas>
 
     <script type="module" src="/js/main.js"></script>
 </body>
