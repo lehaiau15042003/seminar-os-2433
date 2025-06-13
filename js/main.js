@@ -3,7 +3,7 @@
 import { renderPages, renderFrame, renderSteps, renderBit, renderIndex } from './handlers/render.js'
 import { runAlgorithms } from './handlers/algorithms.js';
 import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc } from './handlers/input.js';
-import drawLine from './handlers/drawLine.js';
+import drawLine from './handlers/drawLine/drawLine.js';
 
 let pages = [];
 window.onload = function() {

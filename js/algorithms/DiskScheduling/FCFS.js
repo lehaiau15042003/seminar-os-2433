@@ -1,7 +1,9 @@
 'use strict'
   
 function FCFS(queue, headStart) {
-    
+    queue.forEach(() => {
+        
+    });
 }
 
   
