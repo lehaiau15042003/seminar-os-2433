@@ -54,7 +54,6 @@ export function queueInputFunc(queueInput, drawLineInstance) {
                     drawLineInstance.request.push(track);
                 });
                 drawLineInstance.draw();
-                queueInput.value = '';
             }
         }
     });
@@ -66,12 +65,9 @@ export function headInputFunc(headInput, drawLineInstance) {
             e.preventDefault();
             const input = headInput.value.trim();
             if(input === '') return;
-
             const headStart = parseInt(input, 10);
             if(isNaN(headStart)) return;
-
             drawLineInstance.setHeadStart(headStart);
-            headInput.value = '';
         }     
     });
 }

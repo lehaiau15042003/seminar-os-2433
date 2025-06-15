@@ -91,7 +91,7 @@
     .dropdown input:checked + label + ul {
       max-height: 500px;
     }
-
+    
     .dropdown ul li {
       margin-bottom: 10px;
     }
@@ -397,11 +397,18 @@ input[type="number"] {
   background-color: chocolate;
 }
 
- canvas {
-    border: 1px solid black;
-    margin: 50px;
- }
+canvas {
+  border: 1px solid black;
+  margin: 50px;
+}
 
+#disk {
+  display: none;
+}
+
+#disk.show {
+  display: block;
+}
 
 @media (max-width: 430px)
 {.title{grid-gap: 30px;}}
