@@ -1,6 +1,5 @@
 'use strict'
 
-import drawBaseLine from "./drawBaseLine.js";
 import drawRequest from "./drawRequest.js";
 
 function drawLine(canvasId) {
@@ -8,16 +7,16 @@ function drawLine(canvasId) {
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
-    const margin = 200;
+    const margin = 50;
     const trackMax = 199;
     const scale = (width - 2 * margin) / trackMax;
 
     const request = [];
     let headStart = null;
-
+    let pathSteps = [];
+    
     function draw() {
-        drawBaseLine(ctx, width, height, margin, trackMax, scale);
-        drawRequest(ctx, request, headStart, width, height, margin, scale, trackMax);
+        drawRequest(ctx, request, headStart, width, height, margin, scale, trackMax, pathSteps);
     }
 
     return {
@@ -42,10 +41,6 @@ function drawLine(canvasId) {
         setSteps: (steps) => {
             pathSteps = steps;
             draw();
-        },
-
-        drawBaseLine: () => {
-            drawBaseLine(ctx, width, margin, trackMax, scale);
         },
 
         get headStart() {
