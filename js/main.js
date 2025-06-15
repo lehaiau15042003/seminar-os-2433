@@ -7,6 +7,7 @@ import drawLine from './handlers/drawLine/drawLine.js';
 
 let pages = [];
 let selectedAlgorithm = null;
+let drawLineInstance = drawLine('myCanvas');
 window.onload = function() {
     const DOM = {
         pageInput: document.getElementById('pageInput'),
@@ -19,13 +20,12 @@ window.onload = function() {
         headInput: document.getElementById('headInput'),
         runbtn: document.getElementById('run-btn'),
         algorithmsSelect: document.querySelector('.pageReplacement'),
-        drawLineInstance: drawLine('myCanvas'),
     }
 
     pageInputFunc(DOM.pageInput, DOM.pageDisplay, pages, DOM.indexDisplay,renderPages, renderIndex);
     frameInputFunc(DOM.frameInput, DOM.frameDisplay, renderFrame, DOM.bitDisplay, renderBit);
-    queueInputFunc(DOM.queueInput, DOM.drawLineInstance);
-    headInputFunc(DOM.headInput, DOM.drawLineInstance);
+    queueInputFunc(DOM.queueInput, drawLineInstance);
+    headInputFunc(DOM.headInput, drawLineInstance);
 
     DOM.runbtn.addEventListener('click', () => {
         const frameSize = parseInt(DOM.frameInput.value || DOM.frameDisplay.childElementCount, 10);
@@ -33,7 +33,7 @@ window.onload = function() {
         const queue = (DOM.queueInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
         const result = runAlgorithms({pages, frameSize, queue, headStart, algorithms: selectedAlgorithm});
         //renderPageSteps(selectedAlgorithm, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
-        renderDiskSteps(result.path, 'myCanvas', DOM.drawLineInstance, queue);
+        renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue);
         console.log('Algorithm:', selectedAlgorithm); 
         console.log('Result:', result);
     });
@@ -51,7 +51,7 @@ window.onload = function() {
                 selectedAlgorithm = section.dataset.value;
 
                 const diskAlgorithms = ['fcfs', 'srtf', 'scan', 'cscan', 'look', 'clook'];
-                if(diskAlgorithms.includes(id.toLowerCase())) {
+                if(diskAlgorithms.includes(id)) {
                     disk.style.display = 'block';
                 }else {
                     disk.style.display = 'none';

@@ -1,6 +1,6 @@
 'use strict'
 
-import drawBaseLine from './drawLine/drawBaseLine.js';
+import drawLine from './drawLine/drawLine.js';
 
 export function renderPages(pages, pageDisplay){
     pageDisplay.innerHTML = '';
@@ -106,16 +106,13 @@ export function renderPageSteps(algorithms, steps, frameSize, frameDisplay, bitD
 export function renderDiskSteps(steps, canvasId, drawLineInstance, queue) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     const width = canvas.width;
     const height = canvas.height;
-    const margin = 50;
+    const margin = 100;
     const minTrack = Math.min(...queue);
     const maxTrack = Math.max(...queue);
     const xScale = (width - 2 * margin) / (maxTrack - minTrack || 1);
     const yStep = (height - 2 * margin) / (steps.length - 1 || 1);
-    drawBaseLine(ctx, width, margin, minTrack, maxTrack, xScale, queue);
 
     ctx.lineWidth = 2;
     for (let i = 0; i < steps.length - 1; i++) {
@@ -150,7 +147,6 @@ export function renderDiskSteps(steps, canvasId, drawLineInstance, queue) {
     const lastX = margin + (steps[steps.length - 1] - minTrack) * xScale;
     const lastY = margin + (steps.length - 1) * yStep;
     ctx.beginPath();
-    ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
     ctx.fill();
     ctx.font = '12px Arial';
     ctx.fillStyle = '#333';
