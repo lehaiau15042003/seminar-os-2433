@@ -1,5 +1,6 @@
 'use strict'
 
+import drawBaseLine from "./drawBaseLine.js";
 import drawRequest from "./drawRequest.js";
 
 function drawLine(canvasId) {
@@ -14,18 +15,8 @@ function drawLine(canvasId) {
     const request = [];
     let headStart = null;
 
-    
-    canvas.addEventListener('click', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const track = Math.floor((x - margin) / scale);
-        if(track >= 0 && track <= trackMax && !request.includes(track)) {
-            request.push(track);
-            draw();
-        }
-    });
-
     function draw() {
+        drawBaseLine(ctx, width, height, margin, trackMax, scale);
         drawRequest(ctx, request, headStart, width, height, margin, scale, trackMax);
     }
 
@@ -46,6 +37,19 @@ function drawLine(canvasId) {
                 request.push(val);
                 draw();
             }
+        },
+
+        setSteps: (steps) => {
+            pathSteps = steps;
+            draw();
+        },
+
+        drawBaseLine: () => {
+            drawBaseLine(ctx, width, margin, trackMax, scale);
+        },
+
+        get headStart() {
+            return headStart;
         },
 
         request

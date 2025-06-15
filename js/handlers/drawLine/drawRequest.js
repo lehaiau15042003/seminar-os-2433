@@ -4,10 +4,12 @@ function drawRequest(ctx, request, headStart, width, height, margin, scale, trac
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
     ctx.moveTo(margin, height - margin);
+    ctx.lineTo(width - margin, height - margin);
     ctx.strokeStyle = '#333';
     ctx.stroke();
-    const numbers = [];
     let spacing = 20;
+    const numbers = [];
+    
     request.forEach(r => {
         const x = margin + r * scale;
         const y = height - margin;
@@ -65,19 +67,6 @@ function drawRequest(ctx, request, headStart, width, height, margin, scale, trac
 
     if(!request.includes(0)) request.unshift(0);
     if(!request.includes(trackMax)) request.push(trackMax);
-
-    if(request.length > 0) {
-        ctx.beginPath();
-        ctx.moveTo(margin + request[0] * scale, height - margin);
-        request.forEach(r => {
-            const x = margin + r * scale;
-            const y = height - margin;
-            ctx.lineTo(x, y);
-        });
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-    }
 }
 
 export default drawRequest;

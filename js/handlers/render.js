@@ -1,5 +1,7 @@
 'use strict'
 
+import drawBaseLine from './drawLine/drawBaseLine.js';
+
 export function renderPages(pages, pageDisplay){
     pageDisplay.innerHTML = '';
     pages.forEach(p => {
@@ -40,7 +42,7 @@ export function renderBit(count, bitDisplay) {
     }
 }
 
-export function renderSteps(algorithms, steps, frameSize, frameDisplay, bitDisplay, speed = 500) {
+export function renderPageSteps(algorithms, steps, frameSize, frameDisplay, bitDisplay, speed = 500) {
     frameDisplay.innerHTML = '';
     bitDisplay.innerHTML = '';
     const frameRows = [];
@@ -99,4 +101,65 @@ export function renderSteps(algorithms, steps, frameSize, frameDisplay, bitDispl
         setTimeout(showStep, speed);
     }
     showStep();
+}
+
+export function renderDiskSteps(steps, canvasId, drawLineInstance, queue) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const margin = 50;
+    const minTrack = Math.min(...queue);
+    const maxTrack = Math.max(...queue);
+    const xScale = (width - 2 * margin) / (maxTrack - minTrack || 1);
+    const yStep = (height - 2 * margin) / (steps.length - 1 || 1);
+    drawBaseLine(ctx, width, margin, minTrack, maxTrack, xScale, queue);
+
+    ctx.lineWidth = 2;
+    for (let i = 0; i < steps.length - 1; i++) {
+        const x1 = margin + (steps[i] - minTrack) * xScale;
+        const y1 = margin + i * yStep;
+        const x2 = margin + (steps[i + 1] - minTrack) * xScale;
+        const y2 = margin + (i + 1) * yStep;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = '#000';
+        ctx.stroke();
+        const angle = Math.atan2(y2 - y1, x2 - x1);
+        const headLength = 10;
+        const arrowX1 = x2 - headLength * Math.cos(angle - Math.PI / 6);
+        const arrowY1 = y2 - headLength * Math.sin(angle - Math.PI / 6);
+        const arrowX2 = x2 - headLength * Math.cos(angle + Math.PI / 6);
+        const arrowY2 = y2 - headLength * Math.sin(angle + Math.PI / 6);
+
+        ctx.beginPath();
+        ctx.moveTo(x2, y2);
+        ctx.lineTo(arrowX1, arrowY1);
+        ctx.lineTo(arrowX2, arrowY2);
+        ctx.lineTo(x2, y2);
+        ctx.fillStyle = '#000';
+        ctx.fill();
+        ctx.font = '12px Arial';
+        const offsetX = (x2 - x1) >= 0 ? 8 : -20;
+        const offsetY = -20;
+        ctx.fillText(steps[i], x1 + offsetX, y1 + offsetY);
+    }
+    const lastX = margin + (steps[steps.length - 1] - minTrack) * xScale;
+    const lastY = margin + (steps.length - 1) * yStep;
+    ctx.beginPath();
+    ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.font = '12px Arial';
+    ctx.fillStyle = '#333';
+    let offsetX = 10, offsetY = -10;
+    if (steps.length >= 2) {
+        const prevX = margin + (steps[steps.length - 2] - minTrack) * xScale;
+        const dx = lastX - prevX;
+        offsetX = dx >= 0 ? 8 : -20;
+        offsetY = -20;
+    }
+    ctx.fillText(steps[steps.length - 1], lastX + offsetX, lastY + offsetY);
 }
