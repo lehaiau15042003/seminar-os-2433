@@ -144,14 +144,14 @@
       font-family: "Courier New", monospace;
     } */
 
-    footer {
+    /* footer {
       margin-top: 60px;
       padding-top: 30px;
       border-top: 1px solid var(--border-color);
       font-size: 0.9rem;
       color: var(--text-muted);
       text-align: center;
-    }
+    } */
 
     @media (max-width: 768px) {
       nav {
@@ -161,15 +161,21 @@
         flex-direction: column;
         padding: 20px;
       }
-
- */
+      body{
+        margin: 0px;
+      }
 
       .nav-footer {
         display: none;
       }
     }
- /* VER 2 */
 
+
+
+
+
+
+ /* VER 2 */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -181,10 +187,45 @@ input[type="number"] {
     
 }
 
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
  .header{
     display: flex;
 } 
+
+.algorithms-container{
+  /* background-color: white;
+  border-radius: 10px;
+  justify-content: space-between;
+  width: 500px;
+  display: flex;
+  padding: 10px;
+  border: 1px solid #000;
+  position: fixed;      */
+}
+
+.pageReplacement{
+  border-radius: 10px;
+  padding: 10px;
+
+}
+
+.pageReplacement:hover {
+  background-color: greenyellow;
+}
+
+.diskScheduling{
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.diskScheduling:hover {
+  background-color: greenyellow;
+}
 
 .container{
     margin-top: 200px;
@@ -196,24 +237,19 @@ input[type="number"] {
     /* grid-template-columns: repeat(auto-fit ,minmax(200px,1fr)); */
 }
 
+.box_page_frame{
+  width: 1000%;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
+}
+
 .page-container {
-  width: 300px;
   display: flex;
   overflow: visible;
   flex-wrap: nowrap;
   justify-content: start;
   flex-direction: column;
-  width: 1000%;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
-}
-
-
-#index{
-
-}
-
-#page{
-  
+  width: 100%;
+  /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)   */
 }
 
 #pageInput {
@@ -248,18 +284,18 @@ input[type="number"] {
 }
 
 #frame{
-    margin-left: 0px;
-    width: 1130px; /* edited */
-    justify-content: center ;
     display: flex;
+    width: 1130px; /* edited */
     flex-direction: column;
   
 }
 .box_bit{
-    margin-top: 20px;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132);
-}
+    width: 1130px; /* edited */
 
+    margin-top: 20px;
+    /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132) */
+
+}
 .bit{
     display: flex;
     flex-direction: column;  
@@ -337,6 +373,9 @@ input[type="number"] {
 }
 
 .cell {
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132);
+
+  min-width: 3%;
   text-align: center;
   margin-left: 0px;
   background-color: #ffffff;
@@ -366,7 +405,7 @@ input[type="number"] {
 .fault {
   background-color: #ffebee ;
   color: #c62828;
-  border: 2px solid #ef5350;
+  border: 1px solid #ef5350;
   font-weight: bold;
 }
 
