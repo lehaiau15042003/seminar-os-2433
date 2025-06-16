@@ -2,7 +2,9 @@ import FIFO from '../algorithms/PageReplacement/FIFO.js'
 import LRU from '../algorithms/PageReplacement/LRU.js'
 import OPTIMAL from '../algorithms/PageReplacement/OPTIMAL.js'
 import CLOCK from '../algorithms/PageReplacement/CLOCK.js'
+
 import FCFS from '../algorithms/DiskScheduling/FCFS.js'
+import SRTF from '../algorithms/DiskScheduling/SRTF.js'
 import SCAN from '../algorithms/DiskScheduling/SCAN.js'
 import CSCAN from '../algorithms/DiskScheduling/CSCAN.js'
 
