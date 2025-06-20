@@ -1,9 +1,9 @@
 'use strict'
 
-import { renderPages, renderFrame, renderPageSteps, renderBit, renderIndex, renderDiskSteps } from './handlers/render.js'
-import { runAlgorithms } from './handlers/algorithms.js';
-import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc } from './handlers/input.js';
-import drawLine from './handlers/drawLine/drawLine.js';
+import { renderPages, renderFrame, renderPageSteps, renderBit, renderIndex, renderDiskSteps, renderProcessSteps } from './handlers/render.js'
+import { runAlgorithms } from './handlers/Algorithms.js'
+import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc, processInputFunc } from './handlers/Input.js'
+import drawLine from './handlers/drawLine.js';
 
 let pages = [];
 let selectedAlgorithm = null;
@@ -18,6 +18,9 @@ window.onload = function() {
         bitDisplay: document.getElementById('bit'),
         queueInput: document.getElementById('queueInput'),
         headInput: document.getElementById('headInput'),
+        burstInput: document.getElementById('burstInput'),
+        processDisplay: document.getElementById('process'),
+        directionInput: document.getElementById('directionInput'),
         runbtn: document.getElementById('run-btn'),
         algorithmsSelect: document.querySelector('.pageReplacement'),
     }
@@ -26,14 +29,20 @@ window.onload = function() {
     frameInputFunc(DOM.frameInput, DOM.frameDisplay, renderFrame, DOM.bitDisplay, renderBit);
     queueInputFunc(DOM.queueInput, drawLineInstance);
     headInputFunc(DOM.headInput, drawLineInstance);
+    processInputFunc(DOM.burstInput, DOM.processDisplay, drawLineInstance);
 
     DOM.runbtn.addEventListener('click', () => {
-        const frameSize = parseInt(DOM.frameInput.value || DOM.frameDisplay.childElementCount, 10);
-        const headStart = parseInt(DOM.headInput.value);
-        const queue = (DOM.queueInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
-        const result = runAlgorithms({pages, frameSize, queue, headStart, algorithms: selectedAlgorithm});
+        let frameSize = parseInt(DOM.frameInput.value || DOM.frameDisplay.childElementCount, 10);
+        let headStart = parseInt(DOM.headInput.value);
+        let queue = (DOM.queueInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+        let direction = DOM.directionInput.value;
+        let burstTime = (DOM.burstInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+        const minTrack = 0;
+        const maxTrack = 199;
+        let result = runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack, maxTrack, burstTime, algorithms: selectedAlgorithm});
         //renderPageSteps(selectedAlgorithm, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
-        renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue);
+        //renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue, 700);
+        renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime, 700);
         console.log('Algorithm:', selectedAlgorithm); 
         console.log('Result:', result);
     });
@@ -42,7 +51,7 @@ window.onload = function() {
         link.addEventListener('click', () => {
             const id = link.getAttribute('href').substring(1);
             const section = document.getElementById(id);
-            const disk = document.getElementById('disk');
+            const canvas = document.getElementById('canvas');
             if(section) {
                 document.querySelectorAll('.algorithms-container section').forEach(sec => {
                     sec.classList.remove('selected');
@@ -50,12 +59,21 @@ window.onload = function() {
                 section.classList.add('selected');
                 selectedAlgorithm = section.dataset.value;
 
-                const diskAlgorithms = ['fcfs', 'srtf', 'scan', 'cscan', 'look', 'clook'];
+                const diskAlgorithms = ['fcfs_disk', 'sstf', 'scan', 'cscan', 'look', 'clook'];
+                const processAlgorithms = ['fcfs_process', 'sjf', 'srtf', 'rr'];
+
                 if(diskAlgorithms.includes(id)) {
-                    disk.style.display = 'block';
+                    drawLineInstance.setAlgo('disk');
+                    drawLineInstance.clear();
+                    canvas.style.display = 'block';
+                }else if(processAlgorithms.includes(id)){
+                    drawLineInstance.setAlgo('process');
+                    drawLineInstance.clear();
+                    canvas.style.display = 'block';
                 }else {
-                    disk.style.display = 'none';
+                    canvas.style.display = 'none';
                 }
+                
             }
         });
     });

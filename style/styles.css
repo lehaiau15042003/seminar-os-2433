@@ -214,17 +214,11 @@ input[type="number"] {
 
 }
 
-.pageReplacement:hover {
-  background-color: greenyellow;
-}
+
 
 .diskScheduling{
   border-radius: 10px;
   padding: 10px;
-}
-
-.diskScheduling:hover {
-  background-color: greenyellow;
 }
 
 .container{
