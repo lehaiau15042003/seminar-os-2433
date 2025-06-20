@@ -186,11 +186,20 @@ input[type="number"] {
     -moz-appearance: textfield;
     
 }
+input{
+  
+  border-radius: 5px;
+}
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+.input-container{
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132);
+  padding: 10px;
+  border-radius: 10px;
 }
 
  .header{
@@ -214,8 +223,6 @@ input[type="number"] {
 
 }
 
-
-
 .diskScheduling{
   border-radius: 10px;
   padding: 10px;
@@ -231,10 +238,10 @@ input[type="number"] {
     /* grid-template-columns: repeat(auto-fit ,minmax(200px,1fr)); */
 }
 
-.box_page_frame{
+/* .box_page_frame{
   width: 1000%;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132)
-}
+} */
 
 .page-container {
   display: flex;
@@ -277,6 +284,7 @@ input[type="number"] {
     /* flex-direction: column; */
 }
 
+
 #frame{
     display: flex;
     width: 1130px; /* edited */
@@ -310,6 +318,8 @@ input[type="number"] {
 
 .index-pages {
   width: 3%;
+  display: flex;
+  justify-content: center;
   color: #333;
   padding: 6px 12px;
   font-size: 16px;
@@ -361,16 +371,16 @@ input[type="number"] {
 .row {
   width: 100%;
   display: flex;
-  justify-content: start;
+  /* justify-content: start; */
   /* display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20px,1fr)); */
 }
 
 .cell {
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132);
-
   min-width: 3%;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  /* text-align: center; */
   margin-left: 0px;
   background-color: #ffffff;
   border: 1px solid #ccc;
@@ -380,9 +390,10 @@ input[type="number"] {
   /* width: 10%; number: 10 */
   /* width: 6.67%; number:15 */
   /* width: 5%; number: 20 */
-
+  
   /* text-align: center; */
   font-size: 16px;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132);
   
 }
 
