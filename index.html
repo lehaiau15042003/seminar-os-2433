@@ -26,12 +26,22 @@
                     <input type="checkbox" id="toggle-disk" />
                     <label for="toggle-disk">Disk Scheduling</label>
                     <ul>
-                        <li><a href="#fcfs">FCFS</a></li>
-                        <li><a href="#srtf">SRTF</a></li>
+                        <li><a href="#fcfs_disk">FCFS</a></li>
+                        <li><a href="#sstf">SSTF</a></li>
                         <li><a href="#scan">SCAN</a></li>
                         <li><a href="#cscan">C-SCAN</a></li>
                         <li><a href="#look">LOOK</a></li>
                         <li><a href="#clook">C-LOOK</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <input type="checkbox" id="toggle-process" />
+                    <label for="toggle-process">Process Scheduling </label>
+                    <ul>
+                        <li><a href="#fcfs_process">FCFS</a></li>
+                        <li><a href="#sjf">SJF</a></li>
+                        <li><a href="#srtf">SRTF</a></li>
+                        <li><a href="#rr">RR</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,6 +60,15 @@
 
                 <label for="headInput">Head starts at:</label>
                 <input id="headInput" type="number">
+
+                <label for="burstInput">Burst Time</label>
+                <input id="burstInput" type="text">
+
+                <label for="directionInput">Direction:</label>
+                <select id="directionInput">
+                    <option value="up">Up</option>
+                    <option value="down">Down</option>
+                </select>
             </div>
             <div class="header">
                 <div class="algorithms-container">
@@ -63,19 +82,26 @@
                     </div>
                     <div class="item2">
                         <article data-name="diskScheduling" class="diskScheduling">
-                            <section id="fcfs" class="fcfs" data-value="FCFS">
-                                <div id="disk">
-                                    <canvas id="myCanvas" width="900" height="400"></canvas>
-                                </div>
-                            </section>
-                            <section id="srtf" class="srtf" data-value="SRTF"></section>
+                            <section id="fcfs_disk" class="fcfs_disk" data-value="FCFS_disk"></section>
+                            <section id="sstf" class="sstf" data-value="SSTF"></section>
                             <section id="scan" class="scan" data-value="SCAN"></section>
                             <section id="cscan" class="cscan" data-value="CSCAN"></section>
                             <section id="look" class="look" data-value="LOOK"></section>
                             <section id="clook" class="clook" data-value="CLOOK"></section>
                         </article>
                     </div>
-                </div>        
+                    <div class="item3">
+                        <article data-name="processScheduling " class="processScheduling ">
+                            <section id="fcfs_process" class="fcfs_process" data-value="FCFS"></section>
+                            <section id="sjf" class="sjf" data-value="SJF"></section>
+                            <section id="srtf" class="srtf" data-value="SRTF"></section>
+                            <section id="rr" class="rr" data-value="RR"></section>
+                        </article>
+                    </div>
+                </div>
+                <div id="canvas" style="display: none;">
+                    <canvas id="myCanvas" width="900" height="400"></canvas>
+                </div>
             </div>
             <div class="container">
                 <div class="page-container">
@@ -89,6 +115,9 @@
                 </div>
                 <div class="box_bit">
                     <div id="bit"></div>
+                </div>
+                <div class="process-display">
+                    <div id="process"></div>
                 </div>
             </div>
             <button id="run-btn" type="button">Run</button>

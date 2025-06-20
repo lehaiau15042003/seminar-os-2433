@@ -1,6 +1,6 @@
 'use strict'
 
-function CSCAN(queue, headStart, direction, minTrack = 0, maxTrack = 199) {
+function CLOOK(queue, headStart, direction) {
     const steps = [];
     const path = [headStart];
     let current = headStart;
@@ -11,9 +11,9 @@ function CSCAN(queue, headStart, direction, minTrack = 0, maxTrack = 199) {
 
     let pathDirection = [];
     if(direction === 'up') {
-        pathDirection = [...up, maxTrack, minTrack, ...down.reverse()];
-    }else if(direction === 'down'){
-        pathDirection = [...down, minTrack, maxTrack, ...up.reverse()];
+        pathDirection = [...up, ...down.reverse()];
+    }else if(direction === 'down') {
+        pathDirection = [...down, ...up.reverse()];
     }
 
     pathDirection.forEach(track => {
@@ -36,4 +36,4 @@ function CSCAN(queue, headStart, direction, minTrack = 0, maxTrack = 199) {
     }
 }
 
-export default CSCAN;
+export default CLOOK;
