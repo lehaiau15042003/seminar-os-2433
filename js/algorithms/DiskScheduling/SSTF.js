@@ -1,6 +1,6 @@
 'use strict'
 
-function SRTF(queue, headStart) {
+function SSTF(queue, headStart) {
     const steps = [];
     const path = [headStart];
     let current = headStart;
@@ -10,14 +10,14 @@ function SRTF(queue, headStart) {
         let nearIndex = 0;
         let minDistance = Math.abs(remaining[0] - current);
         
-        for(let i = 0; i < remaining.length; i++) {
-            let distance = Math.abs(remaining[i] - current);
+        remaining.forEach((track, i) => {
+            const distance = Math.abs(track - current);
             if(distance < minDistance) {
                 nearIndex = i;
                 minDistance = distance;
             }
-        }
-
+        }); 
+        
         const nextTrack = remaining.splice(nearIndex, 1)[0];
         steps.push({
             from: current,
@@ -38,4 +38,4 @@ function SRTF(queue, headStart) {
     };
 }
 
-export default SRTF;
+export default SSTF;

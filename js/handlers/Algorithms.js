@@ -3,12 +3,17 @@ import LRU from '../algorithms/PageReplacement/LRU.js'
 import OPTIMAL from '../algorithms/PageReplacement/OPTIMAL.js'
 import CLOCK from '../algorithms/PageReplacement/CLOCK.js'
 
-import FCFS from '../algorithms/DiskScheduling/FCFS.js'
-import SRTF from '../algorithms/DiskScheduling/SRTF.js'
+import FCFS_disk from '../algorithms/DiskScheduling/FCFS_disk.js'
+import SSTF from '../algorithms/DiskScheduling/SSTF.js'
 import SCAN from '../algorithms/DiskScheduling/SCAN.js'
 import CSCAN from '../algorithms/DiskScheduling/CSCAN.js'
+import LOOK from '../algorithms/DiskScheduling/LOOK.js'
+import CLOOK from '../algorithms/DiskScheduling/CLOOK.js'
 
-export function runAlgorithms({pages, frameSize, queue, headStart, algorithms: selectedAlgorithm}){
+import FCFS_process from '../algorithms/ProcessScheduling/FCFS_process.js'
+import SJF from '../algorithms/ProcessScheduling/SJF.js'
+
+export function runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack = 0, maxTrack = 199, burstTime, algorithms: selectedAlgorithm}){
     switch(selectedAlgorithm) {
         case "FIFO":
             return FIFO(pages, frameSize);
@@ -18,18 +23,22 @@ export function runAlgorithms({pages, frameSize, queue, headStart, algorithms: s
             return OPTIMAL(pages, frameSize);
         case "CLOCK":
             return CLOCK(pages, frameSize);
-        case "FCFS":
-            return FCFS(queue, headStart);
-        case "SRTF":
-            return SRTF(queue, headStart);
+        case "FCFS_disk":
+            return FCFS_disk(queue, headStart);
+        case "SSTF":
+            return SSTF(queue, headStart);
         case "SCAN":
-            return SCAN(queue, headStart);
+            return SCAN(queue, headStart, direction, minTrack, maxTrack);
         case "CSCAN":
-            return CSCAN(queue, headStart);
+            return CSCAN(queue, headStart, direction, minTrack, maxTrack);
         case "LOOK":
-            return LOOK(queue, headStart);
+            return LOOK(queue, headStart, direction);
         case "CLOOK":
-            return CLOOK(queue, headStart);
+            return CLOOK(queue, headStart, direction);
+        case "FCFS_process":
+            return FCFS_process(burstTime);
+        case "SJF":
+            return SJF(burstTime);
         default:
             return null;
     }

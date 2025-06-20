@@ -1,6 +1,6 @@
 'use strict'
   
-function FCFS(queue, headStart) {
+function FCFS_disk(queue, headStart) {
     const steps = [];
     const path = [headStart];
     let current = headStart;
@@ -24,4 +24,4 @@ function FCFS(queue, headStart) {
     };
 }
 
-export default FCFS;
+export default FCFS_disk;
