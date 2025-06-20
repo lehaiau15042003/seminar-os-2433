@@ -32,8 +32,8 @@ window.onload = function() {
         const headStart = parseInt(DOM.headInput.value);
         const queue = (DOM.queueInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
         const result = runAlgorithms({pages, frameSize, queue, headStart, algorithms: selectedAlgorithm});
-        //renderPageSteps(selectedAlgorithm, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
-        renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue);
+        renderPageSteps(selectedAlgorithm, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
+        //renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue);
         console.log('Algorithm:', selectedAlgorithm); 
         console.log('Result:', result);
     });
