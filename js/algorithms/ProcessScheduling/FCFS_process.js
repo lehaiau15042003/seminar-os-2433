@@ -4,15 +4,20 @@ function FCFS_process(burstTime, arrivalTime = []) {
     let steps = [];
     let timeLine = [];
     let currentTime = 0;
-
-    let totalresponseWaitingTime = 0;
+    let totalResponseWaitingTime = 0;
     let totalTime = 0;
 
     let waitingTime = [];
     let turnarroundTime = [];
 
-    burstTime.forEach((bt, idx) => {
-        let arrival = arrivalTime[idx];
+    for(let i = 0; i < burstTime.length; i++) {
+        let bt = burstTime[i];
+        let arrival = arrivalTime[i];
+        
+        if(arrival > currentTime) {
+            currentTime = arrival;
+        }
+        
         let start = currentTime;
         let end = start + bt;
         
@@ -20,40 +25,40 @@ function FCFS_process(burstTime, arrivalTime = []) {
         let time = end - arrival;
 
         steps.push({
-            process: `P${idx + 1}`,
+            process: `P${i + 1}`,
             start,
             end,
             arrivalTime: arrival
         });
 
-        for(let i = currentTime; i < end; i++) {
+        for(let j = currentTime; j < end; j++) {
             let queue = [];
-            for(let j = 0; j < burstTime.length; j++) {
-                let finished = steps.some(s => s.process === `P${j + 1}` && s.end <= i);
-                let arrived = arrivalTime[j] <= i;
-                if(arrived && !finished && j !== idx) {
-                    queue.push(`P${j + 1}`);
+            for(let k = 0; k < burstTime.length; k++) {
+                let finished = steps.some(s => s.process === `P${k + 1}` && s.end <= j);
+                let arrived = arrivalTime[k] <= j;
+                if(arrived && !finished && k !== i) {
+                    queue.push(`P${k + 1}`);
                 }
             }
             timeLine.push({
-                time: i,
-                running: `P${idx + 1}`,
+                time: j,
+                running: `P${i + 1}`,
                 ready: queue
             });
         }
 
         waitingTime.push(responseWaitingTime);
         turnarroundTime.push(time);
-        totalresponseWaitingTime += responseWaitingTime;
+        totalResponseWaitingTime += responseWaitingTime;
         totalTime += time; 
         currentTime = end;
-    });
-    let avgResponseWatingTime = totalresponseWaitingTime / burstTime.length;
+    }
+    let avgResponseWaitingTime = totalResponseWaitingTime / burstTime.length;
     let avgTime = totalTime / burstTime.length;
     return {
         steps,
         timeLine,
-        avgResponseWatingTime,
+        avgResponseWaitingTime,
         avgTime,
         waitingTimes: waitingTime,
         turnarroundTimes: turnarroundTime

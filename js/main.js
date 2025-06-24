@@ -4,7 +4,6 @@ import { renderPages, renderFrame, renderPageSteps, renderBit, renderIndex, rend
 import { runAlgorithms } from './handlers/Algorithms.js'
 import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc, processInputFunc } from './handlers/Input.js'
 import drawLine from './handlers/drawLine.js';
-import clearAll from './handlers/clearAll.js'
 
 let pages = [];
 let selectedAlgorithm = null;
@@ -27,6 +26,10 @@ window.onload = function() {
         resultDisplay: document.getElementById('result'),
         runbtn: document.getElementById('run-btn'),
         algorithmsSelect: document.querySelector('.pageReplacement'),
+        inputContainer: document.querySelector('.input-container'),
+        inputGroupPage: document.querySelector('.input-group.page'),
+        inputGroupDisk: document.querySelector('.input-group.disk'),
+        inputGroupProcess: document.querySelector('.input-group.process'),
     }
 
     pageInputFunc(DOM.pageInput, DOM.pageDisplay, pages, DOM.indexDisplay,renderPages, renderIndex);
@@ -41,9 +44,10 @@ window.onload = function() {
         let queue = (DOM.queueInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
         let direction = DOM.directionInput.value;
         let burstTime = (DOM.burstInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+        let arrivalTime = (DOM.arrivalInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
         const minTrack = 0;
         const maxTrack = 199;
-        let result = runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack, maxTrack, burstTime, algorithms: selectedAlgorithm});
+        let result = runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack, maxTrack, burstTime, arrivalTime, algorithms: selectedAlgorithm});
 
         const pageAlgorithms = ['FIFO', 'LRU' ,'OPTIMAL', 'CLOCK'];
         const diskAlgorithms = ['FCFS_disk', 'SSTF', 'SCAN', 'CSCAN', 'LOOK', 'CLOOK'];
@@ -54,7 +58,7 @@ window.onload = function() {
         }else if(diskAlgorithms.includes(selectedAlgorithm)) {
             renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue, 700);
         }else if(processAlgorithms.includes(selectedAlgorithm)) {
-            renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime ,500);
+            renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime, arrivalTime, 500);
             renderReadyQueue(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
             renderResult(result.waitingTimes, result.turnarroundTimes, DOM.resultDisplay)
         }
@@ -70,21 +74,38 @@ window.onload = function() {
                     sec.classList.remove('selected');
                 });
                 section.classList.add('selected');
+                
                 selectedAlgorithm = section.dataset.value;
+                let algoDisplay = document.getElementById('select-algo');
+                algoDisplay.textContent = `${link.textContent}-Algorithm`;
+                algoDisplay.classList.remove('active');
+                requestAnimationFrame(() => {
+                    algoDisplay.classList.add('active');
+                });
 
-                const pageId = ['fifo', 'lru', 'optimal', 'clock'];
-                const diskId = ['fcfs_disk', 'sstf', 'scan', 'cscan', 'look', 'clook'];
-                const processId = ['fcfs_process', 'sjf', 'srtf', 'rr'];
+                let pageId = ['fifo', 'lru', 'optimal', 'clock'];
+                let diskId = ['fcfs_disk', 'sstf', 'scan', 'cscan', 'look', 'clook'];
+                let processId = ['fcfs_process', 'sjf', 'srtf', 'rr'];
+
+                document.querySelectorAll('.input-group').forEach(group => {
+                    group.style.display = 'none';
+                });
 
                 if(diskId.includes(id)) {
+                    DOM.inputGroupDisk.style.display = 'block';
+                    DOM.inputContainer.style.display = 'block';
                     drawLineInstance.setAlgo('disk');
                     drawLineInstance.clear();
                     canvas.style.display = 'block';
                 }else if(processId.includes(id)){
+                    DOM.inputGroupProcess.style.display = 'block';
+                    DOM.inputContainer.style.display = 'block';
                     drawLineInstance.setAlgo('process');
                     drawLineInstance.clear();
                     canvas.style.display = 'block';
                 }else if(pageId.includes(id)){
+                    DOM.inputGroupPage.style.display = 'block';
+                    DOM.inputContainer.style.display = 'block';
                     canvas.style.display = 'none';
                 }else {
                     canvas.style.display = 'none';

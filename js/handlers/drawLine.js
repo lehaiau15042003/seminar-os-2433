@@ -68,7 +68,6 @@ function drawLine(canvasId) {
             dataBurstTime = val;
             draw();
         },
-
         request
     };
 }

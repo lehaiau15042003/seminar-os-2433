@@ -18,32 +18,32 @@
                     <input type="checkbox" id="toggle-page" />
                     <label for="toggle-page">Page Replacement</label>
                     <ul>
-                        <li><a href="#fifo" data-name=" fifo :" class="algo-link">FIFO</a></li>
-                        <li><a href="#lru" data-name="lru :" class="algo-link">LRU</a></li>
-                        <li><a href="#optimal" data-name="optimal :" class="algo-link">OPTIMAL</a></li>
-                        <li><a href="#clock" data-name="clock :" class="algo-link">CLOCK</a></li>
+                        <li><a href="#fifo" data-name=" fifo" >FIFO</a></li>
+                        <li><a href="#lru" data-name="lru" >LRU</a></li>
+                        <li><a href="#optimal" data-name="optimal" >OPTIMAL</a></li>
+                        <li><a href="#clock" data-name="clock" >CLOCK</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
                     <input type="checkbox" id="toggle-disk" />
                     <label for="toggle-disk">Disk Scheduling</label>
                     <ul>
-                        <li><a href="#fcfs_disk" data-name="FCFS_DISK :"  class="algo-link" >FCFS</a></li>
-                        <li><a href="#sstf" data-name="ssrf :" class="algo-link">SSTF</a></li>
-                        <li><a href="#scan" data-name="scan :" class="algo-link">SCAN</a></li>
-                        <li><a href="#cscan" data-name="c-scan :" class="algo-link">C-SCAN</a></li>
-                        <li><a href="#look" data-name="look :" class="algo-link">LOOK</a></li>
-                        <li><a href="#clook" data-name="c-look :" class="algo-link">C-LOOK</a></li>
+                        <li><a href="#fcfs_disk" data-name="fcfs"  >FCFS</a></li>
+                        <li><a href="#sstf" data-name="ssrf" >SSTF</a></li>
+                        <li><a href="#scan" data-name="scan" >SCAN</a></li>
+                        <li><a href="#cscan" data-name="c-scan" >C-SCAN</a></li>
+                        <li><a href="#look" data-name="look" >LOOK</a></li>
+                        <li><a href="#clook" data-name="c-look" >C-LOOK</a></li>
                     </ul>
                 </div>
                 <div class="dropdown">
                     <input type="checkbox" id="toggle-process" />
                     <label for="toggle-process">CPU Scheduling</label>
                     <ul>
-                        <li><a href="#fcfs_process" data-name="FCFS_PROCESS :" class="algo-link">FCFS</a></li>
-                        <li><a href="#sjf" data-name="sjf :" class="algo-link">SJF</a></li>
-                        <li><a href="#srtf" data-name="srtf :" class="algo-link">SRTF</a></li>
-                        <li><a href="#rr" data-name="rr :" class="algo-link">RR</a></li>
+                        <li><a href="#fcfs_process" data-name="fcfs" >FCFS</a></li>
+                        <li><a href="#sjf" data-name="sjf" >SJF</a></li>
+                        <li><a href="#srtf" data-name="srtf" >SRTF</a></li>
+                        <li><a href="#rr" data-name="rr" >RR</a></li>
                     </ul>
                 </div>
             </div>
@@ -52,32 +52,37 @@
         
         <main>
             <div class="input-container">
-                <label for="pageInput">Page:</label>
-                <input id="pageInput" type="number" >
-                
-                <label for="frameInput">Frame:</label>
-                <input id="frameInput" type="number" min="1">
+                <div class="input-group page">
+                    <label for="pageInput">Page:</label>
+                    <input id="pageInput" type="number" >
+                    
+                    <label for="frameInput">Frame:</label>
+                    <input id="frameInput" type="number" min="1">
+                </div>
 
-                <label for="queueInput">Queue:</label>
-                <input id="queueInput" type="text">
+                <div class="input-group disk">
+                    <label for="queueInput">Queue:</label>
+                    <input id="queueInput" type="text">
+    
+                    <label for="headInput">Head starts at:</label>
+                    <input id="headInput" type="number">
 
-                <label for="headInput">Head starts at:</label>
-                <input id="headInput" type="number">
+                    <label for="directionInput">Direction:</label>
+                    <select id="directionInput">
+                        <option value="up">Up</option>
+                        <option value="down">Down</option>
+                    </select>
+                </div>
 
-                <div>
+                <div class="input-group process">
                     <label for="burstInput">Burst Time</label>
                     <input id="burstInput" type="text">
                     
                     <label for="arrivalInput">Arrival Time</label>
                     <input id="arrivalInput" type="text">
                 </div>
-
-                <label for="directionInput">Direction:</label>
-                <select id="directionInput">
-                    <option value="up">Up</option>
-                    <option value="down">Down</option>
-                </select>
             </div>
+            <div id="select-algo"></div>
             <div class="header">
                 <div class="algorithms-container">
                     <div class="item1">
