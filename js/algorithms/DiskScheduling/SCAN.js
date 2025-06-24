@@ -1,6 +1,6 @@
 'use strict'
 
-function SCAN(queue, headStart, direction, minTrack = 0, maxTrack = 199) {
+function SCAN(queue, headStart, direction, minTrack = 0, maxTrack) {
     const steps = [];
     const path = [headStart];
     let current = headStart;

@@ -167,22 +167,25 @@ export function renderDiskSteps(steps, canvasId, drawLineInstance, queue, speed 
 }
 
 export function renderRequest(ctx, request, headStart, width, height, margin, scaleDisk, trackMax, pathSteps = []) {
-    const baselineY = margin;
+    let baselineY = margin;
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
     ctx.moveTo(0, baselineY);
     ctx.lineTo(width, baselineY);
     ctx.stroke();
     let spacing = 20;
-    const numbers = [];
-
-    if(!request.includes(0)) request.unshift(0);
-    if(!request.includes(trackMax)) request.push(trackMax);
-
+    let numbers = [];
+    request = request.filter(r => r <= trackMax);
+    if(!request.includes(0)) {
+        request.unshift(0);
+    }
+    if(!request.includes(trackMax)) {
+        request.push(trackMax);
+    }
 
     request.forEach(r => {
-        const x = margin + r * scaleDisk;
-        const y = margin;
+        let x = margin + r * scaleDisk;
+        let y = margin;
 
         ctx.beginPath();
         ctx.moveTo(x, y - 5);
@@ -215,9 +218,9 @@ export function renderRequest(ctx, request, headStart, width, height, margin, sc
     });
 
     if (headStart !== null) {
-        const x = margin + headStart * scaleDisk;
-        const y = baselineY;
-        const lineHeight = 10;
+        let x = margin + headStart * scaleDisk;
+        let y = baselineY;
+        let lineHeight = 10;
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(x, y - lineHeight);
@@ -236,12 +239,12 @@ export function renderRequest(ctx, request, headStart, width, height, margin, sc
     if (pathSteps.length >= 2) {
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 2;
-        const yTrack = baselineY + 40;
+        let yTrack = baselineY + 40;
         for (let i = 0; i < pathSteps.length - 1; i++) {
-            const x1 = margin + pathSteps[i] * scaleDisk;
-            const x2 = margin + pathSteps[i + 1] * scaleDisk;
-            const y1 = yTrack;
-            const y2 = yTrack;
+            let x1 = margin + pathSteps[i] * scaleDisk;
+            let x2 = margin + pathSteps[i + 1] * scaleDisk;
+            let y1 = yTrack;
+            let y2 = yTrack;
     
             ctx.beginPath();
             ctx.moveTo(x1, y1);
@@ -253,8 +256,8 @@ export function renderRequest(ctx, request, headStart, width, height, margin, sc
             ctx.fillText(pathSteps[i], x1 + 5, y1 - 10);
         }
     
-        const lastX = margin + pathSteps[pathSteps.length - 1] * scaleDisk;
-        const lastY = baselineY;
+        let lastX = margin + pathSteps[pathSteps.length - 1] * scaleDisk;
+        let lastY = baselineY;
         ctx.fillText(pathSteps[pathSteps.length - 1], lastX + 5, lastY - 15);
     }
 }
@@ -279,7 +282,7 @@ export function renderTimeLine(ctx, width, height, margin, scaleProcess, maxTime
     }
 }
 
-export function renderProcessSteps(steps, canvasId, drawLineInstance, burstTime = [] ,speed) {
+export function renderProcessSteps(steps, canvasId, drawLineInstance, burstTime = [], arrivalTime, speed) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
@@ -290,7 +293,6 @@ export function renderProcessSteps(steps, canvasId, drawLineInstance, burstTime 
     let maxTime = 26;
     let scaleProcess = (width - 2 * margin) / maxTime;
     let currentStep = 0;
-    let arrivalTime = burstTime.map((_, i) => i);
     function showStep() {
         if(currentStep >= steps.length) return;
         let step = steps[currentStep];
@@ -317,7 +319,7 @@ export function renderProcessSteps(steps, canvasId, drawLineInstance, burstTime 
         ctx.font = '12px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
-        ctx.fillText(`${currentStep}`, xArrival, y - 15);
+        ctx.fillText(`${arrival}`, xArrival, y - 15);
 
         ctx.beginPath();
         ctx.lineWidth = 2;
