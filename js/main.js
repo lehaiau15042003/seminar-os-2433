@@ -1,9 +1,10 @@
 'use strict'
 
-import { renderPages, renderFrame, renderPageSteps, renderBit, renderIndex, renderDiskSteps, renderProcessSteps } from './handlers/render.js'
+import { renderPages, renderFrame, renderPageSteps, renderBit, renderIndex, renderDiskSteps, renderProcessSteps, renderReadyQueue , renderResult} from './handlers/render.js'
 import { runAlgorithms } from './handlers/Algorithms.js'
 import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc, processInputFunc } from './handlers/Input.js'
 import drawLine from './handlers/drawLine.js';
+import clearAll from './handlers/clearAll.js'
 
 let pages = [];
 let selectedAlgorithm = null;
@@ -20,7 +21,10 @@ window.onload = function() {
         headInput: document.getElementById('headInput'),
         burstInput: document.getElementById('burstInput'),
         processDisplay: document.getElementById('process'),
+        arrivalInput: document.getElementById('arrivalInput'),
         directionInput: document.getElementById('directionInput'),
+        readyQueueDisplay: document.getElementById('ready-queue'),
+        resultDisplay: document.getElementById('result'),
         runbtn: document.getElementById('run-btn'),
         algorithmsSelect: document.querySelector('.pageReplacement'),
     }
@@ -29,7 +33,7 @@ window.onload = function() {
     frameInputFunc(DOM.frameInput, DOM.frameDisplay, renderFrame, DOM.bitDisplay, renderBit);
     queueInputFunc(DOM.queueInput, drawLineInstance);
     headInputFunc(DOM.headInput, drawLineInstance);
-    processInputFunc(DOM.burstInput, DOM.processDisplay, drawLineInstance);
+    processInputFunc(DOM.burstInput, DOM.arrivalInput, DOM.processDisplay);
 
     DOM.runbtn.addEventListener('click', () => {
         let frameSize = parseInt(DOM.frameInput.value || DOM.frameDisplay.childElementCount, 10);
@@ -40,11 +44,19 @@ window.onload = function() {
         const minTrack = 0;
         const maxTrack = 199;
         let result = runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack, maxTrack, burstTime, algorithms: selectedAlgorithm});
-        //renderPageSteps(selectedAlgorithm, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
-        //renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue, 700);
-        renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime, 700);
-        console.log('Algorithm:', selectedAlgorithm); 
-        console.log('Result:', result);
+        const pageAlgorithms = ['FIFO', 'LRU' ,'OPTIMAL', 'CLOCK'];
+        const diskAlgorithms = ['FCFS_disk', 'SSTF', 'SCAN', 'CSCAN', 'LOOK', 'CLOOK'];
+        const processAlgorithms = ['FCFS_process', 'SJF', 'SRTF', 'RR'];
+
+        if(pageAlgorithms.includes(selectedAlgorithm)) {
+            renderPageSteps(selectedAlgorithm, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
+        }else if(diskAlgorithms.includes(selectedAlgorithm)) {
+            renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue, 700);
+        }else if(processAlgorithms.includes(selectedAlgorithm)) {
+            renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime ,500);
+            renderReadyQueue(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
+            renderResult(result.waitingTimes, result.turnarroundTimes, DOM.resultDisplay)
+        }
     });
 
     document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -59,17 +71,20 @@ window.onload = function() {
                 section.classList.add('selected');
                 selectedAlgorithm = section.dataset.value;
 
-                const diskAlgorithms = ['fcfs_disk', 'sstf', 'scan', 'cscan', 'look', 'clook'];
-                const processAlgorithms = ['fcfs_process', 'sjf', 'srtf', 'rr'];
+                const pageId = ['fifo', 'lru', 'optimal', 'clock'];
+                const diskId = ['fcfs_disk', 'sstf', 'scan', 'cscan', 'look', 'clook'];
+                const processId = ['fcfs_process', 'sjf', 'srtf', 'rr'];
 
-                if(diskAlgorithms.includes(id)) {
+                if(diskId.includes(id)) {
                     drawLineInstance.setAlgo('disk');
                     drawLineInstance.clear();
                     canvas.style.display = 'block';
-                }else if(processAlgorithms.includes(id)){
+                }else if(processId.includes(id)){
                     drawLineInstance.setAlgo('process');
                     drawLineInstance.clear();
                     canvas.style.display = 'block';
+                }else if(pageId.includes(id)){
+                    canvas.style.display = 'none';
                 }else {
                     canvas.style.display = 'none';
                 }

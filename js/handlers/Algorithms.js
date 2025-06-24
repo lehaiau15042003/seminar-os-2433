@@ -12,6 +12,8 @@ import CLOOK from '../algorithms/DiskScheduling/CLOOK.js'
 
 import FCFS_process from '../algorithms/ProcessScheduling/FCFS_process.js'
 import SJF from '../algorithms/ProcessScheduling/SJF.js'
+import SRTF from '../algorithms/ProcessScheduling/SRTF.js'
+import RR from '../algorithms/ProcessScheduling/RR.js'
 
 export function runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack = 0, maxTrack = 199, burstTime, algorithms: selectedAlgorithm}){
     switch(selectedAlgorithm) {
@@ -37,8 +39,12 @@ export function runAlgorithms({pages, frameSize, queue, headStart, direction, mi
             return CLOOK(queue, headStart, direction);
         case "FCFS_process":
             return FCFS_process(burstTime);
+        case "SRTF":
+            return SRTF(burstTime);
         case "SJF":
             return SJF(burstTime);
+        case "RR":
+            return RR(burstTime, quantum);
         default:
             return null;
     }

@@ -36,7 +36,7 @@
                 </div>
                 <div class="dropdown">
                     <input type="checkbox" id="toggle-process" />
-                    <label for="toggle-process">Process Scheduling </label>
+                    <label for="toggle-process">CPU Scheduling</label>
                     <ul>
                         <li><a href="#fcfs_process">FCFS</a></li>
                         <li><a href="#sjf">SJF</a></li>
@@ -61,8 +61,13 @@
                 <label for="headInput">Head starts at:</label>
                 <input id="headInput" type="number">
 
-                <label for="burstInput">Burst Time</label>
-                <input id="burstInput" type="text">
+                <div>
+                    <label for="burstInput">Burst Time</label>
+                    <input id="burstInput" type="text">
+                    
+                    <label for="arrivalInput">Arrival Time</label>
+                    <input id="arrivalInput" type="text">
+                </div>
 
                 <label for="directionInput">Direction:</label>
                 <select id="directionInput">
@@ -91,33 +96,38 @@
                         </article>
                     </div>
                     <div class="item3">
-                        <article data-name="processScheduling " class="processScheduling ">
-                            <section id="fcfs_process" class="fcfs_process" data-value="FCFS"></section>
+                        <article data-name="processScheduling" class="processScheduling ">
+                            <section id="fcfs_process" class="fcfs_process" data-value="FCFS_process"></section>
                             <section id="sjf" class="sjf" data-value="SJF"></section>
                             <section id="srtf" class="srtf" data-value="SRTF"></section>
                             <section id="rr" class="rr" data-value="RR"></section>
                         </article>
                     </div>
                 </div>
-                <div id="canvas" style="display: none;">
-                    <canvas id="myCanvas" width="900" height="400"></canvas>
-                </div>
-            </div>
-            <div class="container">
-                <div class="page-container">
-                        <div id="index" class="row"></div>
-                        <div id="page" class="row index-row"></div>
-                        <div id="frame"></div> 
-                </div>
-                <div class="box_queue">
-                    <div id="queue"></div>
-                    <div id="headstart"></div>
-                </div>
-                <div class="box_bit">
-                    <div id="bit"></div>
-                </div>
-                <div class="process-display">
+                <div class="process-container">
                     <div id="process"></div>
+                    <div id="canvas" style="display: none;">
+                        <canvas id="myCanvas" width="900" height="400"></canvas>
+                    </div>
+                    <div id="ready-queue" class="ready-queue-container"></div>
+                    <div class="result-display">
+                        <div id="result" class="result-container"></div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="page-container">
+                            <div id="index" class="row"></div>
+                            <div id="page" class="row index-row"></div>
+                            <div id="frame"></div> 
+                    </div>
+                    <div class="box_queue">
+                        <div id="queue"></div>
+                        <div id="headstart"></div>
+                    </div>
+                    <div class="box_bit">
+                        <div id="bit"></div>
+                    </div>
                 </div>
             </div>
             <button id="run-btn" type="button">Run</button>

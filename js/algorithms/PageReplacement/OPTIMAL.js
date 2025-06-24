@@ -32,7 +32,7 @@ function OPTIMAL(pages, frameSize) {
         }
         console.log(frame);
         const futureIndex = frame.map(f => {
-            const future = pages.slice(idx + 1).indexOf(f);
+            let future = pages.slice(idx + 1).indexOf(f);
             return future === -1 ? '∞' : future + idx + 1 + 1;
         });
 

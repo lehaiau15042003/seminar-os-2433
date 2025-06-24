@@ -1,6 +1,6 @@
 'use strict'
 
-import { runAlgorithms } from "./Algorithms.js";
+import { renderTable } from "./render.js";
 
 export function pageInputFunc(pageInput, pageDisplay, pages, indexDisplay,renderPages, renderIndex) {
     pageInput.addEventListener('input', () => {
@@ -74,44 +74,50 @@ export function headInputFunc(headInput, drawLineInstance) {
     });
 }
 
-export function processInputFunc(burstInput, processDisplay, drawLineInstance, getSelectedAlgorithm) {
+export function processInputFunc(burstInput, arrivalInput, processDisplay) {
+    let burstTimes = [];
+    let arrivalTimes = [];
     burstInput.addEventListener('keydown', (e) => {
-        if(e.key === ' ') {
+        if (e.key === ' ') {
             e.preventDefault();
-            let processValue = burstInput.value.trim();
-            if(processValue !== '') {
-                burstInput.value = processValue + ', ';
+            let burstValue = burstInput.value.trim();
+            if (burstValue !== '') {
+                burstInput.value = burstValue + ', ';
+            }
+        }
+    });
+
+    arrivalInput.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+            e.preventDefault();
+            let arrivalValue = arrivalInput.value.trim();
+            if (arrivalValue !== '') {
+                arrivalInput.value = arrivalValue + ', ';
             }
         }
     });
 
     burstInput.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter') {
+        if (e.key === 'Enter') {
             e.preventDefault();
-            let processValue = burstInput.value.trim();
-            let burstTime = processValue.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
-            drawLineInstance.setDataBurstTime(burstTime);
+            burstTimes = burstInput.value
+                .split(',')
+                .map(s => parseInt(s.trim()))
+                .filter(n => !isNaN(n));
 
-            let table = document.createElement('table');
-            table.className = 'table-process';
+            renderTable(burstTimes, arrivalTimes, processDisplay);
+        }
+    });
 
-            let header = table.insertRow();
-            ['Tiến trình (Process)', 'Thời gian đến (Arrival time)', 'Thời gian cần CPU (Burst time)'].forEach(text => {
-                let th = document.createElement('th');
-                th.innerText = text;
-                header.appendChild(th);
-            });
+    arrivalInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            arrivalTimes = arrivalInput.value
+                .split(',')
+                .map(s => parseInt(s.trim()))
+                .filter(n => !isNaN(n));
 
-            burstTime.forEach((bt, i) => {
-                let row = table.insertRow();
-                [`P${i + 1}`, i, bt].forEach(val => {
-                    let td = row.insertCell();
-                    td.innerText = val;
-                });
-            });
-
-            processDisplay.innerHTML = '';
-            processDisplay.appendChild(table);
+            renderTable(burstTimes, arrivalTimes, processDisplay);
         }
     });
 }
