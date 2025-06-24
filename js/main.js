@@ -44,6 +44,7 @@ window.onload = function() {
         const minTrack = 0;
         const maxTrack = 199;
         let result = runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack, maxTrack, burstTime, algorithms: selectedAlgorithm});
+
         const pageAlgorithms = ['FIFO', 'LRU' ,'OPTIMAL', 'CLOCK'];
         const diskAlgorithms = ['FCFS_disk', 'SSTF', 'SCAN', 'CSCAN', 'LOOK', 'CLOOK'];
         const processAlgorithms = ['FCFS_process', 'SJF', 'SRTF', 'RR'];
