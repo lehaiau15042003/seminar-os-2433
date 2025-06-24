@@ -40,9 +40,9 @@ window.onload = function() {
         const minTrack = 0;
         const maxTrack = 199;
         let result = runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack, maxTrack, burstTime, algorithms: selectedAlgorithm});
-        //renderPageSteps(selectedAlgorithm, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
+        renderPageSteps(selectedAlgorithm, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
         //renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue, 700);
-        renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime, 700);
+        // renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime, 700);
         console.log('Algorithm:', selectedAlgorithm); 
         console.log('Result:', result);
     });

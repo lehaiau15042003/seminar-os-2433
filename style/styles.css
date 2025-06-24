@@ -18,7 +18,7 @@
 
     body {
       /* font-family: "Georgia", serif; */
-      background-color: var(--bg-body);
+      background-color: #eae7d6;
       color: var(--text-main);
       line-height: 1.75;
       margin-left: 240px;
@@ -26,12 +26,14 @@
     }
 
     nav {
+      z-index: 1;
+      font-family: "Georgia", serif;
       position: fixed;
       top: 0;
       left: 0;
       width: 240px;
       height: 100vh;
-      background-color: var(--bg-sidebar);
+      background-color: #a4c3a2;
       border-right: 1px solid var(--border-color);
       padding: 30px 20px;
       display: flex;
@@ -58,7 +60,7 @@
     }
 
     nav a:hover, nav label:hover {
-      color: var(--accent-color);
+      color: white;
     }
 
     .nav-footer {
@@ -98,14 +100,15 @@
 
     .dropdown ul li a {
       font-size: 0.95rem;
-      color: var(--text-muted);
+      color:#424242;
     }
 
     .dropdown ul li a:hover {
-      color: var(--accent-color);
+      color: white;
     }
 
     main {
+      z-index: 2;
       /* margin-left: 240px; */
       /* padding: 50px 40px; */
     }
@@ -197,6 +200,8 @@ input{
     box-sizing: border-box;
 }
 .input-container{
+  margin-top: 10px;
+  background-color: #b0d4b8;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132);
   padding: 10px;
   border-radius: 10px;
@@ -207,6 +212,7 @@ input{
 } 
 
 .algorithms-container{
+  display: flex;
   /* background-color: white;
   border-radius: 10px;
   justify-content: space-between;
@@ -229,7 +235,11 @@ input{
 }
 
 .container{
-    margin-top: 200px;
+    width: 78%;
+    overflow-x: scroll;
+    transform: scale(1.2);
+    margin-top: 20px;
+    margin-left: 13%;
     padding-left: 20px;
     padding-right: 30px;
     background-position:center;
@@ -244,6 +254,7 @@ input{
 } */
 
 .page-container {
+  margin-top: 100px;
   display: flex;
   overflow: visible;
   flex-wrap: nowrap;
@@ -293,7 +304,6 @@ input{
 }
 .box_bit{
     width: 1130px; /* edited */
-
     margin-top: 20px;
     /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.132) */
 
@@ -331,11 +341,10 @@ input{
 .frame-rows {
   background-color: #e0e0e0;
   padding: 10px;
-  margin: 4px;
   border: 1px solid #999;
   border-radius: 4px;
   text-align: center;
-  width: 40px;
+  width: 3%;
   font-weight: bold;
   font-size: 14px;
 }
@@ -343,11 +352,10 @@ input{
 .bit-rows {
   background-color: #e0e0e0;
   padding: 10px;
-  margin: 4px;
   border: 1px solid #999;
   border-radius: 4px;
   text-align: center;
-  width: 40px;
+  width: 3%;
   font-weight: bold;
   font-size: 14px;
 }
@@ -428,17 +436,31 @@ input{
   font-weight: bold;
 }
 
+
 #run-btn{
-  border-radius: 10px;
-  background-color: #90a4ae;
+  font-family: "Georgia", serif;
+  border: 2px solid rgb(213, 59, 59);
+  color: rgb(213, 59, 59);
+  border-radius: 6px;
+  background-color: #eae7d6;
+  /* background-color: #90a4ae; */
   width: 100px;
-  margin: 20px;
-  font-size: 15px;
+  padding: 6px;
+  margin-top: 5%;
+  margin-left: 40%;
+  font-size: 16px;
   transition-duration: 200ms;
+  cursor: pointer;
   transition-property: background-color;
+  box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.132);
+
+  
+  
 }
 #run-btn:hover{
-  background-color: chocolate;
+  color: white;
+  background-color: rgb(213, 59, 59);
+  border: 2px solid rgb(213, 59, 59) ;
 }
 
 canvas {
@@ -452,6 +474,10 @@ canvas {
 
 #disk.show {
   display: block;
+}
+.table-process,th,td{
+  border: 1px solid #000;
+  border-collapse: collapse;
 }
 
 @media (max-width: 430px)
