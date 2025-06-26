@@ -1,8 +1,8 @@
 'use strict'
 
-import { renderPages, renderFrame, renderPageSteps, renderBit, renderIndex, renderDiskSteps, renderProcessSteps, renderReadyQueue , renderResult} from './handlers/render.js'
+import { renderPages, renderFrame, renderPageSteps, renderBit, renderIndex, renderDiskSteps, renderProcessSteps, renderReadyQueueFCFS, renderReadyQueue , renderResult, renderResult2, renderProcessStepsFCFS, renderReadyQueueSJF, renderReadyQueueSRTF} from './handlers/render.js'
 import { runAlgorithms } from './handlers/Algorithms.js'
-import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc, processInputFunc } from './handlers/Input.js'
+import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc, processInputFunc, quantumInputFunc } from './handlers/Input.js'
 import drawLine from './handlers/drawLine.js';
 
 let pages = [];
@@ -21,6 +21,8 @@ window.onload = function() {
         burstInput: document.getElementById('burstInput'),
         processDisplay: document.getElementById('process'),
         arrivalInput: document.getElementById('arrivalInput'),
+        quantumInput: document.getElementById('quantumInput'),
+        quantumDisplay: document.getElementById('quantum'),
         directionInput: document.getElementById('directionInput'),
         readyQueueDisplay: document.getElementById('ready-queue'),
         resultDisplay: document.getElementById('result'),
@@ -37,6 +39,7 @@ window.onload = function() {
     queueInputFunc(DOM.queueInput, drawLineInstance);
     headInputFunc(DOM.headInput, drawLineInstance);
     processInputFunc(DOM.burstInput, DOM.arrivalInput, DOM.processDisplay);
+    quantumInputFunc(DOM.quantumInput, DOM.quantumDisplay);
 
     DOM.runbtn.addEventListener('click', () => {
         let frameSize = parseInt(DOM.frameInput.value || DOM.frameDisplay.childElementCount, 10);
@@ -45,9 +48,10 @@ window.onload = function() {
         let direction = DOM.directionInput.value;
         let burstTime = (DOM.burstInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
         let arrivalTime = (DOM.arrivalInput.value).split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+        let quantum = parseInt(DOM.quantumInput.value);
         const minTrack = 0;
         const maxTrack = 199;
-        let result = runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack, maxTrack, burstTime, arrivalTime, algorithms: selectedAlgorithm});
+        let result = runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack, maxTrack, burstTime, arrivalTime, quantum, algorithms: selectedAlgorithm});
 
         const pageAlgorithms = ['FIFO', 'LRU' ,'OPTIMAL', 'CLOCK'];
         const diskAlgorithms = ['FCFS_disk', 'SSTF', 'SCAN', 'CSCAN', 'LOOK', 'CLOOK'];
@@ -58,9 +62,23 @@ window.onload = function() {
         }else if(diskAlgorithms.includes(selectedAlgorithm)) {
             renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue, 700);
         }else if(processAlgorithms.includes(selectedAlgorithm)) {
-            renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime, arrivalTime, 500);
-            renderReadyQueue(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
-            renderResult(result.waitingTimes, result.turnarroundTimes, DOM.resultDisplay)
+            if(selectedAlgorithm === 'FCFS_process') {
+                renderProcessStepsFCFS(result.steps, 'myCanvas', drawLineInstance, burstTime, arrivalTime, 500);
+                renderReadyQueueFCFS(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
+                renderResult(result.waitingTimes, result.turnaroundTimes, DOM.resultDisplay);
+            }else if(selectedAlgorithm === 'SJF') {
+                renderProcessStepsFCFS(result.steps, 'myCanvas', drawLineInstance, burstTime, arrivalTime, 500);
+                renderReadyQueueSJF(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
+                renderResult(result.waitingTimes, result.turnaroundTimes, DOM.resultDisplay);
+            }else if(selectedAlgorithm === 'SRTF') {
+                renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime, arrivalTime, 500);
+                renderReadyQueueSRTF(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
+                renderResult2(result.waitingTimes, result.turnaroundTimes, result.responseTimes, DOM.resultDisplay);
+            }else {
+                renderProcessSteps(result.steps, 'myCanvas', drawLineInstance, burstTime, arrivalTime, 500);
+                renderReadyQueue(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
+                renderResult2(result.waitingTimes, result.turnaroundTimes, result.responseTimes, DOM.resultDisplay);
+            }
         }
     });
 
@@ -94,14 +112,10 @@ window.onload = function() {
                 if(diskId.includes(id)) {
                     DOM.inputGroupDisk.style.display = 'block';
                     DOM.inputContainer.style.display = 'block';
-                    drawLineInstance.setAlgo('disk');
-                    drawLineInstance.clear();
                     canvas.style.display = 'block';
                 }else if(processId.includes(id)){
                     DOM.inputGroupProcess.style.display = 'block';
                     DOM.inputContainer.style.display = 'block';
-                    drawLineInstance.setAlgo('process');
-                    drawLineInstance.clear();
                     canvas.style.display = 'block';
                 }else if(pageId.includes(id)){
                     DOM.inputGroupPage.style.display = 'block';

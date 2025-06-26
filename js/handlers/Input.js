@@ -121,3 +121,17 @@ export function processInputFunc(burstInput, arrivalInput, processDisplay) {
         }
     });
 }
+
+export function quantumInputFunc(quantumInput, quantumDisplay) {
+    quantumInput.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') {
+            e.preventDefault();
+            let quantum = parseInt(quantumInput.value);
+            if(!isNaN(quantum) && quantum > 0) {
+                quantumInput.value = quantum;
+                quantumDisplay.innerText = `Quantum: ${quantum}`;
+                quantumDisplay.style.display = 'block';
+            }
+        }
+    });
+}

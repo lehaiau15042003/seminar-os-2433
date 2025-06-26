@@ -21,7 +21,7 @@ function CLOOK(queue, headStart, direction) {
         steps.push({
             from: current,
             to: track,
-            distance: distance
+            distance: distance 
         });
         totalMove += distance;
         current = track;

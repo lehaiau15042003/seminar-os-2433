@@ -15,7 +15,7 @@ import SJF from '../algorithms/ProcessScheduling/SJF.js'
 import SRTF from '../algorithms/ProcessScheduling/SRTF.js'
 import RR from '../algorithms/ProcessScheduling/RR.js'
 
-export function runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack = 0, maxTrack = 199, burstTime, arrivalTime,algorithms: selectedAlgorithm}){
+export function runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack = 0, maxTrack = 199, burstTime, arrivalTime, quantum, algorithms: selectedAlgorithm}){
     switch(selectedAlgorithm) {
         case "FIFO":
             return FIFO(pages, frameSize);
@@ -39,12 +39,12 @@ export function runAlgorithms({pages, frameSize, queue, headStart, direction, mi
             return CLOOK(queue, headStart, direction);
         case "FCFS_process":
             return FCFS_process(burstTime, arrivalTime);
-        case "SRTF":
-            return SRTF(burstTime);
         case "SJF":
-            return SJF(burstTime);
+            return SJF(burstTime, arrivalTime);
+        case "SRTF":
+            return SRTF(burstTime, arrivalTime);
         case "RR":
-            return RR(burstTime, quantum);
+            return RR(burstTime, quantum, arrivalTime);
         default:
             return null;
     }
