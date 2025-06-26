@@ -3,12 +3,13 @@
 function FCFS_process(burstTime, arrivalTime = []) {
     let steps = [];
     let timeLine = [];
+    let waitingTime = [];
+    let turnaroundTime = [];
+
     let currentTime = 0;
     let totalResponseWaitingTime = 0;
-    let totalTime = 0;
+    let totalTurnaroundlTime = 0;
 
-    let waitingTime = [];
-    let turnarroundTime = [];
 
     for(let i = 0; i < burstTime.length; i++) {
         let bt = burstTime[i];
@@ -22,7 +23,7 @@ function FCFS_process(burstTime, arrivalTime = []) {
         let end = start + bt;
         
         let responseWaitingTime = start - arrival;
-        let time = end - arrival;
+        let turnaround = end - arrival;
 
         steps.push({
             process: `P${i + 1}`,
@@ -48,20 +49,20 @@ function FCFS_process(burstTime, arrivalTime = []) {
         }
 
         waitingTime.push(responseWaitingTime);
-        turnarroundTime.push(time);
+        turnaroundTime.push(turnaround);
         totalResponseWaitingTime += responseWaitingTime;
-        totalTime += time; 
+        totalTurnaroundlTime += turnaround; 
         currentTime = end;
     }
     let avgResponseWaitingTime = totalResponseWaitingTime / burstTime.length;
-    let avgTime = totalTime / burstTime.length;
+    let avgTime = totalTurnaroundlTime / burstTime.length;
     return {
         steps,
         timeLine,
         avgResponseWaitingTime,
         avgTime,
         waitingTimes: waitingTime,
-        turnarroundTimes: turnarroundTime
+        turnaroundTimes: turnaroundTime
     };
 }
 

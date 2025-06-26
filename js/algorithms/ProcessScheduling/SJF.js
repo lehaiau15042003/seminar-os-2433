@@ -1,34 +1,39 @@
-'use strict'
+'use strict';
 
-function SJF(burstTime, arrivalTime) {
+function SJF(burstTime, arrivalTime = []) {
     let steps = [];
     let timeLine = [];
     let currentTime = 0;
 
-    let isComplete = [];
+    const n = burstTime.length;
+    let isComplete = Array(n).fill(false);
+    let waitingTime = Array(n).fill(0);
+    let turnaroundTime = Array(n).fill(0);
 
-    let waitingTime = [];
-    let turnaroundTime = [];
     let totalWaiting = 0;
     let totalTurnaround = 0;
-    let complete = 0;
+    let completed = 0;
 
-    for(let i = 0; i < burstTime.length; i++) {
-        isComplete[i] = false;
-    }
+    let realQueue = [];
 
-    while (complete < burstTime.length) {
-        let idx = -1;
-        let minBurst = Number.MAX_SAFE_INTEGER;
-
-        for (let i = 0; i < burstTime.length; i++) {
-            if (!isComplete[i] && arrivalTime[i] <= currentTime && burstTime[i] < minBurst) {
-                minBurst = burstTime[i];
-                idx = i;
+    while (completed < n) {
+        for (let i = 0; i < n; i++) {
+            if (!isComplete[i] && arrivalTime[i] === currentTime) {
+                realQueue.push(i);
             }
         }
 
-        if (idx === -1) {
+        let selected = -1;
+        let minBurst = Infinity;
+        for (let i = 0; i < realQueue.length; i++) {
+            let idx = realQueue[i];
+            if (burstTime[idx] < minBurst) {
+                minBurst = burstTime[idx];
+                selected = idx;
+            }
+        }
+
+        if (selected === -1) {
             timeLine.push({
                 time: currentTime,
                 running: null,
@@ -36,48 +41,51 @@ function SJF(burstTime, arrivalTime) {
             });
             currentTime++;
         } else {
-            let queue = [];
-            for (let j = 0; j < burstTime.length; j++) {
-                if (j !== idx && arrivalTime[j] <= currentTime && !isComplete[j]) {
-                    queue.push(`P${j + 1}`);
+            let start = currentTime;
+            let end = start + burstTime[selected];
+
+            for (let t = start; t < end; t++) {
+                for (let i = 0; i < n; i++) {
+                    if (!isComplete[i] && arrivalTime[i] === t) {
+                        realQueue.push(i);
+                    }
                 }
-            }
-            for (let t = 0; t < burstTime[idx]; t++) {
+                
+
                 timeLine.push({
-                    time: currentTime + t,
-                    running: `P${idx + 1}`,
-                    ready: queue
+                    time: t,
+                    running: `P${selected + 1}`,
+                    ready
                 });
             }
 
-            let start = currentTime;
-            currentTime += burstTime[idx];
-            let end = currentTime;
-            isComplete[idx] = true;
-            complete++;
+            currentTime = end;
+            isComplete[selected] = true;
+            completed++;
 
-            let turnaround = end - arrivalTime[idx];
-            let waiting = turnaround - burstTime[idx];
+            let turnaround = end - arrivalTime[selected];
+            let waiting = turnaround - burstTime[selected];
+
+            totalTurnaround += turnaround;
+            totalWaiting += waiting;
+            turnaroundTime[selected] = turnaround;
+            waitingTime[selected] = waiting;
 
             steps.push({
-                process: `P${idx + 1}`,
+                process: `P${selected + 1}`,
                 start,
                 end,
-                arrivalTime: arrivalTime[idx]
+                arrivalTime: arrivalTime[selected]
             });
-
-            waitingTime.push(waiting);
-            turnaroundTime.push(turnaround);
-            totalWaiting += waiting;
-            totalTurnaround += turnaround;
+            realQueue = realQueue.filter(i => i !== selected);
         }
     }
 
     return {
         steps,
         timeLine,
-        avgWaitingTime: totalWaiting / burstTime.length,
-        avgTurnaroundTime: totalTurnaround / burstTime.length,
+        avgWaitingTime: totalWaiting / n,
+        avgTurnaroundTime: totalTurnaround / n,
         waitingTimes: waitingTime,
         turnaroundTimes: turnaroundTime
     };

@@ -18,22 +18,17 @@ function drawLine(canvasId) {
     const request = [];
     let headStart = null;
     let pathSteps = [];
-    let mode = 'disk';
     let dataBurstTime = [];
     function draw() {
         ctx.clearRect(0, 0, width, height);
-        if(mode === 'disk') {
-            renderRequest(ctx, request, headStart, width, height, margin, scaleDisk, trackMax, pathSteps);
-        }else if(mode === 'process') {
-            renderTimeLine(ctx, width, height, margin, scaleProcess, maxTime);
-        }
+        renderRequest(ctx, request, headStart, width, height, margin, scaleDisk, trackMax, pathSteps);
     }
 
     return {
         draw,
         clear: () => {
             request.length = 0;
-            draw();
+            headStart = null;
         },
 
         setHeadStart: (val) => {
@@ -51,13 +46,6 @@ function drawLine(canvasId) {
         setSteps: (steps) => {
             pathSteps = steps;
             draw();
-        },
-
-        setAlgo: (val) => {
-            if(val === 'disk' || val === 'process') {
-                mode = val;
-                draw();
-            }
         },
 
         get headStart() {
