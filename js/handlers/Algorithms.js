@@ -15,7 +15,12 @@ import SJF from '../algorithms/ProcessScheduling/SJF.js'
 import SRTF from '../algorithms/ProcessScheduling/SRTF.js'
 import RR from '../algorithms/ProcessScheduling/RR.js'
 
-export function runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack = 0, maxTrack = 199, burstTime, arrivalTime, quantum, algorithms: selectedAlgorithm}){
+import FCFS_IO from '../algorithms/CPU-IO/FCFS_IO.js'
+import SJF_IO from '../algorithms/CPU-IO/SJF_IO.js'
+import SRTF_IO from '../algorithms/CPU-IO/SRTF_IO.js'
+import RR_IO from '../algorithms/CPU-IO/RR_IO.js'
+
+export function runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack = 0, maxTrack = 199, burstTime, arrivalTime, quantum, burstTimeList, arrivalTimeIO, IOUsing, algorithms: selectedAlgorithm}){
     switch(selectedAlgorithm) {
         case "FIFO":
             return FIFO(pages, frameSize);
@@ -45,6 +50,14 @@ export function runAlgorithms({pages, frameSize, queue, headStart, direction, mi
             return SRTF(burstTime, arrivalTime);
         case "RR":
             return RR(burstTime, quantum, arrivalTime);
+        case "FCFS_IO":
+            return FCFS_IO(burstTimeList, arrivalTimeIO, IOUsing);
+        case "SJF_IO":
+            return SJF_IO(burstTimeList, arrivalTimeIO, IOUsing);
+        case "SRTF_IO":
+            return SRTF_IO(burstTimeList, arrivalTimeIO);
+        case "RR_IO":
+            return RR_IO(burstTimeList, arrivalTimeIO, quantum);
         default:
             return null;
     }

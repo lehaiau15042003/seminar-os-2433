@@ -1,6 +1,6 @@
 'use strict'
 
-import { renderTable } from "./render.js";
+import { renderTableCPU, renderTablecpuIO } from "./render.js";
 
 export function pageInputFunc(pageInput, pageDisplay, pages, indexDisplay,renderPages, renderIndex) {
     pageInput.addEventListener('input', () => {
@@ -105,7 +105,7 @@ export function processInputFunc(burstInput, arrivalInput, processDisplay) {
                 .map(s => parseInt(s.trim()))
                 .filter(n => !isNaN(n));
 
-            renderTable(burstTimes, arrivalTimes, processDisplay);
+            renderTableCPU(burstTimes, arrivalTimes, processDisplay);
         }
     });
 
@@ -117,7 +117,7 @@ export function processInputFunc(burstInput, arrivalInput, processDisplay) {
                 .map(s => parseInt(s.trim()))
                 .filter(n => !isNaN(n));
 
-            renderTable(burstTimes, arrivalTimes, processDisplay);
+            renderTableCPU(burstTimes, arrivalTimes, processDisplay);
         }
     });
 }
@@ -131,6 +131,108 @@ export function quantumInputFunc(quantumInput, quantumDisplay) {
                 quantumInput.value = quantum;
                 quantumDisplay.innerText = `Quantum: ${quantum}`;
                 quantumDisplay.style.display = 'block';
+            }
+        }
+    });
+}
+
+export function quantumInputIOFunc(quantumInputIO, quantumDisplay) {
+    quantumInputIO.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') {
+            e.preventDefault();
+            let quantum = parseInt(quantumInputIO.value);
+            if(!isNaN(quantum) && quantum > 0) {
+                quantumInputIO.value = quantum;
+                quantumDisplay.innerText = `Quantum: ${quantum}`;
+                quantumDisplay.style.display = 'block';
+            }
+        }
+    });
+}
+
+export function processInputIOFunc(burstInputIO, arrivalInputIO, IOUsingInput, burstTimeList, arrivalTimeIO, IOUsing, processDisplay) {
+    burstInputIO.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+            e.preventDefault();
+            let burstValue = burstInputIO.value.trim();
+            if (burstValue !== '') {
+                burstInputIO.value = burstValue + ', ';
+            }
+        }
+    });
+
+    arrivalInputIO.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+            e.preventDefault();
+            let arrivalValue = arrivalInputIO.value.trim();
+            if (arrivalValue !== '') {
+                arrivalInputIO.value = arrivalValue + ', ';
+            }
+        }
+    });
+
+    IOUsingInput.addEventListener('keydown', (e) => {
+        if(e.key === ' ') {
+            e.preventDefault();
+            let IOValue = IOUsingInput.value.trim();
+            if(IOValue !== '') {
+                IOUsingInput.value = IOValue + ', ';
+            }
+        }
+    });
+
+    burstInputIO.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            let burstTimes = burstInputIO.value
+                .split(',')
+                .map(s => parseInt(s.trim()))
+                .filter(n => !isNaN(n));
+
+            if(burstTimes.length > 0) {
+                burstTimeList.push(burstTimes);
+                renderTablecpuIO(burstTimeList, arrivalTimeIO, IOUsing, processDisplay);
+                burstInputIO.value = '';
+            }
+        }
+    });
+
+    arrivalInputIO.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            arrivalTimeIO = arrivalInputIO.value
+                .split(',')
+                .map(s => parseInt(s.trim()))
+                .filter(n => !isNaN(n));
+
+            renderTablecpuIO(burstTimeList, arrivalTimeIO, IOUsing, processDisplay);
+            arrivalInputIO.value = '';
+            }
+    });
+
+    IOUsingInput.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') {
+            e.preventDefault();
+            IOUsing = IOUsingInput.value
+                .split(',')
+                .map(s => parseInt(s.trim()))
+                .filter(n => !isNaN(n));
+
+            renderTablecpuIO(burstTimeList, arrivalTimeIO, IOUsing, processDisplay);
+            IOUsingInput.value = '';
+        }
+    });
+}
+
+export function numberInputIOFunc(numberInputIO, numberIODisplay) {
+    numberInputIO.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') {
+            e.preventDefault();
+            let number = numberInputIO.value.trim();
+            if(number > 0) {
+                numberInputIO.value = number;
+                numberIODisplay.innerText = `Number I/O: ${number}`;
+                numberIODisplay.style.display = 'block';
             }
         }
     });

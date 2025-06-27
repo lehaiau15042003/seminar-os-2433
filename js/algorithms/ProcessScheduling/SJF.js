@@ -14,19 +14,19 @@ function SJF(burstTime, arrivalTime = []) {
     let totalTurnaround = 0;
     let completed = 0;
 
-    let realQueue = [];
+    let queue = [];
 
     while (completed < n) {
         for (let i = 0; i < n; i++) {
             if (!isComplete[i] && arrivalTime[i] === currentTime) {
-                realQueue.push(i);
+                queue.push(i);
             }
         }
 
         let selected = -1;
         let minBurst = Infinity;
-        for (let i = 0; i < realQueue.length; i++) {
-            let idx = realQueue[i];
+        for (let i = 0; i < queue.length; i++) {
+            let idx = queue[i];
             if (burstTime[idx] < minBurst) {
                 minBurst = burstTime[idx];
                 selected = idx;
@@ -47,11 +47,11 @@ function SJF(burstTime, arrivalTime = []) {
             for (let t = start; t < end; t++) {
                 for (let i = 0; i < n; i++) {
                     if (!isComplete[i] && arrivalTime[i] === t) {
-                        realQueue.push(i);
+                        queue.push(i);
                     }
                 }
-                
 
+                let ready = queue.filter(i => !isComplete[i]).map(i => `P${i + 1}`);
                 timeLine.push({
                     time: t,
                     running: `P${selected + 1}`,
@@ -77,7 +77,7 @@ function SJF(burstTime, arrivalTime = []) {
                 end,
                 arrivalTime: arrivalTime[selected]
             });
-            realQueue = realQueue.filter(i => i !== selected);
+            queue = queue.filter(i => i !== selected);
         }
     }
 

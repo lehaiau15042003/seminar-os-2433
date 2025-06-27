@@ -46,6 +46,16 @@
                         <li><a href="#rr" data-name="rr" >RR</a></li>
                     </ul>
                 </div>
+                <div class="dropdown">
+                    <input type="checkbox" id="toggle-process-io" />
+                    <label for="toggle-process-io">CPU Scheduling With I/O</label>
+                    <ul>
+                        <li><a href="#fcfs_io" data-name="fcfs_io" >FCFS</a></li>
+                        <li><a href="#sjf_io" data-name="sjf_io" >SJF</a></li>
+                        <li><a href="#srtf_io" data-name="srtf_io" >SRTF</a></li>
+                        <li><a href="#rr_io" data-name="rr_io" >RR</a></li>
+                    </ul>
+                </div>
             </div>
             
         </nav>
@@ -83,9 +93,28 @@
                     <label for="quantumInput">Quantum</label>
                     <input id="quantumInput" type="text">
                 </div>
+
+                <div class="input-group cpu-io">
+                    <label for="burstInputIO">Burst-I/O list</label>
+                    <input id="burstInputIO" type="text">
+
+                    <label for="arrivalInputIO">Arrival Time</label>
+                    <input id="arrivalInputIO" type="text">
+
+                    <label for="IOUsingInput">I/O Using</label>
+                    <input  id="IOUsingInput" type="text">
+
+                    <label for="quantumInputIO">Quantum</label>
+                    <input id="quantumInputIO" type="number">
+
+                    <label for="numberInputIO">Number I/O</label>
+                    <input id="numberInputIO" type="number">
+                </div>
+
             </div>
             <div id="select-algo"></div>
             <div id="quantum"></div>
+            <div id="numberIO"></div>
             <div class="header">
                 <div class="algorithms-container">
                     <div class="item1">
@@ -107,24 +136,38 @@
                         </article>
                     </div>
                     <div class="item3">
-                        <article data-name="processScheduling" class="processScheduling ">
+                        <article data-name="processScheduling" class="processScheduling">
                             <section id="fcfs_process" class="fcfs_process" data-value="FCFS_process"></section>
                             <section id="sjf" class="sjf" data-value="SJF"></section>
                             <section id="srtf" class="srtf" data-value="SRTF"></section>
                             <section id="rr" class="rr" data-value="RR"></section>
                         </article>
                     </div>
+                    <div class="item4">
+                        <article data-name="processSchedulingIO" class="processSchedulingIO">
+                            <section id="fcfs_io" class="fcfs_io" data-value="FCFS_IO"></section>
+                            <section id="sjf_io" class="sjf_io" data-value="SJF_IO"></section>
+                            <section id="srtf_io" class="srtf_io" data-value="SRTF_IO"></section>
+                            <section id="rr_io" class="rr_io" data-value="RR_IO"></section>
+                        </article>
+                    </div>
                 </div>
                 <div class="process-container">
                     <div id="process"></div>
-                    <div id="canvas" style="display: none;">
+                    <div id="canvasCPU" style="display: none;">
                         <canvas id="myCanvas" width="900" height="400"></canvas>
+                    </div>
+                    <div class="cpu-io-container">
+                        <div id="canvasIO">
+                            <canvas id="myCanvasIO" width="900" height="400"></canvas>
+                        </div>
                     </div>
                     <div id="ready-queue" class="ready-queue-container"></div>
                     <div class="result-display">
                         <div id="result" class="result-container"></div>
                     </div>
                 </div>
+
 
                 <div class="container">
                     <div class="page-container">
