@@ -395,6 +395,11 @@ canvas {
   margin: 50px;
 }
 
+#canvasCPU,
+#canvasIO {
+  display: none;
+}
+
 #disk {
   display: none;
 }
@@ -541,7 +546,20 @@ canvas {
   }
 }
 
-#quantum {
+#quantum{
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background-color: #f0f8ff;
+  border: 1px solid #007acc;
+  border-radius: 10px;
+  color: #007acc;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#numberIO {
   margin-bottom: 20px;
   padding: 8px 16px;
   background-color: #f0f8ff;

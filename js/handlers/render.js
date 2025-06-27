@@ -282,7 +282,7 @@ export function renderTimeLine(ctx, width, height, margin, scaleProcess, maxTime
     }
 }
 
-export function renderProcessStepsFCFS(steps, canvasId, drawLineInstance, burstTime = [], arrivalTime = [], speed) {
+export function renderProcessStepsFCFS(steps, canvasId, burstTime = [], arrivalTime = [], speed) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
@@ -379,7 +379,7 @@ export function renderProcessStepsFCFS(steps, canvasId, drawLineInstance, burstT
 }
 
 
-export function renderProcessSteps(steps, canvasId, drawLineInstance, burstTime = [], arrivalTime = [], speed = 500) {
+export function renderProcessSteps(steps, canvasId, burstTime = [], arrivalTime = [], speed = 500) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
     const height = canvas.height;
@@ -783,7 +783,7 @@ export function renderResult2(waitingTimes, turnarroundTimes, responseTimes, res
     resultDisplay.classList.add('display');
 }
 
-export function renderTable(burstTimes, arrivalTimes, processDisplay) {
+export function renderTableCPU(burstTimes, arrivalTimes, processDisplay) {
     const totalProcess = Math.max(burstTimes.length, arrivalTimes.length);
     if (totalProcess === 0) return;
     const table = document.createElement('table');
@@ -808,4 +808,119 @@ export function renderTable(burstTimes, arrivalTimes, processDisplay) {
 
     processDisplay.innerHTML = '';
     processDisplay.appendChild(table);
+}
+
+export function renderTablecpuIO(burstLists, arrivalTime, IOUsing, processDisplay) {
+    if (!burstLists.length) return;
+
+    let table = document.createElement('table');
+    table.className = 'table-process';
+
+    let maxLen = Math.max(...burstLists.map(list => list.length));
+
+    let header = table.insertRow();
+    let firstTh = document.createElement('th');
+    firstTh.innerText = 'Process';
+    header.appendChild(firstTh);
+
+    let thArrival = document.createElement('th');
+    thArrival.innerText = 'Arrival Time';
+    header.appendChild(thArrival);
+
+    let thIO = document.createElement('th');
+    thIO.innerText = 'I/O Using';
+    header.appendChild(thIO);
+
+    for (let i = 0; i < maxLen; i++) {
+        const th = document.createElement('th');
+        th.innerText = i % 2 === 0 ? 'CPU' : 'I/O';
+        header.appendChild(th);
+    }
+
+    for (let i = 0; i < burstLists.length; i++) {
+        let row = table.insertRow();
+        let tdName = row.insertCell();
+        tdName.innerText = `P${i + 1}`;
+
+        let tdArrival = row.insertCell();
+        tdArrival.innerText = arrivalTime[i] !== undefined ? arrivalTime[i] : '';
+
+        let tdIO = row.insertCell();
+        tdIO.innerText = IOUsing[i] !== undefined ? IOUsing[i] : '';
+
+        let burstList = burstLists[i];
+        for (let j = 0; j < maxLen; j++) {
+            const td = row.insertCell();
+            td.innerText = burstList[j] !== undefined ? burstList[j] : '';
+        }
+    }
+
+    processDisplay.innerHTML = '';
+    processDisplay.appendChild(table);
+}
+
+export function renderIO(steps, canvascpuId, canvasioId, burstTimeList, arrivalTimeIO, speed = 500) {
+    const canvasCPU = document.getElementById(canvascpuId);
+    const canvasIO = document.getElementById(canvasioId);
+    const ctxCPU = canvasCPU.getContext('2d');
+    const ctxIO = canvasIO.getContext('2d');
+    
+    const margin = 50;
+    const rowHeight = 40;
+    const rowGap = 20;
+
+    console.log(steps);
+
+    let maxTime = Math.max(...steps.map(s => s.end), 20);
+    const width = canvasCPU.width;
+    const height = canvasCPU.height;
+    const scale = (width - 2 * margin) / maxTime;
+
+    renderTimeLine(ctxCPU, width, height, margin, scale, maxTime);
+    renderTimeLine(ctxIO, width, height, margin, scale, maxTime);
+    
+    arrivalTimeIO.forEach((t, i) => {
+        const x = margin + t * scale;
+        ctxIO.strokeStyle = '#ff0000';
+        ctxIO.beginPath();
+        ctxIO.moveTo(x, margin);
+        ctxIO.lineTo(x, height - margin);
+        ctxIO.stroke();
+    
+        ctxIO.fillText(`Arr ${i}`, x + 5, margin + 10 + i * 15);
+    });
+
+    let currentStep = 0;
+
+    function showStep() {
+        if (currentStep >= steps.length) return;
+
+        const step = steps[currentStep];
+        const ctx = step.type === 'CPU' ? ctxCPU : ctxIO;
+        const yOffset = margin + 45 + (parseInt(step.process.slice(1)) - 1) * (rowHeight + rowGap);
+        const xStart = margin + step.start * scale;
+        const xEnd = margin + step.end * scale;
+
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(step.process, margin - 10, yOffset);
+
+        ctx.strokeStyle = step.type === 'CPU' ? '#007bff' : '#28a745';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(xStart, yOffset);
+        ctx.lineTo(xEnd, yOffset);
+        ctx.stroke();
+
+        ctx.fillStyle = '#000';
+        ctx.textAlign = 'center';
+        ctx.fillText(`${step.start}`, xStart, yOffset - 10);
+        ctx.fillText(`${step.end}`, xEnd, yOffset - 10);
+
+        currentStep++;
+        setTimeout(showStep, speed);
+    }
+
+    showStep();
 }
