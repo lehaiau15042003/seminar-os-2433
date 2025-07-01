@@ -26,7 +26,11 @@ function RR(burstTime, quantum, arrivalTime = []) {
 
     while (complete < burstTime.length) {
         if (queue.length === 0) {
-            timeLine.push({ time: currentTime, running: null, ready: [] });
+            timeLine.push({ 
+                time: currentTime, 
+                running: null, 
+                ready: [] 
+            });
             currentTime++;
 
             for (let i = 0; i < burstTime.length; i++) {
@@ -35,8 +39,6 @@ function RR(burstTime, quantum, arrivalTime = []) {
                     temp[i] = true;
                 }
             }
-
-            continue;
         }
 
         let idx = queue.shift();
@@ -73,7 +75,6 @@ function RR(burstTime, quantum, arrivalTime = []) {
             }
         }
         
-
         for (let i = 0; i < burstTime.length; i++) {
             if (!temp[i] && arrivalTime[i] <= currentTime) {
                 queue.push(i);

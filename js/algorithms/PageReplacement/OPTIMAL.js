@@ -5,9 +5,9 @@ function OPTIMAL(pages, frameSize) {
     let pageFault = 0;
     let steps = [];
     pages.forEach((page, idx) => {
-        const isFault = !frame.includes(page);
+        let isFault = !frame.includes(page);
         let replaceIndex = -1;
-        if(isFault){
+        if(isFault) {
             pageFault++;
             if(frame.length < frameSize) {
                 frame.push(page);
@@ -16,8 +16,16 @@ function OPTIMAL(pages, frameSize) {
                 let indexPage = -1;
                 let farthest = -1;
                 for(let i = 0; i < frame.length; i++) {
-                    const value = frame[i];
-                    const future = pages.slice(idx + 1).indexOf(value);
+                    let value = frame[i];
+                    let future = -1;
+                    
+                    for(let j = idx + 1; j < pages.length; j++) {
+                        if(pages[j] === value) {
+                            future = j;
+                            break;
+                        }
+                    }
+
                     if(future === -1) {
                         indexPage = i;
                         break;
@@ -30,11 +38,18 @@ function OPTIMAL(pages, frameSize) {
                 replaceIndex = indexPage;
             }
         }
-        console.log(frame);
-        const futureIndex = frame.map(f => {
-            let future = pages.slice(idx + 1).indexOf(f);
-            return future === -1 ? '∞' : future + idx + 1 + 1;
-        });
+
+        let futureIndex = [];
+        for(let i = 0; i < frame.length; i++) {
+            let future = -1;
+            for(let j = idx + 1; j < pages.length; j++) {
+                if(pages[j] === frame[i]) {
+                    future = j;
+                    break;
+                }
+            }
+            futureIndex.push(future === -1 ? '∞' : future + 1);
+        }
 
         steps.push({
             index: replaceIndex,

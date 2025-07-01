@@ -7,7 +7,7 @@ function CLOCK(pages, frameSize) {
     let bit = new Array(frameSize).fill(0);
     let steps = [];
     pages.forEach((page) => {
-        const isFault = !frame.includes(page);
+        let isFault = !frame.includes(page);
         let pageIndex = frame.indexOf(page);
         let replaceIndex = -1;
         let currentPointer = -1;
@@ -18,12 +18,13 @@ function CLOCK(pages, frameSize) {
                 frame.push(page)
                 replaceIndex = frame.length - 1;
                 currentPointer = replaceIndex;
-                nextPointer = (currentPointer + 1) % frameSize;
+                pointer = (replaceIndex + 1) % frameSize;
+                nextPointer = pointer;
             }else {
                 while(true){
                     if(bit[pointer] === 0){
-                        replaceIndex = pointer;
                         currentPointer = pointer;
+                        replaceIndex = currentPointer;
                         frame[pointer] = page;
                         pointer = (pointer + 1) % frameSize;
                         nextPointer = pointer;

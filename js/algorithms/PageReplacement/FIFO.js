@@ -6,7 +6,7 @@ function FIFO(pages, frameSize) {
     let pointer = 0;
     let steps = [];
     pages.forEach((page) =>{
-        const isFault = !frame.includes(page);
+        let isFault = !frame.includes(page);
         let replaceIndex = -1;
         if(isFault){
             if(frame.length < frameSize){

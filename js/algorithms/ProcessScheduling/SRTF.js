@@ -3,12 +3,12 @@
 function SRTF(burstTime, arrivalTime = []) {
     let steps = [];
     let timeLine = [];
-    let currentTime = 0;
 
+    let currentTime = 0;
+    let remainingTime = [...burstTime];
     let start = Array(burstTime.length).fill(-1);
     let end = Array(burstTime.length).fill(0);
     let isComplete = Array(burstTime.length).fill(false);
-    let remainingTime = [...burstTime];
 
     let responseTime = Array(burstTime.length).fill(-1);
     let waitingTime = Array(burstTime.length).fill(0);
@@ -17,49 +17,42 @@ function SRTF(burstTime, arrivalTime = []) {
     let totalResponseTime = 0;
     let totalWaitingTime = 0;
     let totalTurnaroundTime = 0;
+
+    let complete = 0;
+    let queue = [];
+
     let lastRunning = -1;
     let runStart = -1;
-    let complete = 0;
-
-    let readyQueue = [];
 
     while (complete < burstTime.length) {
-        for (let j = 0; j < burstTime.length; j++) {
-            if (
-                arrivalTime[j] === currentTime &&
-                !isComplete[j] &&
-                !readyQueue.includes(j)
-            ) {
-                readyQueue.push(j);
+        for (let i = 0; i < burstTime.length; i++) {
+            if (arrivalTime[i] === currentTime && !isComplete[i] && !queue.includes(i)) {
+                queue.push(i);
+            }
+        }
+        let selected = -1;
+        let minTime = Infinity;
+
+        for (let i = 0; i < queue.length; i++) {
+            let idx = queue[i];
+            if (!isComplete[idx] && remainingTime[idx] < minTime) {
+                minTime = remainingTime[idx];
+                selected = idx;
             }
         }
 
-        let idx = -1;
-        let min = Number.MAX_SAFE_INTEGER;
-        for (let i = 0; i < readyQueue.length; i++) {
-            const pid = readyQueue[i];
-            if (!isComplete[pid] && remainingTime[pid] < min) {
-                min = remainingTime[pid];
-                idx = pid;
-            }
-        }
-
-        if (idx === -1) {
+        if (selected === -1) {
             timeLine.push({
                 time: currentTime,
                 running: null,
-                highlight: false,
-                ready: [...readyQueue],
+                ready: [],
                 remainingTime: [...remainingTime]
             });
             currentTime++;
-            continue;
         }
 
-        const highlight = idx !== lastRunning;
-
-        if (highlight) {
-            if (lastRunning !== -1 && runStart !== -1 && runStart !== currentTime) {
+        if (lastRunning !== selected) {
+            if (lastRunning !== -1) {
                 steps.push({
                     process: `P${lastRunning + 1}`,
                     start: runStart,
@@ -68,51 +61,59 @@ function SRTF(burstTime, arrivalTime = []) {
                 });
             }
             runStart = currentTime;
-            lastRunning = idx;
+            lastRunning = selected;
         }
 
-        if (start[idx] === -1) {
-            start[idx] = currentTime;
-            responseTime[idx] = currentTime - arrivalTime[idx];
-            totalResponseTime += responseTime[idx];
+        if (start[selected] === -1) {
+            start[selected] = currentTime;
+            responseTime[selected] = currentTime - arrivalTime[selected];
+            totalResponseTime += responseTime[selected];
         }
 
+        let ready = [];
+        if (start[selected] === currentTime) {
+            ready = queue.map(i => `P${i + 1}`);
+        } else {
+            ready = queue.filter(i => i !== selected).map(i => `P${i + 1}`);
+        }
         timeLine.push({
             time: currentTime,
-            running: idx,
-            highlight,
-            ready: [...readyQueue],
+            running: `P${selected + 1}`,
+            ready: ready,
             remainingTime: [...remainingTime]
         });
 
-        remainingTime[idx]--;
+        remainingTime[selected]--;
         currentTime++;
 
-        if (remainingTime[idx] === 0) {
-            end[idx] = currentTime;
-            isComplete[idx] = true;
+        if (remainingTime[selected] === 0) {
+            end[selected] = currentTime;
+            isComplete[selected] = true;
             complete++;
 
-            const turnaround = end[idx] - arrivalTime[idx];
-            const waiting = turnaround - burstTime[idx];
+            let turnaround = end[selected] - arrivalTime[selected];
+            let waiting = turnaround - burstTime[selected];
 
-            turnaroundTime[idx] = turnaround;
-            waitingTime[idx] = waiting;
-            totalWaitingTime += waiting;
+            turnaroundTime[selected] = turnaround;  
+            waitingTime[selected] = waiting;
+
             totalTurnaroundTime += turnaround;
+            totalWaitingTime += waiting;
 
-            if (runStart !== -1 && runStart !== currentTime) {
-                steps.push({
-                    process: `P${idx + 1}`,
-                    start: runStart,
-                    end: currentTime,
-                    arrivalTime: arrivalTime[idx]
-                });
-            }
+            steps.push({
+                process: `P${selected + 1}`,
+                start: runStart,
+                end: currentTime,
+                arrivalTime: arrivalTime[selected]
+            });
 
             runStart = -1;
             lastRunning = -1;
-            readyQueue = readyQueue.filter(p => p !== idx);
+
+            let removeIndex = queue.indexOf(selected);
+            if (removeIndex !== -1) {
+                queue.splice(removeIndex, 1);
+            }
         }
     }
 

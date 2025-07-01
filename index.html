@@ -63,7 +63,7 @@
             <div class="input-container">
                 <div class="input-group page">
                     <label for="pageInput">Page:</label>
-                    <input id="pageInput" type="number" >
+                    <input id="pageInput" type="text" >
                     
                     <label for="frameInput">Frame:</label>
                     <input id="frameInput" type="number" min="1">
@@ -75,6 +75,9 @@
     
                     <label for="headInput">Head starts at:</label>
                     <input id="headInput" type="number">
+
+                    <label for="trackMaxInput">Track Max:</label>
+                    <input id="trackMaxInput" type="number">
 
                     <label for="directionInput">Direction:</label>
                     <select id="directionInput">
@@ -154,13 +157,11 @@
                 </div>
                 <div class="process-container">
                     <div id="process"></div>
-                    <div id="canvasCPU" style="display: none;">
+                    <div id="canvas" style="display: none;">
                         <canvas id="myCanvas" width="900" height="400"></canvas>
                     </div>
+                    <div id="distance"></div>
                     <div class="cpu-io-container">
-                        <div id="canvasIO">
-                            <canvas id="myCanvasIO" width="900" height="400"></canvas>
-                        </div>
                     </div>
                     <div id="ready-queue" class="ready-queue-container"></div>
                     <div class="result-display">
@@ -182,6 +183,7 @@
                     <div class="box_bit">
                         <div id="bit"></div>
                     </div>
+                    <div id="pageFault"></div>
                 </div>
             </div>
             <button id="run-btn" type="button">Run</button>

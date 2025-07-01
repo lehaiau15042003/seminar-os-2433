@@ -1,13 +1,23 @@
 'use strict'
 
 function SCAN(queue, headStart, direction, minTrack = 0, maxTrack) {
-    const steps = [];
-    const path = [headStart];
-    let current = headStart;
+    let steps = [];
+    let path = [headStart];
+    let current = headStart; 
     let totalMove = 0;
+    
+    let up = [];
+    let down = [];
 
-    let up = queue.filter(t => t > current).sort((a,b) => a - b);
-    let down = queue.filter(t => t < current).sort((a,b) => b - a);
+    for(let i = 0; i < queue.length; i++) {
+        if(queue[i] > headStart) {
+            up.push(queue[i]);
+        }else {
+            down.push(queue[i]);
+        }
+    }
+    up.sort((a, b) => a - b);
+    down.sort((a, b) => b - a);
 
     let pathDirection = [];
     if(direction === 'up') {
