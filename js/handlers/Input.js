@@ -4,7 +4,7 @@ import { renderTableCPU, renderTablecpuIO } from "./render.js";
 
 export function pageInputFunc(pageInput, pageDisplay, pages, indexDisplay,renderPages, renderIndex) {
     pageInput.addEventListener('input', () => {
-        let value = parseInt(pageInput.value, 10);
+        let value = parseInt(pageInput.value);
         if(!isNaN(value)){
             pages.push(value);
             renderPages(pages, pageDisplay);
@@ -25,7 +25,7 @@ export function pageInputFunc(pageInput, pageDisplay, pages, indexDisplay,render
 
 export function frameInputFunc(frameInput, frameDisplay, renderFrame, bitDisplay, renderBit) {
     frameInput.addEventListener('input', () => {
-        let value = parseInt(frameInput.value, 10);
+        let value = parseInt(frameInput.value);
         if(!isNaN(value) && value > 0){
             renderFrame(value,frameDisplay);
             renderBit(value, bitDisplay);
@@ -50,7 +50,7 @@ export function queueInputFunc(queueInput, drawLineInstance) {
             e.preventDefault();
             let queueValue = queueInput.value.trim();
             if(queueValue !== '' ) {
-                let numbers = queueValue.split(',').map(num => parseInt(num.trim(), 10)).filter(num => !isNaN(num));
+                let numbers = queueValue.split(',').map(num => parseInt(num));
                 drawLineInstance.clear();
                 numbers.forEach(track => {
                     drawLineInstance.request.push(track);
@@ -67,9 +67,20 @@ export function headInputFunc(headInput, drawLineInstance) {
             e.preventDefault();
             let input = headInput.value.trim();
             if(input === '') return;
-            let headStart = parseInt(input, 10);
-            if(isNaN(headStart)) return;
+            let headStart = parseInt(input);
             drawLineInstance.setHeadStart(headStart);
+        }     
+    });
+}
+
+export function trackMaxInputFunc(trackMaxInput, drawLineInstance) {
+    trackMaxInput.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter') {
+            e.preventDefault();
+            let input = trackMaxInput.value.trim();
+            if(input === '') return;
+            let trackMax = parseInt(input);
+            drawLineInstance.setTrackMax(trackMax);
         }     
     });
 }
@@ -158,6 +169,16 @@ export function processInputIOFunc(burstInputIO, arrivalInputIO, IOUsingInput, b
             if (burstValue !== '') {
                 burstInputIO.value = burstValue + ', ';
             }
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            let burstTimes = burstInputIO.value
+                .split(',')
+                .map(s => parseInt(s.trim()))
+                .filter(n => !isNaN(n));
+
+            burstTimeList.push(burstTimes);
+            renderTablecpuIO(burstTimeList, arrivalTimeIO, IOUsing, processDisplay);
+            burstInputIO.value = '';
         }
     });
 
@@ -168,61 +189,43 @@ export function processInputIOFunc(burstInputIO, arrivalInputIO, IOUsingInput, b
             if (arrivalValue !== '') {
                 arrivalInputIO.value = arrivalValue + ', ';
             }
-        }
-    });
-
-    IOUsingInput.addEventListener('keydown', (e) => {
-        if(e.key === ' ') {
+        } else if (e.key === 'Enter') {
             e.preventDefault();
-            let IOValue = IOUsingInput.value.trim();
-            if(IOValue !== '') {
-                IOUsingInput.value = IOValue + ', ';
-            }
-        }
-    });
-
-    burstInputIO.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            let burstTimes = burstInputIO.value
+            let values = arrivalInputIO.value
                 .split(',')
                 .map(s => parseInt(s.trim()))
                 .filter(n => !isNaN(n));
 
-            if(burstTimes.length > 0) {
-                burstTimeList.push(burstTimes);
-                renderTablecpuIO(burstTimeList, arrivalTimeIO, IOUsing, processDisplay);
-                burstInputIO.value = '';
-            }
-        }
-    });
-
-    arrivalInputIO.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            arrivalTimeIO = arrivalInputIO.value
-                .split(',')
-                .map(s => parseInt(s.trim()))
-                .filter(n => !isNaN(n));
-
+            arrivalTimeIO.length = 0;
+            arrivalTimeIO.push(...values);
             renderTablecpuIO(burstTimeList, arrivalTimeIO, IOUsing, processDisplay);
             arrivalInputIO.value = '';
-            }
+        }
     });
 
     IOUsingInput.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter') {
+        if (e.key === ' ') {
             e.preventDefault();
-            IOUsing = IOUsingInput.value
+            let IOValue = IOUsingInput.value.trim();
+            if (IOValue !== '') {
+                IOUsingInput.value = IOValue + ', ';
+            }
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            const values = IOUsingInput.value
                 .split(',')
                 .map(s => parseInt(s.trim()))
                 .filter(n => !isNaN(n));
+
+            IOUsing.length = 0;
+            IOUsing.push(...values);
 
             renderTablecpuIO(burstTimeList, arrivalTimeIO, IOUsing, processDisplay);
             IOUsingInput.value = '';
         }
     });
 }
+
 
 export function numberInputIOFunc(numberInputIO, numberIODisplay) {
     numberInputIO.addEventListener('keydown', (e) => {

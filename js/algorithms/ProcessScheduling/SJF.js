@@ -15,18 +15,18 @@ function SJF(burstTime, arrivalTime = []) {
     let completed = 0;
 
     let queue = [];
+    let firstRun = new Set(); 
 
     while (completed < n) {
         for (let i = 0; i < n; i++) {
-            if (!isComplete[i] && arrivalTime[i] === currentTime) {
+            if (!isComplete[i] && arrivalTime[i] <= currentTime && !queue.includes(i)) {
                 queue.push(i);
             }
         }
 
         let selected = -1;
         let minBurst = Infinity;
-        for (let i = 0; i < queue.length; i++) {
-            let idx = queue[i];
+        for (const idx of queue) {
             if (burstTime[idx] < minBurst) {
                 minBurst = burstTime[idx];
                 selected = idx;
@@ -46,12 +46,20 @@ function SJF(burstTime, arrivalTime = []) {
 
             for (let t = start; t < end; t++) {
                 for (let i = 0; i < n; i++) {
-                    if (!isComplete[i] && arrivalTime[i] === t) {
+                    if (!isComplete[i] && arrivalTime[i] <= t && !queue.includes(i)) {
                         queue.push(i);
                     }
                 }
 
-                let ready = queue.filter(i => !isComplete[i]).map(i => `P${i + 1}`);
+                let ready = queue
+                    .map(idx => `P${idx + 1}`);
+
+                    if (firstRun.has(selected)) {
+                        ready = ready.filter(p => p !== `P${selected + 1}`);
+                    } else if (t === start) {
+                        firstRun.add(selected);
+                    }
+
                 timeLine.push({
                     time: t,
                     running: `P${selected + 1}`,

@@ -40,6 +40,10 @@ export function renderBit(count, bitDisplay) {
     }
 }
 
+export function renderPageFault(pageFault, pageFaultDisplay) {
+    pageFaultDisplay.innerText = `Page Fault: ${pageFault}`;
+}
+
 export function renderPageSteps(algorithms, steps, frameSize, frameDisplay, bitDisplay, speed = 500) {
     frameDisplay.innerHTML = '';
     bitDisplay.innerHTML = '';
@@ -62,17 +66,17 @@ export function renderPageSteps(algorithms, steps, frameSize, frameDisplay, bitD
     let currentStep = 0;
     function showStep() {
         if(currentStep >= steps.length) return;
-        const step = steps[currentStep];
+        let step = steps[currentStep];
 
         frameRows.forEach((row, i) => {
-            const cell = document.createElement('div');
+            let cell = document.createElement('div');
             cell.className = 'cell';
 
             if(step.frame[i] !== undefined) {   
                 if(!step.isFault) {
                     cell.innerText = "|";
                 }else {
-                    const extra = step.exponentIndex?.[i] !== undefined ? `<sup>${step.exponentIndex[i]}</sup>` : '';
+                    let extra = step.exponentIndex?.[i] !== undefined ? `<sup>${step.exponentIndex[i]}</sup>` : '';
                     cell.innerHTML = `${step.frame[i]}${extra}`;
                 }
             }
@@ -100,23 +104,23 @@ export function renderPageSteps(algorithms, steps, frameSize, frameDisplay, bitD
     showStep();
 }
 
-export function renderDiskSteps(steps, canvasId, drawLineInstance, queue, speed = 700) {
+export function renderDiskSteps(steps, canvasId, queue, speed = 700) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
     let margin = 100;
-    let minTrack = Math.min(...queue);
-    let maxTrack = Math.max(...queue);
-    let xScale = (width - 2 * margin) / (maxTrack - minTrack || 1);
-    let yStep = (height - 2 * margin) / (steps.length - 1 || 1);
+    let minTrack = Math.min(...steps);
+    let maxTrack = Math.max(...steps);
+    let xScale = (width - 2 * margin) / (maxTrack - minTrack);
+    let yStep = (height - 2 * margin) / (steps.length - 1);
     ctx.clearRect(0, 70, canvas.width, canvas.height);
     ctx.lineWidth = 2;
     let currentStep = 0;
     function showStep() {
         if(currentStep >= steps.length - 1) {
-            const lastX = margin + (steps[steps.length - 1] - minTrack) * xScale;
-            const lastY = margin + (steps.length - 1) * yStep;
+            let lastX = margin + (steps[steps.length - 1] - minTrack) * xScale;
+            let lastY = margin + (steps.length - 1) * yStep;
             ctx.font = '12px Arial';
             ctx.fillStyle = '#333';
             let offsetX = 10, offsetY = -10;
@@ -129,10 +133,10 @@ export function renderDiskSteps(steps, canvasId, drawLineInstance, queue, speed 
             ctx.fillText(steps[steps.length - 1], lastX + offsetX, lastY + offsetY);
             return;
         }
-        const x1 = margin + (steps[currentStep] - minTrack) * xScale;
-        const y1 = margin + currentStep * yStep;
-        const x2 = margin + (steps[currentStep + 1] - minTrack) * xScale;
-        const y2 = margin + (currentStep + 1) * yStep;
+        let x1 = margin + (steps[currentStep] - minTrack) * xScale;
+        let y1 = margin + currentStep * yStep;
+        let x2 = margin + (steps[currentStep + 1] - minTrack) * xScale;
+        let y2 = margin + (currentStep + 1) * yStep;
 
         ctx.beginPath();
         ctx.moveTo(x1, y1);
@@ -140,12 +144,12 @@ export function renderDiskSteps(steps, canvasId, drawLineInstance, queue, speed 
         ctx.strokeStyle = '#000';
         ctx.stroke();
 
-        const angle = Math.atan2(y2 - y1, x2 - x1);
-        const headLength = 10;
-        const arrowX1 = x2 - headLength * Math.cos(angle - Math.PI / 6);
-        const arrowY1 = y2 - headLength * Math.sin(angle - Math.PI / 6);
-        const arrowX2 = x2 - headLength * Math.cos(angle + Math.PI / 6);
-        const arrowY2 = y2 - headLength * Math.sin(angle + Math.PI / 6);
+        let angle = Math.atan2(y2 - y1, x2 - x1);
+        let headLength = 10;
+        let arrowX1 = x2 - headLength * Math.cos(angle - Math.PI / 6);
+        let arrowY1 = y2 - headLength * Math.sin(angle - Math.PI / 6);
+        let arrowX2 = x2 - headLength * Math.cos(angle + Math.PI / 6);
+        let arrowY2 = y2 - headLength * Math.sin(angle + Math.PI / 6);
 
         ctx.beginPath();
         ctx.moveTo(x2, y2);
@@ -166,9 +170,15 @@ export function renderDiskSteps(steps, canvasId, drawLineInstance, queue, speed 
     showStep();
 }
 
+export function renderDistance(totalMove, distanceDisplay) {
+    distanceDisplay.innerText = `Distance: ${totalMove}`;
+}
+
+
 export function renderRequest(ctx, request, headStart, width, height, margin, scaleDisk, trackMax, pathSteps = []) {
     let baselineY = margin;
     ctx.clearRect(0, 0, width, height);
+    ctx.strokeStyle = 'black';
     ctx.beginPath();
     ctx.moveTo(0, baselineY);
     ctx.lineTo(width, baselineY);
@@ -179,7 +189,8 @@ export function renderRequest(ctx, request, headStart, width, height, margin, sc
     if(!request.includes(0)) {
         request.unshift(0);
     }
-    if(!request.includes(trackMax)) {
+
+    if (!request.includes(trackMax)) {
         request.push(trackMax);
     }
 
@@ -282,197 +293,85 @@ export function renderTimeLine(ctx, width, height, margin, scaleProcess, maxTime
     }
 }
 
-export function renderProcessStepsFCFS(steps, canvasId, burstTime = [], arrivalTime = [], speed) {
+export function renderProcessSteps(steps, canvasId, arrivalTime = [], speed = 500) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
-    let margin = 50;
+
+    const margin = 50;
     const rowHeight = 40;
     const rowGap = 20;
 
-    let maxTime = 0;
-    steps.forEach(step => {
-        if (step.end > maxTime) maxTime = step.end;
-    });
-    maxTime = Math.max(maxTime, 20);
+    ctx.clearRect(0, 0, width, height);
 
-    let scaleProcess = (width - 2 * margin) / maxTime;
+    let processSet = new Set();
+    steps.forEach(s => {
+        if (s.process) processSet.add(s.process);
+    });
+    let processList = Array.from(processSet).sort();
+
+    let maxTime = Math.max(...steps.map(s => s.end));
+    let scale = (width - 2 * margin) / maxTime;
+
+    let lastXEndOfProcess = {};
+    let drawnLabel = new Set();
+
     let currentStep = 0;
 
-    renderTimeLine(ctx, width, height, margin, scaleProcess, maxTime);
+    renderTimeLine(ctx, width, height, margin, scale, maxTime);
 
     function showStep() {
         if (currentStep >= steps.length) return;
 
-        let step = steps[currentStep];
-        let processName = step.process;
-        let idx = parseInt(processName.substring(1)) - 1;
+        const { process, start, end } = steps[currentStep];
+        const pid = process;
+        const index = parseInt(pid.slice(1)) - 1;
+        const row = processList.indexOf(pid);
+        const y = margin + 45 + row * (rowHeight + rowGap);
 
-        let xStart = margin + step.start * scaleProcess;
-        let xEnd = margin + step.end * scaleProcess;
-        let y = margin + 45 + idx * (rowHeight + rowGap);
+        const xStart = margin + start * scale;
+        const xEnd = margin + end * scale;
+        const xArrival = margin + arrivalTime[index] * scale;
 
-        let arrival = arrivalTime?.[idx] ?? 0;
+        if (!drawnLabel.has(pid)) {
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(pid, margin - 10, y);
+            drawnLabel.add(pid);
+        }
 
-        ctx.font = '14px Arial';
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(`P${idx + 1}`, margin - 10, y);
-
-        ctx.strokeStyle = '#000';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(xStart, y);
-        ctx.lineTo(xEnd, y);
-        ctx.stroke();
-
-        let xArrival = margin + arrival * scaleProcess;
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'black';
-        ctx.moveTo(xArrival, y - 5);
-        ctx.lineTo(xArrival, y + 5);
-        ctx.stroke();
-        ctx.font = '12px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'bottom';
-        ctx.fillText(`${arrival}`, xArrival, y - 15);
-
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'black';
-        ctx.moveTo(xStart, y - 5);
-        ctx.lineTo(xStart, y + 5);
-        ctx.stroke();
-        ctx.fillText(`${step.start}`, xStart, y - 15);
-
-        if (xArrival < xStart) {
+        if (start > arrivalTime[index]) {
             ctx.beginPath();
             ctx.setLineDash([5, 5]);
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'gray';
             ctx.moveTo(xArrival, y);
             ctx.lineTo(xStart, y);
             ctx.stroke();
             ctx.setLineDash([]);
+
+            ctx.beginPath();
+            ctx.moveTo(xArrival, y - 5);
+            ctx.lineTo(xArrival, y + 5);
+            ctx.stroke();
+
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${arrivalTime[index]}`, xArrival, y - 15);
         }
 
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'black';
-        ctx.moveTo(xEnd, y - 5);
-        ctx.lineTo(xEnd, y + 5);
-        ctx.stroke();
-        ctx.fillText(`${step.end}`, xEnd, y - 15);
-
-        ctx.beginPath();
-        ctx.lineWidth = 2;
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('X', xEnd + 10, y);
-
-        currentStep++;
-        setTimeout(showStep, speed);
-    }
-
-    showStep();
-}
-
-
-export function renderProcessSteps(steps, canvasId, burstTime = [], arrivalTime = [], speed = 500) {
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext('2d');
-    const height = canvas.height;
-    const width = canvas.width;
-    const margin = 50;
-    const rowHeight = 40;
-    const rowGap = 20;
-    ctx.clearRect(0, 0, width, height);
-    let maxTime = 0;
-    for (let i = 0; i < steps.length; i++) {
-        if (steps[i].end > maxTime) {
-            maxTime = steps[i].end;
-        }
-    }
-    if (maxTime < 26) {
-        maxTime = 26;
-    }
-    maxTime += 1;
-
-    const scaleProcess = (width - 2 * margin) / maxTime;
-    const processList = [];
-    for (let i = 0; i < steps.length; i++) {
-        const p = steps[i].process;
-        let exists = false;
-        for (let j = 0; j < processList.length; j++) {
-            if (processList[j] === p) {
-                exists = true;
-                break;
-            }
-        }
-        if (!exists) {
-            processList.push(p);
-        }
-    }
-
-    const lastXEndOfProcess = [];
-    const drawnLabel = [];
-    let currentStep = 0;
-
-    renderTimeLine(ctx, width, height, margin, scaleProcess, maxTime);
-
-    function showStep() {
-        if (currentStep >= steps.length) return;
-
-        const step = steps[currentStep];
-        const process = step.process;
-        const pid = parseInt(process.slice(1)) - 1;
-        const arrival = arrivalTime[pid];
-
-        let row = -1;
-        for (let i = 0; i < processList.length; i++) {
-            if (processList[i] === process) {
-                row = i;
-                break;
-            }
-        }
-
-        const xStart = margin + step.start * scaleProcess;
-        const xEnd = margin + step.end * scaleProcess;
-        const xArrival = margin + arrival * scaleProcess;
-        const y = margin + 45 + row * (rowHeight + rowGap);
-        let wasDrawn = false;
-        for (let i = 0; i < drawnLabel.length; i++) {
-            if (drawnLabel[i] === process) {
-                wasDrawn = true;
-                break;
-            }
-        }
-        if (!wasDrawn) {
-            ctx.font = '14px Arial';
-            ctx.textAlign = 'right';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(process, margin - 10, y);
-            drawnLabel.push(process);
-        }
-        let xPrev = null;
-        for (let i = 0; i < lastXEndOfProcess.length; i++) {
-            if (lastXEndOfProcess[i].name === process) {
-                xPrev = lastXEndOfProcess[i].x;
-                break;
-            }
-        }
-        if (xPrev !== null) {
+        if (lastXEndOfProcess[pid] !== undefined && lastXEndOfProcess[pid] < xStart - 1) {
             ctx.beginPath();
             ctx.setLineDash([5, 5]);
             ctx.strokeStyle = 'gray';
-            ctx.moveTo(xPrev, y);
+            ctx.moveTo(lastXEndOfProcess[pid], y);
             ctx.lineTo(xStart, y);
             ctx.stroke();
             ctx.setLineDash([]);
         }
 
-        lastXEndOfProcess.push({ name: process, x: xEnd });
+        lastXEndOfProcess[pid] = xEnd;
 
         ctx.strokeStyle = '#000';
         ctx.lineWidth = 2;
@@ -480,52 +379,28 @@ export function renderProcessSteps(steps, canvasId, burstTime = [], arrivalTime 
         ctx.moveTo(xStart, y);
         ctx.lineTo(xEnd, y);
         ctx.stroke();
+
         ctx.beginPath();
         ctx.moveTo(xStart, y - 5);
         ctx.lineTo(xStart, y + 5);
         ctx.stroke();
         ctx.font = '12px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText(step.start + '', xStart, y - 15);
+        ctx.fillText(`${start}`, xStart, y - 15);
+
         ctx.beginPath();
         ctx.moveTo(xEnd, y - 5);
         ctx.lineTo(xEnd, y + 5);
         ctx.stroke();
-        ctx.fillText(step.end + '', xEnd, y - 15);
+        ctx.fillText(`${end}`, xEnd, y - 15);
+
         let isLast = true;
-        for (let i = currentStep + 1; i < steps.length; i++) {
-            if (steps[i].process === process) {
-                isLast = false;
-                break;
-            }
-        }
         if (isLast) {
             ctx.font = '12px Arial';
             ctx.textAlign = 'left';
             ctx.textBaseline = 'middle';
             ctx.fillText('X', xEnd + 10, y);
         }
-        let isFirst = true;
-        for (let i = 0; i < currentStep; i++) {
-            if (steps[i].process === process) {
-                isFirst = false;
-                break;
-            }
-        }
-        if (isFirst && arrival !== step.start) {
-            ctx.beginPath();
-            ctx.moveTo(xArrival, y - 5);
-            ctx.lineTo(xArrival, y + 5);
-            ctx.stroke();
-            ctx.fillText(arrival + '', xArrival, y - 15);
-
-            ctx.beginPath();
-            ctx.setLineDash([5, 5]);
-            ctx.moveTo(xArrival, y);
-            ctx.lineTo(xStart, y);
-            ctx.stroke();
-            ctx.setLineDash([]);
-        }
 
         currentStep++;
         setTimeout(showStep, speed);
@@ -534,173 +409,42 @@ export function renderProcessSteps(steps, canvasId, burstTime = [], arrivalTime 
     showStep();
 }
 
-export function renderReadyQueueFCFS(timeLine, readyQueueDisplay, burstTime = [], speed = 500) {
+
+
+export function renderReadyQueue1times(timeLine, readyQueueDisplay, burstTime = [], speed = 500) {
     readyQueueDisplay.innerHTML = '';
 
-    let span_ready = document.createElement('span');
-    span_ready.className = 'ready-label';
-    span_ready.innerText = 'Ready: ';
-    readyQueueDisplay.appendChild(span_ready);
+    let label = document.createElement('span');
+    label.className = 'ready-label';
+    label.innerText = 'Ready: ';
+    readyQueueDisplay.appendChild(label);
 
     let currentStep = 0;
     let set = new Set();
-
-    function showStep() {
-        if (currentStep >= timeLine.length) return;
-
-        const { time, running, ready } = timeLine[currentStep];
-
-        let column = document.createElement('div');
-        column.className = 'ready-column';
-
-        let timeLabel = document.createElement('div');
-        timeLabel.className = 'time-label';
-        timeLabel.innerText = time;
-        column.appendChild(timeLabel);
-
-        
-        if (running && !set.has(running)) {
-            const box = document.createElement('div');
-            box.className = 'process-box running';
-            let idx = parseInt(running.substring(1)) - 1;
-            box.innerHTML = `P<sub>${idx + 1}</sub><sup>${burstTime[idx]}</sup>`;
-            column.appendChild(box);
-            set.add(running);
-        }
-
-        ready.forEach(p => {
-                const box = document.createElement('div');
-                box.className = 'process-box';
-                let idx = parseInt(p.substring(1)) - 1;
-                box.innerHTML = `P<sub>${idx + 1}</sub><sup>${burstTime[idx]}</sup>`;
-                column.appendChild(box);
-        });
-        
-        readyQueueDisplay.appendChild(column);
-
-        currentStep++;
-        setTimeout(showStep, speed);
-    }
-
-    showStep();
-}
-
-export function renderReadyQueueSJF(timeLine, readyQueueDisplay, burstTime = [], speed = 500) {
-    readyQueueDisplay.innerHTML = '';
-
-    let span_ready = document.createElement('span');
-    span_ready.className = 'ready-label';
-    span_ready.innerText = 'Ready: ';
-    readyQueueDisplay.appendChild(span_ready);
-    let set = new Set();
-    let currentStep = 0;
     function showStep() {
         if (currentStep >= timeLine.length) return;
 
         let { time, running, ready } = timeLine[currentStep];
 
-        let column = document.createElement('div');
+        const column = document.createElement('div');
         column.className = 'ready-column';
 
         const timeLabel = document.createElement('div');
         timeLabel.className = 'time-label';
         timeLabel.innerText = time;
         column.appendChild(timeLabel);
+
         ready.forEach(p => {
             const box = document.createElement('div');
             box.className = 'process-box';
-
-            if (p === running && !set.has(p)) {
+            if (p === running && !set.has(p)){
                 box.classList.add('running');
                 set.add(p);
             }
 
-            let idx = parseInt(p.substring(1)) - 1;
-            box.innerHTML = `P<sub>${idx + 1}</sub><sup>${burstTime[idx]}</sup>`;
-            column.appendChild(box);
-        }); 
-
-
-        readyQueueDisplay.appendChild(column);
-        currentStep++;
-        setTimeout(showStep, speed);
-    }
-    showStep();
-}
-
-export function renderReadyQueueSRTF(timeLine, readyQueueDisplay, burstTime = [], speed = 500) {
-    readyQueueDisplay.innerHTML = '';
-
-    let span_ready = document.createElement('span');
-    span_ready.className = 'ready-label';
-    span_ready.innerText = 'Ready: ';
-    readyQueueDisplay.appendChild(span_ready);
-
-    let currentStep = 0;
-    function showStep() {
-        if (currentStep >= timeLine.length) return;
-
-        const { time, running, ready, remainingTime, highlight } = timeLine[currentStep];
-
-        const column = document.createElement('div');
-        column.className = 'ready-column';
-
-        const timeLabel = document.createElement('div');
-        timeLabel.className = 'time-label';
-        timeLabel.innerText = time;
-        column.appendChild(timeLabel);
-
-        ready.forEach(p => {
-            const box = document.createElement('div');
-            box.className = 'process-box';
-
-            if(p === running && highlight) {
-                box.classList.add('running');
-            }
-            box.innerHTML = `P<sub>${p + 1}</sub><sup>${remainingTime[p]}</sup>`;
-            column.appendChild(box);
-        });
-
-        readyQueueDisplay.appendChild(column);
-        currentStep++;
-        setTimeout(showStep, speed);
-    }
-
-    showStep();
-}
-
-export function renderReadyQueue(timeLine, readyQueueDisplay, speed = 500) {
-    readyQueueDisplay.innerHTML = '';
-
-    const span_ready = document.createElement('span');
-    span_ready.className = 'ready-label';
-    span_ready.innerText = 'Ready: ';
-    readyQueueDisplay.appendChild(span_ready);
-
-    let currentStep = 0;
-    function showStep() {
-        if (currentStep >= timeLine.length) return;
-
-        const { time, running, ready, remainingTime } = timeLine[currentStep];
-
-        const column = document.createElement('div');
-        column.className = 'ready-column';
-
-        const timeLabel = document.createElement('div');
-        timeLabel.className = 'time-label';
-        timeLabel.innerText = time;
-        column.appendChild(timeLabel);
-
-        if (running !== null) {
-            const runningBox = document.createElement('div');
-            runningBox.className = 'process-box running';
-            runningBox.innerHTML = `P<sub>${running + 1}</sub><sup>${remainingTime[running]}</sup>`;
-            column.appendChild(runningBox);
-        }
-        ready.forEach(i => {
-            const box = document.createElement('div');
-            box.className = 'process-box';
-            box.innerHTML = `P<sub>${i + 1}</sub><sup>${remainingTime[i]}</sup>`;
+            let idx = parseInt(p.replace('P', '')) - 1;
+            let burst = burstTime[idx] !== undefined ? burstTime[idx] : '?';
+            box.innerHTML = `P<sub>${idx + 1}</sub><sup>${burst}</sup>`;
             column.appendChild(box);
         });
 

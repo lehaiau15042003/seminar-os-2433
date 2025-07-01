@@ -41,6 +41,9 @@ function FCFS_process(burstTime, arrivalTime = []) {
                     queue.push(`P${k + 1}`);
                 }
             }
+            if(j === start) {
+                queue.unshift(`P${i + 1}`);
+            }
             timeLine.push({
                 time: j,
                 running: `P${i + 1}`,

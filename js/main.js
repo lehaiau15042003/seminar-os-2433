@@ -1,8 +1,8 @@
 'use strict'
 
-import { renderPages, renderFrame, renderPageSteps, renderBit, renderIndex, renderDiskSteps, renderProcessSteps, renderReadyQueueFCFS, renderReadyQueue , renderResult, renderResult2, renderProcessStepsFCFS, renderReadyQueueSJF, renderReadyQueueSRTF, renderIO} from './handlers/render.js'
+import { renderPages, renderFrame, renderPageSteps, renderBit, renderIndex, renderDiskSteps, renderProcessSteps , renderResult, renderResult2, renderIO, renderPageFault, renderDistance, renderReadyQueue1times} from './handlers/render.js'
 import { runAlgorithms } from './handlers/Algorithms.js'
-import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc, processInputFunc, quantumInputFunc, quantumInputIOFunc, processInputIOFunc, numberInputIOFunc } from './handlers/Input.js'
+import { pageInputFunc, frameInputFunc, queueInputFunc, headInputFunc, processInputFunc, quantumInputFunc, quantumInputIOFunc, processInputIOFunc, numberInputIOFunc, trackMaxInputFunc } from './handlers/Input.js'
 import drawLine from './handlers/drawLine.js';
 
 let pages = [];
@@ -19,8 +19,12 @@ window.onload = function() {
         frameDisplay: document.getElementById('frame'),
         indexDisplay: document.getElementById('index'),
         bitDisplay: document.getElementById('bit'),
+        pageFaultDisplay: document.getElementById('pageFault'),
+
         queueInput: document.getElementById('queueInput'),
         headInput: document.getElementById('headInput'),
+        trackMaxInput: document.getElementById('trackMaxInput'),
+        distanceDisplay: document.getElementById('distance'),
 
         burstInput: document.getElementById('burstInput'),
         processDisplay: document.getElementById('process'),
@@ -58,6 +62,7 @@ window.onload = function() {
     quantumInputIOFunc(DOM.quantumInputIO, DOM.quantumDisplay);
     numberInputIOFunc(DOM.numberInputIO, DOM.numberIODisplay);
     processInputIOFunc(DOM.burstInputIO, DOM.arrivalInputIO, DOM.IOUsingInput, burstTimeList, arrivalTimeIO, IOUsing, DOM.processDisplay);
+    trackMaxInputFunc(DOM.trackMaxInput, drawLineInstance);
 
     DOM.runbtn.addEventListener('click', () => {
         let frameSize = parseInt(DOM.frameInput.value || DOM.frameDisplay.childElementCount, 10);
@@ -69,7 +74,7 @@ window.onload = function() {
         let quantum = parseInt(DOM.quantumInput.value);
 
         const minTrack = 0;
-        const maxTrack = 199;
+        let maxTrack = parseInt(DOM.trackMaxInput.value);
         let result = runAlgorithms({pages, frameSize, queue, headStart, direction, minTrack, maxTrack, burstTime, arrivalTime, quantum, burstTimeList, arrivalTimeIO, IOUsing, algorithms: selectedAlgorithm});
 
         const pageAlgorithms = ['FIFO', 'LRU' ,'OPTIMAL', 'CLOCK'];
@@ -79,20 +84,21 @@ window.onload = function() {
 
         if(pageAlgorithms.includes(selectedAlgorithm)) {
             renderPageSteps(selectedAlgorithm, result.steps, frameSize, DOM.frameDisplay, DOM.bitDisplay, 500);
+            renderPageFault(result.pageFault, DOM.pageFaultDisplay);
         }else if(diskAlgorithms.includes(selectedAlgorithm)) {
-            renderDiskSteps(result.path, 'myCanvas', drawLineInstance, queue, 700);
+            renderDiskSteps(result.path, 'myCanvas', queue, 700);
+            renderDistance(result.totalMove, DOM.distanceDisplay);
         }else if(processAlgorithms.includes(selectedAlgorithm)) {
             if(selectedAlgorithm === 'FCFS_process') {
-                renderProcessStepsFCFS(result.steps, 'myCanvas', burstTime, arrivalTime, 500);
-                renderReadyQueueFCFS(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
+                renderProcessSteps(result.steps, 'myCanvas', arrivalTime, 500);
+                renderReadyQueue1times(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
                 renderResult(result.waitingTimes, result.turnaroundTimes, DOM.resultDisplay);
             }else if(selectedAlgorithm === 'SJF') {
-                renderProcessStepsFCFS(result.steps, 'myCanvas', burstTime, arrivalTime, 500);
-                renderReadyQueueSJF(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
+                renderProcessSteps(result.steps, 'myCanvas', arrivalTime, 500);
+                renderReadyQueue1times(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
                 renderResult(result.waitingTimes, result.turnaroundTimes, DOM.resultDisplay);
             }else if(selectedAlgorithm === 'SRTF') {
                 renderProcessSteps(result.steps, 'myCanvas', burstTime, arrivalTime, 500);
-                renderReadyQueueSRTF(result.timeLine, DOM.readyQueueDisplay, burstTime, 500);
                 renderResult2(result.waitingTimes, result.turnaroundTimes, result.responseTimes, DOM.resultDisplay);
             }else if(selectedAlgorithm === 'RR') {
                 renderProcessSteps(result.steps, 'myCanvas', burstTime, arrivalTime, 500);
@@ -112,8 +118,7 @@ window.onload = function() {
         link.addEventListener('click', () => {
             const id = link.getAttribute('href').substring(1);
             const section = document.getElementById(id);
-            const canvas = document.getElementById('canvasCPU');
-            const canvasIO = document.getElementById('canvasIO');
+            const canvas = document.getElementById('canvas');
             if(section) {
                     document.querySelectorAll('.algorithms-container section').forEach(sec => {
                     sec.classList.remove('selected');
@@ -153,7 +158,6 @@ window.onload = function() {
                     DOM.inputGroupCPU_IO.style.display = 'block';
                     DOM.inputContainer.style.display = 'block';
                     canvas.style.display = 'block';
-                    canvasIO.style.display = 'block';
                 }
                 
             }

@@ -6,8 +6,17 @@ function CSCAN(queue, headStart, direction, minTrack = 0, maxTrack = 199) {
     let current = headStart;
     let totalMove = 0;
 
-    let up = queue.filter(t => t > current).sort((a,b) => a - b);
-    let down = queue.filter(t => t < current).sort((a,b) => b - a);
+    let up = [];
+    let down = [];
+    for(let i = 0; i < queue.length; i++) {
+        if(queue[i] > headStart) {
+            up.push(queue[i]);
+        } else {
+            down.push(queue[i]);
+        }
+    }
+    up.sort((a, b) => a - b);
+    down.sort((a, b) => b - a);
 
     let pathDirection = [];
     if(direction === 'up') {
